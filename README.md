@@ -4,7 +4,7 @@ A clone of Discogs.com
 ## Disc Clones
 
 - Loren Davies (trevordavies095)
-
+- Patrick Ehrenreich (pxe1833)
 
 ## Prerequisities
 
