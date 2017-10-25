@@ -20,17 +20,9 @@ import spark.*;
  */
 public class GetHomeRoute implements Route {
 
-    // Values used in the view-model map for rendering the home view.
-    static final String TITLE_ATTR = "title";
-    static final String GAME_STATS_MSG_ATTR = "gameStatsMessage";
-    static final String PLYR_STATS_MSG_ATTR = "userStatsMessage";
-    static final String NEW_PLAYER_ATTR = "newPlayer";
-    private static final String TITLE = "Welcome to the Guessing Game";
-    static final String VIEW_NAME = "home.ftl";
+    private final String WELCOME_STR = "Welcome to DisClones, ";
 
-    // Key in the session attribute map for the player who started the session
     private final TemplateEngine templateEngine;
-
 
     /**
      * The constructor for the {@code POST /guess} route handler.
@@ -47,15 +39,24 @@ public class GetHomeRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String handle(Request request, Response response) {
-      final Session httpSession = request.session();
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public String handle(Request request, Response response) {
+        final Session httpSession = request.session();
 
-      final Map<String, Object> vm = new HashMap<>();
+        final Map<String, Object> vm = new HashMap<>();
 
-      return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
-  }
+        if(httpSession.isNew()){
+            httpSession.attribute(FTLKeys.USER, "Guest");
+            httpSession.attribute(FTLKeys.SIGNED_IN, false);
+        }
+
+        vm.put(FTLKeys.TITLE, WELCOME_STR);
+        vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
+        vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
+
+        return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
+    }
 }

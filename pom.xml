@@ -2,6 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>com.DiscogsApp</groupId>
+  <artifactId>discogs-app</artifactId>
+  <name>DisClones by the Disc Cloners</name>
+  <description>Discogs clone with a Java/Spark architecture.</description>
+  <version>1.0-SNAPSHOT</version>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jdk.version>1.8</jdk.version>
@@ -99,7 +105,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>com.webcheckers.Application</mainClass>
+          <mainClass>com.DiscogsApp.Application</mainClass>
           <arguments>
           </arguments>
         </configuration>
