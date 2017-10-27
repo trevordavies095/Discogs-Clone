@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import com.DiscogsApp.appl.SQLManager;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -35,9 +36,9 @@ public final class Application {
 
         final TemplateEngine templateEngine = new FreeMarkerEngine();
 
+        final SQLManager sqlManager = new SQLManager();
 
-        final WebServer webServer = new WebServer(templateEngine);
-
+        final WebServer webServer = new WebServer(templateEngine, sqlManager);
 
         final Application app = new Application(webServer);
 

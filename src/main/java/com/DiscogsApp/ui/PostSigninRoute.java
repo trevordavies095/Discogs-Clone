@@ -1,5 +1,6 @@
 package com.DiscogsApp.ui;
 
+import com.DiscogsApp.appl.SQLManager;
 import spark.*;
 import java.sql.*;
 
@@ -11,16 +12,20 @@ public class PostSigninRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
+    private final SQLManager sqlManager;
+
     private static final String WRONG_PASSWORD = "Incorrect password for username: ";
 
     private static String makeBadUsernameMessage(String username){
         return "Username " + username + " does not exist.";
     }
 
-    PostSigninRoute(TemplateEngine templateEngine){
+    PostSigninRoute(TemplateEngine templateEngine, SQLManager sqlManager){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
+
+        this.sqlManager = sqlManager;
     }
 
     public String handle(Request request, Response response){
@@ -37,16 +42,10 @@ public class PostSigninRoute implements Route {
                 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
         ) {
-            String qry = "SELECT username FROM users WHERE users.username = '" + username + "'";
-            ResultSet rset = stmt.executeQuery(qry);
-            boolean userExists = rset.first();
-            System.out.println(userExists);
+            boolean userExists = sqlManager.validateUsername(username);
             if(userExists) {
-                qry = "SELECT password FROM users WHERE users.username = '" + username + "'";
-                System.out.println(qry);
-                rset = stmt.executeQuery(qry);
-                rset.next();
-                if (rset.getString("password").equals(password)) {
+                boolean goodPass = sqlManager.validatePassword(username, password);
+                if (goodPass) {
                     httpSession.attribute(FTLKeys.USER, username);
                     httpSession.attribute(FTLKeys.SIGNED_IN, true);
                     response.redirect(FTLKeys.HOME_URL);

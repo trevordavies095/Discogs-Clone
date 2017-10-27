@@ -1,10 +1,13 @@
 package com.DiscogsApp.ui;
 
 import static spark.Spark.halt;
+import static spark.SparkBase.secure;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import com.DiscogsApp.appl.SQLManager;
 import com.DiscogsApp.ui.WebServer;
 
 
@@ -24,6 +27,8 @@ public class GetHomeRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
+    private final SQLManager sqlManager;
+
     /**
      * The constructor for the GET '/' route handler.
      *
@@ -32,10 +37,12 @@ public class GetHomeRoute implements Route {
      * @throws NullPointerException
      *    when the templateEngine parameter is null
      */
-    GetHomeRoute(final TemplateEngine templateEngine) {
+    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
+
+        this.sqlManager = sqlManager;
     }
 
     /**

@@ -7,6 +7,7 @@ import static spark.SparkBase.staticFileLocation;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.DiscogsApp.appl.SQLManager;
 import spark.TemplateEngine;
 
 
@@ -22,17 +23,21 @@ public class WebServer {
 
     private final TemplateEngine templateEngine;
 
+    private final SQLManager sqlManager;
+
     /**
-    * The constructor for the Web Server.
-    *
-    * @param templateEngine
-    *    The TemplateEngine for rendering HTML responses.
-    */
-    public WebServer(
-        final TemplateEngine templateEngine) {
+     * The constructor for the Web Server.
+     *
+     * @param templateEngine: The TemplateEngine for rendering HTML responses.
+     *
+     * @param sqlManager: the SQLManager for the application instance
+     */
+    public WebServer(final TemplateEngine templateEngine, final SQLManager sqlManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
         this.templateEngine = templateEngine;
+
+        this.sqlManager = sqlManager;
     }
 
 
@@ -43,10 +48,10 @@ public class WebServer {
         staticFileLocation("/public");
 
         // Shows Home page.
-        get(FTLKeys.HOME_URL, new GetHomeRoute(templateEngine));
+        get(FTLKeys.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
         get(FTLKeys.SIGNIN_URL, new GetSigninRoute(templateEngine));
-        post(FTLKeys.SIGNIN_URL, new PostSigninRoute(templateEngine));
-        //post(FTLKeys.SIGNUP_URL, new GetSignupRoute(templateEngine));
+        post(FTLKeys.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
+        //post(FTLKeys.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
 
         LOG.config("WebServer is initialized.");
     }
