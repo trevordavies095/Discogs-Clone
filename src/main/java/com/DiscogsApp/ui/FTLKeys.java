@@ -18,14 +18,6 @@ public interface FTLKeys {
 
     public static final String PASS = "password";
 
-    public static final String HOME_URL = "/";
-
-    public static final String SIGNIN_URL = "/signin";
-
-    public static final String SIGNUP_URL = "/signup";
-
-    public static final String SIGNOUT_URL = "/signout";
-
     public static final String MSG_TYPE_ERR = "error";
 
     public static final String MSG_TYPE = "messageType";

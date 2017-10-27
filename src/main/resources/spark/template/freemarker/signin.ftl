@@ -23,7 +23,7 @@
             <br/>
             <label for="username">Username:</label>
             <br/>
-            <input id="username" name="username" />
+            <input id="username" type="text" name="username" />
             <br/>
             <label for="password">Password:</label>
             <br/>

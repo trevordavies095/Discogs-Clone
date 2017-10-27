@@ -23,7 +23,7 @@
             <br/>
             <label for="username">Input a Unique Username (must be <20 characters):</label>
             <br/>
-            <input id="username" name="username" />
+            <input id="username" type="text" name="username" />
             <br/>
             <label for="password">Input a Password (must be <63 characters):</label>
             <br/>
@@ -31,11 +31,11 @@
             <br/>
             <label for="firstname">Input your First Name:</label>
             <br/>
-            <input id="firstname" name="firstname" />
+            <input id="firstname" type="text" name="firstname" />
             <br/>
             <label for="lastname">Input your Last Name:</label>
             <br/>
-            <input id="lastname" name="lastname" />
+            <input id="lastname" type="text" "name="lastname" />
             <br/>
             <button type="submit">Create Account</button>
         </form>

@@ -48,12 +48,12 @@ public class WebServer {
         staticFileLocation("/public");
 
         // Shows Home page.
-        get(FTLKeys.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
-        get(FTLKeys.SIGNIN_URL, new GetSigninRoute(templateEngine));
-        post(FTLKeys.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
-        get(FTLKeys.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
-        post(FTLKeys.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
-        get(FTLKeys.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
+        get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
+        get(Routes.SIGNIN_URL, new GetSigninRoute(templateEngine));
+        post(Routes.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
+        get(Routes.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
+        post(Routes.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
+        get(Routes.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
 
         LOG.config("WebServer is initialized.");
     }

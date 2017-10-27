@@ -71,4 +71,14 @@ public class SQLManager {
             return 2;
         }
     }
+
+    /*public ResultSet getUserData(String username){
+        try{
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }*/
 }

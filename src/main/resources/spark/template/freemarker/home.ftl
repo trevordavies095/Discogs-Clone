@@ -14,7 +14,7 @@
     <div class="navigation">
     <#if signedIn>
         <a href="/">Home</a>
-        <a href="/signout">Sign Out[${username}]</a>
+        <b href="/signout">Sign Out[${username}]</b>
     <#else>
         <a href="/signin">Sign In</a>
     </#if>
