@@ -4,14 +4,15 @@ body {
     font-size: 14px;
 }
 
-.page {
+div.page {
     background: greenyellow;
     border: 1px solid #6ECC12;
     width: 710px;
     margin: 30px auto;
+
 }
 
-.page h1 {
+div.page h1 {
     background: #6ECC14;
     margin: 0;
     padding: 10px 14px;
@@ -19,47 +20,48 @@ body {
     letter-spacing: 1px;
     text-shadow: 0 0 3px #247788;
     font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
 }
 
-.page div.navigation {
+div.page div.navigation {
     background: #DEE932;
-    padding: 4px 10px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #eee;
-    color: #888;
+    padding: 10px;
+    color: #889889;
     font-size: 12px;
+    font-family: 'Impact', sans-serif;
     letter-spacing: 0.5px;
 }
 
-.page, .navigation a {
+div.page, .navigation a {
     color: #555555;
     font-weight: bold;
 }
 
-.page h2 {
+div.page h2 {
     margin: 0 0 15px 0;
     color: #105743;
     text-shadow: 0 1px 2px #ccc;
 }
 
-.page, .body {
+div.page .body {
     padding: 10px;
+    position: fixed;
 }
 
-.page, .footer {
+div.page .footer {
     background: #199293;
     color: #299848;
     padding: 5px 10px;
     font-size: 12px;
 }
 
-.page, ul.players {
+div.page ul.players {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.page, ul.players li {
+div.page ul.players li {
     margin: 10px 0;
     padding: 5px;
     background: #F0FAFF;
@@ -68,7 +70,7 @@ body {
     -webkit-border-radius: 5px;
 }
 
-.error {
+div.error {
     margin: 10px 0;
     background: #FAE4E4;
     border: 1px solid #DD6F6F;
@@ -78,7 +80,7 @@ body {
     font-size: 13px;
 }
 
-.info {
+div.info {
     margin: 10px 0;
     background: #FAFFE4;
     border: 1px solid green;

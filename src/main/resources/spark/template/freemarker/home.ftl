@@ -8,7 +8,7 @@
 <div class="page">
 
     <h1>
-        ${title}${user}
+            ${title}${username}
     </h1>
 
     <div class="navigation">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="body">
-        <p>Welcome to DisClones.</p>
+        <p> Welcome to DisClones.</p>
 
     <#if message??>
         <div class="message ${messageType}">${message}</div>

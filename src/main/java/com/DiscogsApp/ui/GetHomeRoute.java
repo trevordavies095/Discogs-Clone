@@ -15,23 +15,22 @@ import spark.*;
  * This is the page where the user starts (no Game yet)
  * but is also the landing page after a game ends.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
- * @author <a href='mailto:jrv@se.rit.edu'>Jim Vallino</a>
+ * @author Patrick Ehrenreich (pxe1833@rit.edu)
+ * @since October 21st, 2017
  */
 public class GetHomeRoute implements Route {
 
-    private final String WELCOME_STR = "Welcome to DisClones, ";
+    private final String WELCOME_STR = "Welcome to Disc Clones, ";
 
     private final TemplateEngine templateEngine;
 
     /**
-     * The constructor for the {@code POST /guess} route handler.
+     * The constructor for the GET '/' route handler.
      *
      * @param templateEngine
-     *    The {@link TemplateEngine} for the application to use when rendering HTML responses.
-     *
+     *    The TemplateEngine for rendering HTML responses.
      * @throws NullPointerException
-     *    when the {@code gameCenter} or {@code templateEngine} parameter is null
+     *    when the templateEngine parameter is null
      */
     GetHomeRoute(final TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
