@@ -1,8 +1,5 @@
 package com.DiscogsApp.appl;
 
-import com.DiscogsApp.ui.FTLKeys;
-import spark.ModelAndView;
-
 import java.sql.*;
 
 public class SQLManager {
@@ -48,6 +45,30 @@ public class SQLManager {
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    public int addUser(String username, String password, String firstname, String lastname){
+        try {
+            boolean nameTaken = validateUsername(username);
+            if(!(nameTaken)) {
+                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                String qry = "INSERT INTO users VALUES ('"+username+"', '"+password+"'," +
+                        " '"+firstname+"', '"+lastname+"')";
+                stmt.executeUpdate(qry);
+                boolean goodInsert = validateUsername(username);
+                if(goodInsert) {
+                    return 0;
+                }else{
+                    return 2;
+                }
+            }else{
+                return 1;
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return 2;
         }
     }
 }

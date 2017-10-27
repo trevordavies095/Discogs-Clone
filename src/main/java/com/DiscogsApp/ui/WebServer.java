@@ -51,7 +51,9 @@ public class WebServer {
         get(FTLKeys.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
         get(FTLKeys.SIGNIN_URL, new GetSigninRoute(templateEngine));
         post(FTLKeys.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
-        //post(FTLKeys.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
+        get(FTLKeys.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
+        post(FTLKeys.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
+        get(FTLKeys.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
 
         LOG.config("WebServer is initialized.");
     }

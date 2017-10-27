@@ -10,7 +10,7 @@
     <h1>Disc Clones Sign-In</h1>
 
     <div class="navigation">
-        <a href="/">my home</a>
+        <a href="/">home</a>
     </div>
 
     <div>
@@ -21,13 +21,13 @@
 
         <form action="/signin" method="POST">
             <br/>
-            Username:
+            <label for="username">Username:</label>
             <br/>
-            <input name="username" />
+            <input id="username" name="username" />
             <br/>
-            Password:
+            <label for="password">Password:</label>
             <br/>
-            <input type = "password" name="password" />
+            <input id="password" type="password" name="password" />
             <br/>
             <button type="submit">Sign In</button>
         </form>

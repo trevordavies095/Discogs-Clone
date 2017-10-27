@@ -8,6 +8,8 @@ public interface FTLKeys {
 
     public static final String SIGNOUT_VIEW = "signout.ftl";
 
+    public static final String SIGNUP_VIEW = "signup.ftl";
+
     public static final String TITLE = "title";
 
     public static final String USER = "username";
@@ -22,10 +24,14 @@ public interface FTLKeys {
 
     public static final String SIGNUP_URL = "/signup";
 
+    public static final String SIGNOUT_URL = "/signout";
+
     public static final String MSG_TYPE_ERR = "error";
 
     public static final String MSG_TYPE = "messageType";
 
     public static final String MESSAGE = "message";
+
+    public static final String WELCOME = "Welcome to Disc Clones, ";
 
 }

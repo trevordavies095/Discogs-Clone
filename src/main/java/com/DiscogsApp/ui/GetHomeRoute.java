@@ -23,7 +23,6 @@ import spark.*;
  */
 public class GetHomeRoute implements Route {
 
-    private final String WELCOME_STR = "Welcome to Disc Clones, ";
 
     private final TemplateEngine templateEngine;
 
@@ -59,7 +58,7 @@ public class GetHomeRoute implements Route {
             httpSession.attribute(FTLKeys.SIGNED_IN, false);
         }
 
-        vm.put(FTLKeys.TITLE, WELCOME_STR);
+        vm.put(FTLKeys.TITLE, FTLKeys.WELCOME);
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
 

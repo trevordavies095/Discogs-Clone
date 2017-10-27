@@ -20,14 +20,12 @@
     </#if>
     </div>
 
-    <div class="body">
         <p> Welcome to DisClones.</p>
 
     <#if message??>
         <div class="message ${messageType}">${message}</div>
     </#if>
 
-    </div>
 </div>
 </body>
 </html>

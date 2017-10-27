@@ -1,32 +1,32 @@
 body {
-    background: #CAEC15;
+    background: #CED0CE;
     font-family: 'Impact', sans-serif;
     font-size: 14px;
 }
 
 div.page {
-    background: greenyellow;
-    border: 1px solid #6ECC12;
+    background: #F15025;
+    border: 1px solid #FFFFFF;
     width: 710px;
     margin: 30px auto;
 
 }
 
 div.page h1 {
-    background: #6ECC14;
+    background: #CED0CE;
     margin: 0;
     padding: 10px 14px;
-    color: white;
+    color: #191919;
     letter-spacing: 1px;
-    text-shadow: 0 0 3px #247788;
+    text-shadow: 0 0 3px #191919;
     font-weight: normal;
     font-family: 'Trebuchet MS', sans-serif;
 }
 
 div.page div.navigation {
-    background: #DEE932;
+    background: #F25F38;
     padding: 10px;
-    color: #889889;
+    color: #FFFFFF;
     font-size: 12px;
     font-family: 'Impact', sans-serif;
     letter-spacing: 0.5px;
@@ -53,21 +53,6 @@ div.page .footer {
     color: #299848;
     padding: 5px 10px;
     font-size: 12px;
-}
-
-div.page ul.players {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-div.page ul.players li {
-    margin: 10px 0;
-    padding: 5px;
-    background: #F0FAFF;
-    border: 1px solid #DBF3FF;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
 }
 
 div.error {
