@@ -35,7 +35,7 @@
             <br/>
             <label for="lastname">Input your Last Name:</label>
             <br/>
-            <input id="lastname" type="text" "name="lastname" />
+            <input id="lastname" type="text" name="lastname" />
             <br/>
             <button type="submit">Create Account</button>
         </form>

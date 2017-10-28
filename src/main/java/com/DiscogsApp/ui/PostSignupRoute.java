@@ -1,6 +1,7 @@
 package com.DiscogsApp.ui;
 
 import com.DiscogsApp.appl.SQLManager;
+import org.apache.commons.lang3.ObjectUtils;
 import spark.*;
 
 import java.util.HashMap;
@@ -13,9 +14,18 @@ public class PostSignupRoute implements Route {
 
     private final String NAME_TAKEN = "The username you input is already in use. Please choose another.";
 
+    private final int MAX_USR = 20;
+
+    private final int MAX_PASS = 63;
+
     private final SQLManager sqlManager;
 
     private final TemplateEngine templateEngine;
+
+    private String tooLongMessage(String attr, int max){
+        return "Your entry for " + attr + " is too long. Limit entry in field " +
+                attr + " to " + max + " characters.";
+    }
 
     PostSignupRoute(TemplateEngine templateEngine, SQLManager sqlManager){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -35,6 +45,23 @@ public class PostSignupRoute implements Route {
         String password = request.queryParams("password");
         String firstname = request.queryParams("firstname");
         String lastname = request.queryParams("lastname");
+        if(username.length() > 20){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, tooLongMessage("username", MAX_USR));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }else if(firstname != null && firstname.length() > 20){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, tooLongMessage("firstname", MAX_USR));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }else if(lastname != null && lastname.length() > 20){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, tooLongMessage("lastname", MAX_USR));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }else if(password.length() > 63){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, tooLongMessage("password", MAX_PASS));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }
         int status = sqlManager.addUser(username, password, firstname, lastname);
         if(status == 0){
             httpSession.attribute(FTLKeys.USER, username);
