@@ -11,16 +11,20 @@
             ${title}${username}
     </h1>
 
-    <div class="navigation">
+    <nav>
     <#if signedIn>
-        <a href="/search">Search</a>
-        <a href="/account">My Account</a>
-        <a href="/signout">Sign Out[${username}]</a>
+        <ul id = "navigation">
+            <li><a href="/search">Search</a></li>
+            <li><a href="/account">My Account</a></li>
+            <li><a id="signOut" href="/signout">Sign Out[${username}]</a></li>
+        </ul>
     <#else>
-        <a href="/signin">Sign In</a>
-        <a href="/search">Search</a>
+        <ul id = "navigation">
+            <li><a href="/signin">Sign In</a></li>
+            <li><a href="/search">Search</a></li>
+        </ul>
     </#if>
-    </div>
+    </nav>
 
     <p> Welcome to DisClones.</p>
 

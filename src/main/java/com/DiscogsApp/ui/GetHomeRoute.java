@@ -31,10 +31,9 @@ public class GetHomeRoute implements Route {
     /**
      * The constructor for the GET '/' route handler.
      *
-     * @param templateEngine
-     *    The TemplateEngine for rendering HTML responses.
+     * @param templateEngine: The TemplateEngine for rendering HTML responses.
      * @throws NullPointerException
-     *    when the templateEngine parameter is null
+     *    when the templateEngine parameter or sqlManager parameter is null
      */
     GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");

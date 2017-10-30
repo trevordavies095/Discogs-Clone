@@ -5,7 +5,6 @@ import static spark.Spark.post;
 import static spark.SparkBase.staticFileLocation;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import com.DiscogsApp.appl.SQLManager;
 import spark.TemplateEngine;
@@ -18,8 +17,6 @@ import spark.TemplateEngine;
  * @since October 21, 2017
  */
 public class WebServer {
-    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-
 
     private final TemplateEngine templateEngine;
 
@@ -47,15 +44,15 @@ public class WebServer {
     public void initialize() {
         staticFileLocation("/public");
 
-        // Shows Home page.
         get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
         get(Routes.SIGNIN_URL, new GetSigninRoute(templateEngine));
         post(Routes.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
         get(Routes.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
         post(Routes.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
         get(Routes.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
+        get(Routes.SEARCH_URL, new GetSearchRoute(templateEngine, sqlManager));
+        post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager));
 
-        LOG.config("WebServer is initialized.");
     }
 
 }

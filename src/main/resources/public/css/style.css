@@ -23,7 +23,7 @@ div.page h1 {
     font-family: 'Trebuchet MS', sans-serif;
 }
 
-div.page div.navigation {
+#navigation {
     background: #F25F38;
     padding: 10px;
     color: #FFFFFF;
@@ -32,9 +32,19 @@ div.page div.navigation {
     letter-spacing: 0.5px;
 }
 
-div.page div.navigation a {
+#navigation a {
     color: #555555;
     font-weight: bold;
+    text-decoration: none;
+    border-right: 2px solid #F25F38;
+}
+
+#navigation li {
+    display: inline;
+}
+
+#navigation a:hover {
+    background-color: #191919;
 }
 
 div.page h2 {
@@ -73,6 +83,10 @@ div.info {
     -webkit-border-radius: 2px;
     padding: 4px;
     font-size: 13px;
+}
+
+#signOut {
+    float: right;
 }
 
 a {

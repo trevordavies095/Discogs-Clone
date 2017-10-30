@@ -6,9 +6,9 @@ public interface FTLKeys {
 
     public static final String SIGNIN_VIEW = "signin.ftl";
 
-    public static final String SIGNOUT_VIEW = "signout.ftl";
-
     public static final String SIGNUP_VIEW = "signup.ftl";
+
+    public static final String SEARCH_VIEW = "search.ftl";
 
     public static final String TITLE = "title";
 
