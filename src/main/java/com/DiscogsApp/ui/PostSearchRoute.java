@@ -1,6 +1,7 @@
 package com.DiscogsApp.ui;
 
 import com.DiscogsApp.appl.SQLManager;
+import com.DiscogsApp.model.SearchObject;
 import spark.*;
 
 import java.util.ArrayList;
@@ -41,7 +42,8 @@ public class PostSearchRoute implements Route
         String artist =  request.queryParams("artist");
         String album = request.queryParams("artist");
         String label =  request.queryParams("label");
-        ArrayList<String> results;
+        ArrayList<SearchObject> results;
+        results = sqlManager.parseSearch(song, artist, album, label);
 
         /****** start handle() ******/
 

@@ -1,14 +1,10 @@
 package com.DiscogsApp.ui;
 
-import static spark.Spark.halt;
-import static spark.SparkBase.secure;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import com.DiscogsApp.appl.SQLManager;
-import com.DiscogsApp.ui.WebServer;
 
 
 import spark.*;
@@ -20,8 +16,7 @@ import spark.*;
  * @author Patrick Ehrenreich (pxe1833@rit.edu)
  * @since October 21st, 2017
  */
-public class GetHomeRoute implements Route
-{
+public class GetHomeRoute implements Route {
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
@@ -36,8 +31,7 @@ public class GetHomeRoute implements Route
      * @throws NullPointerException
      *    when the templateEngine parameter or sqlManager parameter is null
      */
-    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager)
-    {
+    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
         // Local constants
 
         // Local variables
@@ -53,8 +47,7 @@ public class GetHomeRoute implements Route
     * {@inheritDoc}
     */
     @Override
-    public String handle(Request request, Response response)
-    {
+    public String handle(Request request, Response response) {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();

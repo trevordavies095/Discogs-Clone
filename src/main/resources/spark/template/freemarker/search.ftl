@@ -23,7 +23,15 @@
         <br/>
         <input id="song" type="text" name="song" />
         <br/>
-        <button type="submit">Sign In</button>
+        <label for="album">Album Title:</label>
+        <br/>
+        <input id="album" type="text" name="album" />
+        <br/>
+        <label for="label">Record Label:</label>
+        <br/>
+        <input id="label" type="text" name="label" />
+        <br/>
+        <button type="submit">Search</button>
     </form>
 
 </div>
