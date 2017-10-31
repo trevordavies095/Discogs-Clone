@@ -16,11 +16,14 @@ import spark.TemplateEngine;
  * @author Patrick Ehrenreich (pxe1833@rit.edu)
  * @since October 21, 2017
  */
-public class WebServer {
-
+public class WebServer
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
+
+    // Class variables
+
 
     /**
      * The constructor for the Web Server.
@@ -29,19 +32,30 @@ public class WebServer {
      *
      * @param sqlManager: the SQLManager for the application instance
      */
-    public WebServer(final TemplateEngine templateEngine, final SQLManager sqlManager) {
+    public WebServer(final TemplateEngine templateEngine, final SQLManager sqlManager)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start WebServer() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-
         this.templateEngine = templateEngine;
-
         this.sqlManager = sqlManager;
     }
-
 
     /**
     * Initialize all of the HTTP routes that make up this web application.
     */
-    public void initialize() {
+    public void initialize()
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start initialize() ******/
+
         staticFileLocation("/public");
 
         get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
@@ -54,5 +68,4 @@ public class WebServer {
         post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager));
 
     }
-
 }

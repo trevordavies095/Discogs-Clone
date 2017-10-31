@@ -20,12 +20,14 @@ import spark.*;
  * @author Patrick Ehrenreich (pxe1833@rit.edu)
  * @since October 21st, 2017
  */
-public class GetHomeRoute implements Route {
-
-
+public class GetHomeRoute implements Route
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
+
+    // Class variables
+
 
     /**
      * The constructor for the GET '/' route handler.
@@ -34,11 +36,16 @@ public class GetHomeRoute implements Route {
      * @throws NullPointerException
      *    when the templateEngine parameter or sqlManager parameter is null
      */
-    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
+    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager)
+    {
+        // Local constants
+
+        // Local variables
+
+        /******start GetHomeRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-
         this.templateEngine = templateEngine;
-
         this.sqlManager = sqlManager;
     }
 
@@ -46,12 +53,18 @@ public class GetHomeRoute implements Route {
     * {@inheritDoc}
     */
     @Override
-    public String handle(Request request, Response response) {
+    public String handle(Request request, Response response)
+    {
+        // Local constants
         final Session httpSession = request.session();
-
         final Map<String, Object> vm = new HashMap<>();
 
-        if(httpSession.isNew()){
+        // Local variables
+
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             httpSession.attribute(FTLKeys.USER, "Guest");
             httpSession.attribute(FTLKeys.SIGNED_IN, false);
             httpSession.attribute(FTLKeys.ADMIN, false);

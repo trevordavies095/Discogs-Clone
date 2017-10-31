@@ -5,47 +5,89 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-public class SQLManager {
-
+public class SQLManager
+{
+    // Class constants
     static private final String dburl = "jdbc:postgresql://reddwarf.cs.rit.edu:5432/p32004e";
-
     static private final String dbusername = "p32004e";
-
     static private final String dbpassword = "ievip6se0pha1sahchuD";
 
+    // Class variables
     private Connection con;
 
-    public SQLManager(){
-        try{
+
+    public SQLManager()
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start SQLManager() ******/
+
+        try
+        {
             this.con = DriverManager.getConnection(dburl, dbusername, dbpassword);
-        }catch(SQLException ex){
-            ex.printStackTrace();
+
         }
 
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
-    public boolean validateUsername(String username){
-        try {
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+    public boolean validateUsername(String username)
+    {
+        // Local constants
+
+        // Local variables
+        Statement stmt;
+        String qry;
+        ResultSet rset;
+
+        /****** start validateUsername() ******/
+
+        try
+        {
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            String qry = "SELECT username FROM users WHERE users.username = '" + username + "'";
-            ResultSet rset = stmt.executeQuery(qry);
+            qry = "SELECT username FROM users WHERE users.username = '" + username + "'";
+            rset = stmt.executeQuery(qry);
+
             return rset.first();
-        }catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return false;
         }
     }
 
-    public boolean validatePassword(String username, String password){
-        try {
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+    public boolean validatePassword(String username, String password)
+    {
+        // Local constants
+
+        // Local variables
+        Statement stmt;
+        String qry;
+        ResultSet rset;
+
+        /****** start validatePassword() ******/
+
+        try
+        {
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            String qry = "SELECT password FROM users WHERE users.username = '" + username + "'";
-            ResultSet rset = stmt.executeQuery(qry);
+            qry = "SELECT password FROM users WHERE users.username = '" + username + "'";
+            rset = stmt.executeQuery(qry);
             rset.next();
+
             return rset.getString("password").equals(password);
-        }catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return false;
         }
@@ -65,25 +107,43 @@ public class SQLManager {
         }
     }
 
-    public int addUser(String username, String password, String firstname, String lastname){
-        try {
-            boolean nameTaken = validateUsername(username);
-            if(!(nameTaken)) {
-                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+    public int addUser(String username, String password, String firstname, String lastname)
+    {
+        // Local constants
+
+        // Local variables
+        boolean nameTaken;
+        boolean goodInsert;
+        Statement stmt;
+        String qry;
+
+        /****** start addUser() ******/
+
+        try
+        {
+            nameTaken = validateUsername(username);
+            if(!(nameTaken))
+            {
+                stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                         ResultSet.CONCUR_READ_ONLY);
-                String qry = "INSERT INTO users VALUES ('"+username+"', '"+password+"'," +
+                qry = "INSERT INTO users VALUES ('"+username+"', '"+password+"'," +
                         " '"+firstname+"', '"+lastname+"')";
                 stmt.executeUpdate(qry);
-                boolean goodInsert = validateUsername(username);
-                if(goodInsert) {
+                goodInsert = validateUsername(username);
+
+                if(goodInsert)
                     return 0;
-                }else{
+                else
                     return 2;
-                }
-            }else{
-                return 1;
             }
-        }catch(SQLException ex){
+
+            else
+                return 1;
+
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 2;
         }
