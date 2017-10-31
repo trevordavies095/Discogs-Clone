@@ -15,14 +15,52 @@ import com.DiscogsApp.ui.WebServer;
  *
  *
  */
-public final class Application {
+public final class Application
+{
+    // Class constants
+
+    // Class variables
     private static final Logger LOG = Logger.getLogger(Application.class.getName());
+    private final WebServer webServer;
+
+    private Application(final WebServer webServer)
+    {
+        // Constructor constants
+
+        // Constructor variables
+
+        /****** start Application() ******/
+        Objects.requireNonNull(webServer, "webServer must not be null");
+        this.webServer = webServer;
+    }
+
+    private void initialize()
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start initialize() ******/
+        LOG.config("Application is initializing.");
+        webServer.initialize();
+        LOG.config("Application initialization complete.");
+    }
 
     /**
-    * Entry point for the DisClones web application.
-    * @param args: Command line arguments; none expected.
-    */
-    public static void main(String[] args) {
+     * Entry point for the DisClones web application.
+     * @param args: Command line arguments; none expected.
+     */
+    public static void main(String[] args)
+    {
+        // Local constants
+
+        // Local variables
+        final TemplateEngine templateEngine = new FreeMarkerEngine();
+        final SQLManager sqlManager = new SQLManager();
+        final WebServer webServer = new WebServer(templateEngine, sqlManager);
+        final Application app = new Application(webServer);
+
+        /****** start main() ******/
 
         /*try {
             ClassLoader classLoader = Application.class.getClassLoader();
@@ -33,37 +71,6 @@ public final class Application {
             System.err.println("Could not initialize log manager because: " + e.getMessage());
         }*/
 
-
-        final TemplateEngine templateEngine = new FreeMarkerEngine();
-
-        final SQLManager sqlManager = new SQLManager();
-
-        final WebServer webServer = new WebServer(templateEngine, sqlManager);
-
-        final Application app = new Application(webServer);
-
-
         app.initialize();
     }
-
-    private final WebServer webServer;
-
-    private Application(final WebServer webServer) {
-
-          Objects.requireNonNull(webServer, "webServer must not be null");
-
-          this.webServer = webServer;
-    }
-
-    private void initialize() {
-        LOG.config("Application is initializing.");
-
-
-        webServer.initialize();
-
-
-
-        LOG.config("Application initialization complete.");
-    }
-
 }
