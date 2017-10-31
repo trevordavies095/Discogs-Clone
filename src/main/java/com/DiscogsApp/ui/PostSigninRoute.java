@@ -43,6 +43,7 @@ public class PostSigninRoute implements Route {
             if (goodPass) {
                 httpSession.attribute(FTLKeys.USER, username);
                 httpSession.attribute(FTLKeys.SIGNED_IN, true);
+                httpSession.attribute(FTLKeys.ADMIN, sqlManager.validateAdministrator(username));
                 response.redirect(Routes.HOME_URL);
                 return null;
             } else {

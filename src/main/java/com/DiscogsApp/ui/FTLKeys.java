@@ -26,4 +26,6 @@ public interface FTLKeys {
 
     public static final String WELCOME = "Welcome to Disc Clones, ";
 
+    public static final String ADMIN = "administrator";
+
 }

@@ -3,6 +3,7 @@ package com.DiscogsApp.ui;
 import com.DiscogsApp.appl.SQLManager;
 import spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class PostSearchRoute implements Route {
         String artist =  request.queryParams("artist");
         String album = request.queryParams("artist");
         String label =  request.queryParams("label");
+        ArrayList<String> results;
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.SEARCH_VIEW));
     }

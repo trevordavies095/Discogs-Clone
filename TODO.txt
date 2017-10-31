@@ -1,0 +1,8 @@
+//TODO
+Create admin.ftl file
+Create GetAdminRoute.java class
+Finish Search implementation
+Create artist page template
+***Get all functionality up in SQLManager, even if not necessary yet***
+***Get database populated with data***
+

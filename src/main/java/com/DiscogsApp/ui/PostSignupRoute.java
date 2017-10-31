@@ -27,6 +27,10 @@ public class PostSignupRoute implements Route {
                 attr + " to " + max + " characters.";
     }
 
+    private String invalidMessage(String attr){
+        return "Your entry for " + attr + " is invalid.";
+    }
+
     PostSignupRoute(TemplateEngine templateEngine, SQLManager sqlManager){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "sqlManager must not be null");
@@ -60,6 +64,14 @@ public class PostSignupRoute implements Route {
         }else if(password.length() > 63){
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, tooLongMessage("password", MAX_PASS));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }else if(password.equals("") || password.contains("\"")){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, invalidMessage("password"));
+            return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
+        }else if(username.equals("") || password.contains("\"")){
+            vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
+            vm.put(FTLKeys.MESSAGE, invalidMessage("username"));
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
         }
         int status = sqlManager.addUser(username, password, firstname, lastname);

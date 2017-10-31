@@ -14,9 +14,8 @@ import com.DiscogsApp.ui.WebServer;
 import spark.*;
 
 /**
- * The {@code GET /} route handler; aka the Home page.
- * This is the page where the user starts (no Game yet)
- * but is also the landing page after a game ends.
+ * The {@code GET /} route handler; aka the Home page. The landing
+ * page for the Disc Clones project.
  *
  * @author Patrick Ehrenreich (pxe1833@rit.edu)
  * @since October 21st, 2017
@@ -55,11 +54,20 @@ public class GetHomeRoute implements Route {
         if(httpSession.isNew()){
             httpSession.attribute(FTLKeys.USER, "Guest");
             httpSession.attribute(FTLKeys.SIGNED_IN, false);
+            httpSession.attribute(FTLKeys.ADMIN, false);
         }
-
+        if(httpSession.attribute(FTLKeys.USER) ==  null){
+            httpSession.attribute(FTLKeys.USER, "Guest");
+            httpSession.attribute(FTLKeys.ADMIN, false);
+        }
+        if(httpSession.attribute(FTLKeys.SIGNED_IN) ==  null){
+            httpSession.attribute(FTLKeys.SIGNED_IN, false);
+            httpSession.attribute(FTLKeys.ADMIN, false);
+        }
         vm.put(FTLKeys.TITLE, FTLKeys.WELCOME);
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
+        vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
     }
