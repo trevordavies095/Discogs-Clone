@@ -37,6 +37,11 @@ public class GetSearchRoute implements Route
         // Local variables
 
         /****** start handle() ******/
+        vm.put(FTLKeys.PRESEARCH, true);
+        vm.put(FTLKeys.POSTSEARCH, false);
+        vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
+        vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
+        vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.SEARCH_VIEW));
     }

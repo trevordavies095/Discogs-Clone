@@ -45,4 +45,9 @@ public class Album implements SearchObject {
     public int getRating() {
         return rating;
     }
+
+    public String toString(){
+        return "Album: " + title + ", Genre: " + genre + ", Style: " +
+                style + ", Barcode: " + barcode;
+    }
 }

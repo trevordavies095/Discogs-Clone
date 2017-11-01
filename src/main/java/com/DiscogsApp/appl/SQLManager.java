@@ -13,7 +13,7 @@ public class SQLManager
     static private final String dburl = "jdbc:postgresql://reddwarf.cs.rit.edu:5432/p32004e";
     static private final String dbusername = "p32004e";
     static private final String dbpassword = "ievip6se0pha1sahchuD";
-    static private final String SQL_DEFAULT = "'%%'";
+    static private final String SQL_DEFAULT = "%%";
 
     // Class variables
     private Connection con;
@@ -63,7 +63,7 @@ public class SQLManager
                     rtn.add(new Song(rset.getInt("sum_ratings"), rset.getInt("tot_ratings"),
                             rset.getInt("release_year"), rset.getBoolean("explicit"),
                             rset.getString("title"), rset.getString("length"),
-                            rset.getString("genre"), rset.getString("albumbc")));
+                            rset.getString("genre"), rset.getString("album_bc")));
                 } else if (qryType.getTable().equals(SearchEnum.ALBUM.getTable())) {
                     rtn.add(new Album(rset.getString("barcode"), rset.getString("style"),
                             rset.getString("genre"), rset.getString("title"),
@@ -208,7 +208,7 @@ public class SQLManager
     }*/
 
     public HashMap<SearchEnum, ArrayList<SearchObject>>
-    parseSearch(String song, String artist, String album, String label){
+    parseSearch(String song, String album, String artist, String label){
         try{
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -220,6 +220,8 @@ public class SQLManager
                 params.add(new SearchField(SearchEnum.SONG, song));
                 sections++;
                 qryType = SearchEnum.SONG;
+            }else{
+                params.add(null);
             }
             if(!(album.equals(" ") || album.equals(""))){
                 params.add(new SearchField(SearchEnum.ALBUM, album));
@@ -229,6 +231,8 @@ public class SQLManager
                 }
             }else if(qryType != null){
                 params.add(new SearchField(SearchEnum.ALBUM, SQL_DEFAULT));
+            }else{
+                params.add(null);
             }
             if(!(artist.equals(" ") || artist.equals(""))){
                 params.add(new SearchField(SearchEnum.ARTIST, artist));
@@ -238,6 +242,8 @@ public class SQLManager
                 }
             }else if(qryType != null){
                 params.add(new SearchField(SearchEnum.ARTIST, SQL_DEFAULT));
+            }else{
+                params.add(null);
             }
             if(!(label.equals(" ") || label.equals(""))){
                 params.add(new SearchField(SearchEnum.LABEL, label));
@@ -255,6 +261,7 @@ public class SQLManager
             if(qry == null){
                 return null;
             }
+            System.out.println(qry);
             ResultSet rset = stmt.executeQuery(qry);
             ArrayList<SearchObject> rtnarray = parseResults(rset, qryType);
             if(rtnarray == null){

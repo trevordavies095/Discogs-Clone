@@ -15,5 +15,8 @@ public interface FTLKeys
     public static final String MESSAGE = "message";
     public static final String WELCOME = "Welcome to Disc Clones, ";
     public static final String ADMIN = "administrator";
-
+    public static final String SEARCH_TYPE = "searchType";
+    public static final String SEARCH_RESULTS = "searchResults";
+    public static final String PRESEARCH = "presearch";
+    public static final String POSTSEARCH = "postsearch";
 }

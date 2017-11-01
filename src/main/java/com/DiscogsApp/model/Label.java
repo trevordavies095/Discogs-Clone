@@ -31,4 +31,9 @@ public class Label implements SearchObject {
     public double getNetWorth() {
         return netWorth;
     }
+
+    public String toString(){
+        return "Record Label: " + name + ", Year Formed: " +
+                formed + ", Net Worth: " + netWorth;
+    }
 }

@@ -5,7 +5,7 @@ public enum SearchEnum {
     SONG("song", "song.title", "album_bc", "song_id"),
     ALBUM("album", "album.title", "artist_id", "barcode"),
     ARTIST("artist", "artist.name", "label_name", "artist_id"),
-    LABEL("record_label", "artist.name", "none", "name"),
+    LABEL("record_label", "record_label.name", "none", "name"),
     GENERIC("null", "null", "null", "null");
 
     private final String table;

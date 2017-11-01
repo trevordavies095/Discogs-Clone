@@ -45,4 +45,9 @@ public class Artist implements SearchObject {
     public int getDebut_year() {
         return debut_year;
     }
+
+    public String toString(){
+        return "Group Name: " + name + ", Artist Name: " + real_name +
+                ", Debut Year:" + debut_year + ", Label: " + label_name;
+    }
 }

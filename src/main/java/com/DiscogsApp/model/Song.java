@@ -18,6 +18,14 @@ public class Song implements SearchObject {
 
     private final String album_bc;
 
+    private String getExplicit(){
+        if(explicit){
+            return "Yes";
+        }else{
+            return "No";
+        }
+    }
+
     public Song(int sumrating, int numrating, int release_year, boolean explicit,
                 String title, String length, String genre, String album_bc){
         this.album_bc = album_bc;
@@ -59,5 +67,11 @@ public class Song implements SearchObject {
 
     public String getAlbum_bc() {
         return album_bc;
+    }
+
+    public String toString(){
+        return "Song: " + title + ", Length: " + length + ", Genre: " +
+                genre + ", Release Year: " + release_year + ", Rating: " +
+                rating + ", Explicit: " + getExplicit();
     }
 }
