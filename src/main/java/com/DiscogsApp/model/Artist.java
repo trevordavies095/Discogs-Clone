@@ -18,7 +18,11 @@ public class Artist implements SearchObject {
         this.artist_id = artist_id;
         this.debut_year = debut_year;
         this.name = name;
-        this.real_name = real_name;
+        if(real_name != null) {
+            this.real_name = real_name;
+        } else {
+            this.real_name = "unknown";
+        }
         this.label_name = label_name;
     }
 

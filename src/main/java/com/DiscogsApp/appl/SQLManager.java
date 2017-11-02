@@ -366,7 +366,6 @@ public class SQLManager
             if(qry == null)
                 return null;
 
-            System.out.println(qry);
             rset = stmt.executeQuery(qry);
             rtnarray = parseResults(rset, qryType);
             if(rtnarray == null)

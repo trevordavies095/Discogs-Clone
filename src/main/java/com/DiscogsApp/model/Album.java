@@ -16,10 +16,22 @@ public class Album implements SearchObject {
 
     public Album(String barcode, String style, String genre, String title, int sumrating, int numrating){
         this.barcode = barcode;
-        this.genre = genre;
+        if(genre != null) {
+            this.genre = genre;
+        } else {
+            this.genre = "unknown";
+        }
         this.title = title;
-        this.style = style;
-        this.rating = sumrating/numrating;
+        if(style != null) {
+            this.style = style;
+        } else {
+            this.style = "unknown";
+        }
+        if(sumrating != 0 && numrating != 0) {
+            this.rating = sumrating / numrating;
+        } else {
+            this.rating = 0;
+        }
     }
 
     public static SearchEnum getType() {
