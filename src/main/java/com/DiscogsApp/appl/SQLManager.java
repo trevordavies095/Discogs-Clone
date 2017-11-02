@@ -16,7 +16,6 @@ public class SQLManager
     // Class variables
     private Connection con;
 
-    // Private Methods
     private String buildQuery(ArrayList<SearchField> params, SearchEnum qryType)
     {
         // Local constants
