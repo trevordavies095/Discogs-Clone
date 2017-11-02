@@ -16,6 +16,25 @@ public class SQLManager
     // Class variables
     private Connection con;
 
+    public SQLManager()
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start SQLManager() ******/
+
+        try
+        {
+            this.con = DriverManager.getConnection(dburl, dbusername, dbpassword);
+        }
+
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     private String buildQuery(ArrayList<SearchField> params, SearchEnum qryType)
     {
         // Local constants
@@ -120,24 +139,6 @@ public class SQLManager
         }
 
         return rtn;
-    }
-
-    public SQLManager() {
-        // Local constants
-
-        // Local variables
-
-        /****** start SQLManager() ******/
-
-        try
-        {
-            this.con = DriverManager.getConnection(dburl, dbusername, dbpassword);
-        }
-
-        catch(SQLException ex)
-        {
-            ex.printStackTrace();
-        }
     }
 
     public boolean validateUsername(String username)
