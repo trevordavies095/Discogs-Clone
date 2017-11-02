@@ -29,12 +29,20 @@ public class Song implements SearchObject {
     public Song(int sumrating, int numrating, int release_year, boolean explicit,
                 String title, String length, String genre, String album_bc){
         this.album_bc = album_bc;
-        this.genre = genre;
+        if(genre != null) {
+            this.genre = genre;
+        } else {
+            this.genre = "unknown";
+        }
         this.title = title;
         this.length = length;
         this.explicit = explicit;
         this.release_year = release_year;
-        this.rating = sumrating/numrating;
+        if(sumrating != 0 && numrating != 0) {
+            this.rating = sumrating / numrating;
+        } else {
+            this.rating = 0;
+        }
     }
 
     public static SearchEnum getType() {
