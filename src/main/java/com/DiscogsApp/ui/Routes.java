@@ -7,4 +7,5 @@ public interface Routes
     public static final String SIGNUP_URL = "/signup";
     public static final String SIGNOUT_URL = "/signout";
     public static final String SEARCH_URL = "/search";
+    public static final String ADMIN_URL = "/admin";
 }

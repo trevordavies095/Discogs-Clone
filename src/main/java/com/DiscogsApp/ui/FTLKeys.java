@@ -6,6 +6,7 @@ public interface FTLKeys
     public static final String SIGNIN_VIEW = "signin.ftl";
     public static final String SIGNUP_VIEW = "signup.ftl";
     public static final String SEARCH_VIEW = "search.ftl";
+    public static final String ADMIN_VIEW = "admin.ftl";
     public static final String TITLE = "title";
     public static final String USER = "username";
     public static final String SIGNED_IN = "signedIn";
@@ -14,7 +15,7 @@ public interface FTLKeys
     public static final String MSG_TYPE = "messageType";
     public static final String MESSAGE = "message";
     public static final String WELCOME = "Welcome to Disc Clones, ";
-    public static final String ADMIN = "administrator";
+    public static final String ADMIN = "admin";
     public static final String SEARCH_TYPE = "searchType";
     public static final String SEARCH_RESULTS = "searchResults";
     public static final String PRESEARCH = "presearch";

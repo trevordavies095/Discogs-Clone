@@ -9,9 +9,11 @@
 
     <h1>Disc Clones Account Creation</h1>
 
-    <div class="navigation">
-        <a href="/">home</a>
-    </div>
+    <nav>
+        <ul id="navigation">
+            <li><a href="/">home</a></li>
+        </ul>
+    </nav>
 
     <div>
 

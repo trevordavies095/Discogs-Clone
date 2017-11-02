@@ -9,9 +9,11 @@
 
     <h1>Disc Clones Sign-In</h1>
 
-    <div class="navigation">
-        <a href="/">home</a>
-    </div>
+    <nav>
+        <ul id="navigation">
+            <li><a href="/">home</a></li>
+        </ul>
+    </nav>
 
     <div>
 
@@ -32,7 +34,7 @@
             <button type="submit">Sign In</button>
         </form>
 
-        <p>Need an account? Sign up <a href="./signup">here.</a></p>
+        <p>Need an account? Sign up <a href="/signup">here.</a></p>
     </div>
 
 </div>

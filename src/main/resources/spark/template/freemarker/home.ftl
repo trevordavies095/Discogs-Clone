@@ -14,15 +14,17 @@
     <nav>
     <#if signedIn>
         <ul id = "navigation">
+            <li><a href="/">Home</a></li>
             <li><a href="/search">Search</a></li>
             <li><a href="/account">My Account</a></li>
             <li><a id="signOut" href="/signout">Sign Out[${username}]</a></li>
-            <#if administrator>
+            <#if admin>
                 <li><a href="/admin">Manage Database</a></li>
             </#if>
         </ul>
     <#else>
         <ul id = "navigation">
+            <li><a href="/">Home</a></li>
             <li><a href="/signin">Sign In</a></li>
             <li><a href="/search">Search</a></li>
         </ul>
