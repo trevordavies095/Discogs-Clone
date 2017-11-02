@@ -94,7 +94,7 @@ public class SQLManager
         // Local constants
 
         // Local variables
-        ArrayList<SearchObject> rtn = new ArrayList<>();
+        ArrayList<SearchObject> rtn = new ArrayList<>();        // Return ArrayList<>
 
         /****** start parseResults() ******/
 
