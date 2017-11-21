@@ -14,7 +14,7 @@ public interface FTLKeys
     public static final String MSG_TYPE_ERR = "error";
     public static final String MSG_TYPE = "messageType";
     public static final String MESSAGE = "message";
-    public static final String WELCOME = "Welcome to Disc Clones, ";
+    public static final String WELCOME = "Welcome to DisClones, ";
     public static final String ADMIN = "admin";
     public static final String SEARCH_TYPE = "searchType";
     public static final String SEARCH_RESULTS = "searchResults";

@@ -4,7 +4,6 @@ import com.DiscogsApp.model.*;
 import java.sql.*;
 import java.util.*;
 
-
 public class SQLManager
 {
     // Class constants
@@ -47,6 +46,7 @@ public class SQLManager
 
         /****** start buildQuery() ******/
 
+        // Cycling the search query from the params ArrayList<>
         if(qryType.getTable().equals(SearchEnum.SONG.getTable()))
         {
             return "SELECT * FROM " + q1.getTable() + " WHERE " + q1.getFkey() +

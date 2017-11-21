@@ -59,13 +59,18 @@ public class WebServer
         staticFileLocation("/public");
 
         get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNIN_URL, new GetSigninRoute(templateEngine));
         post(Routes.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
         post(Routes.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
+
         get(Routes.SEARCH_URL, new GetSearchRoute(templateEngine, sqlManager));
         post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager));
+
         get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager));
 
     }
