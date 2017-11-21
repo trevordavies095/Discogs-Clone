@@ -6,7 +6,7 @@ body {
 }
 
 div.page {
-    background: #DCEED8;
+    background: #FFFFFF;
     border: 1px solid #FFFFFF;
     width: 710px;
     margin: 30px auto;
@@ -25,7 +25,7 @@ div.page h1 {
 }
 
 #navigation {
-    background: #DCEED8;
+    background: #FFFFFF;
     padding: 10px;
     color: #FFFFFF;
     font-size: 12px;
@@ -37,7 +37,7 @@ div.page h1 {
     color: #191919;
     font-weight: bold;
     text-decoration: none;
-    border-right: 2px solid #DCEED8;
+    border-right: 2px solid #FFFFFF;
 }
 
 #navigation li {
@@ -48,15 +48,9 @@ div.page h1 {
     background-color: #CED0CE;
 }
 
-div.page h2 {
+div.page h2, h3, h4 {
     margin: 0 0 15px 0;
-    color: #105743;
-    text-shadow: 0 1px 2px #ccc;
-}
-
-div.page h3 {
-    margin: 0 0 15px 0;
-    color: #105743;
+    color: #E59322;
     text-shadow: 0 1px 2px #ccc;
 }
 
