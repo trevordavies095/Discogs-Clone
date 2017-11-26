@@ -12,6 +12,7 @@ public interface FTLKeys
     public static final String SIGNED_IN = "signedIn";
     public static final String PASS = "password";
     public static final String MSG_TYPE_ERR = "error";
+    public static final String MSG_TYPE_INFO = "info";
     public static final String MSG_TYPE = "messageType";
     public static final String MESSAGE = "message";
     public static final String WELCOME = "Welcome to Disc Clones, ";
@@ -20,4 +21,6 @@ public interface FTLKeys
     public static final String SEARCH_RESULTS = "searchResults";
     public static final String PRESEARCH = "presearch";
     public static final String POSTSEARCH = "postsearch";
+    public static final String TOOLS = "tools";
+    public static final String SPECIFIC = "specific";
 }

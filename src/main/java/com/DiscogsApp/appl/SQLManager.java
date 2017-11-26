@@ -2,6 +2,7 @@ package com.DiscogsApp.appl;
 
 import com.DiscogsApp.model.*;
 import java.sql.*;
+import java.time.Period;
 import java.util.*;
 
 
@@ -54,10 +55,10 @@ public class SQLManager
                     " WHERE " + q2.getFkey() + " IN (SELECT " + q3.getPkey() +
                     " FROM " + q3.getTable() + " WHERE " + q3.getFkey() +
                     " IN (SELECT " + q4.getPkey() + " FROM " + q4.getTable() +
-                    " WHERE " + q4.getfrName() + " LIKE '" + q4.getValue() +
-                    "') AND " + q3.getfrName() + " LIKE '" + q3.getValue() +
-                    "') AND " + q2.getfrName() + " LIKE '" + q2.getValue() +
-                    "') AND " + q1.getfrName() + " LIKE '" + q1.getValue() + "'";
+                    " WHERE " + q4.getfrName() + " LIKE '%" + q4.getValue() +
+                    "%') AND " + q3.getfrName() + " LIKE '%" + q3.getValue() +
+                    "%') AND " + q2.getfrName() + " LIKE '%" + q2.getValue() +
+                    "%') AND " + q1.getfrName() + " LIKE '%" + q1.getValue() + "%'";
         }
 
         else if(qryType.getTable().equals(SearchEnum.ALBUM.getTable()))
@@ -66,23 +67,23 @@ public class SQLManager
                     " IN (SELECT " + q3.getPkey() + " FROM " + q3.getTable() +
                     " WHERE " + q3.getFkey() + " IN (SELECT " + q4.getPkey() +
                     " FROM " + q4.getTable() + " WHERE " + q4.getfrName() +
-                    " LIKE '" + q4.getValue() + "') AND " + q3.getfrName() +
-                    " LIKE '" + q3.getValue() + "') AND " + q2.getfrName() +
-                    " LIKE '" + q2.getValue() + "'";
+                    " LIKE '%" + q4.getValue() + "%') AND " + q3.getfrName() +
+                    " LIKE '%" + q3.getValue() + "%') AND " + q2.getfrName() +
+                    " LIKE '%" + q2.getValue() + "%'";
         }
 
         else if(qryType.getTable().equals(SearchEnum.ARTIST.getTable()))
         {
             return "SELECT * FROM " + q3.getTable() + " WHERE " + q3.getFkey() +
                     " IN (SELECT " + q4.getPkey() + " FROM " + q4.getTable() +
-                    " WHERE " + q4.getfrName() + " LIKE '" + q4.getValue() + "') AND " +
-                    q3.getfrName() + " LIKE '" + q3.getValue() + "'";
+                    " WHERE " + q4.getfrName() + " LIKE '%" + q4.getValue() + "%') AND " +
+                    q3.getfrName() + " LIKE '%" + q3.getValue() + "%'";
         }
 
         else if(qryType.getTable().equals(SearchEnum.LABEL.getTable()))
         {
             return "SELECT * FROM " + q4.getTable() + " WHERE " + q4.getfrName() +
-                    " LIKE '" + q4.getValue() + "'";
+                    " LIKE '%" + q4.getValue() + "%'";
         }
 
         else
@@ -381,6 +382,197 @@ public class SQLManager
         {
             ex.printStackTrace();
             return null;
+        }
+    }
+
+    public int addSong(String title, String length, String genre, boolean explicit,
+                       String release, String albumBC){
+        try {
+            PreparedStatement mkID = con.prepareStatement("SELECT COUNT (*) FROM song");
+            ResultSet rset = mkID.executeQuery();
+            rset.next();
+            int songID = 1102 + rset.getInt("count");
+            PreparedStatement pstate = con.prepareStatement("INSERT INTO song VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            pstate.setString(1, title);
+            pstate.setString(2, length);
+            pstate.setInt(3, 0);
+            pstate.setInt(4,0);
+            pstate.setString(5, genre);
+            pstate.setBoolean(6, explicit);
+            pstate.setInt(7, Integer.parseInt(release));
+            pstate.setString(8, albumBC);
+            pstate.setString(9, Integer.toString(songID));
+            return pstate.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int addArtist(String title, String realName, String labelName,
+                         String debutYear){
+        try {
+            PreparedStatement mkID = con.prepareStatement("SELECT COUNT (*) FROM artist");
+            ResultSet rset = mkID.executeQuery();
+            rset.next();
+            int artistID = 1 + rset.getInt("count");
+            PreparedStatement pstate = con.prepareStatement("INSERT INTO artist VALUES(?, ?, ?, ?, ?)");
+            pstate.setString(1, title);
+            pstate.setInt(2, artistID);
+            pstate.setString(3, realName);
+            pstate.setInt(4, Integer.parseInt(debutYear));
+            pstate.setString(5, labelName);
+            return pstate.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int addAlbum(String barcode, String style, String genre, String title,
+                        String artistID){
+        try {
+            PreparedStatement pstate = con.prepareStatement("INSERT INTO album VALUES(?, ?, ?, ?, ?, ?, ?)");
+            pstate.setString(1, barcode);
+            pstate.setString(2, style);
+            pstate.setString(3, genre);
+            pstate.setInt(4,0);
+            pstate.setInt(5,0);
+            pstate.setString(6, title);
+            pstate.setInt(7, Integer.parseInt(artistID));
+            return pstate.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int addLabel(String name, String formYear, String netWorth){
+        try {
+            PreparedStatement pstate = con.prepareStatement("INSERT INTO record_label VALUES(?, ?, ?)");
+            pstate.setString(1, name);
+            pstate.setInt(2, Integer.parseInt(formYear));
+            pstate.setDouble(3, Double.parseDouble(netWorth));
+            return pstate.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeSong(String title, String id){
+        try {
+            PreparedStatement pstate = con.prepareStatement("DELETE FROM song WHERE song.title LIKE " +
+                    "? AND song.song_id LIKE ? ");
+            if(title.equals("")){
+                title = SQL_DEFAULT;
+            }
+            if(id.equals("")){
+                id = SQL_DEFAULT;
+            }
+            pstate.setString(1, title);
+            pstate.setString(2, id);
+            return pstate.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeAlbum(String title, String barcode){
+        try {
+            PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
+                    "song.album_bc LIKE ?");
+            if(barcode.equals("")){
+                PreparedStatement getBC = con.prepareStatement("SELECT barcode FROM album WHERE " +
+                        "title LIKE ?");
+                if(title.equals("")){
+                    return 2;
+                }
+                getBC.setString(1, title);
+                ResultSet bcSet = getBC.executeQuery();
+                bcSet.next();
+                barcode = bcSet.getString("barcode");
+                if(barcode == null){
+                    return 2;
+                }
+            }
+            rmSongs.setString(1, barcode);
+            rmSongs.executeUpdate();
+            PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
+                    "album.barcode LIKE ? AND album.title LIKE ?");
+            rmAlbum.setString(1, barcode);
+            rmAlbum.setString(2, title);
+            return rmAlbum.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeArtist(String name, String artistID){
+        try {
+            PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
+                    "song.album_bc LIKE ?");
+            PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
+                    "barcode LIKE ?");
+            PreparedStatement rmArtist = con.prepareStatement("DELETE FROM artist WHERE " +
+                    "name LIKE ? AND artist_id LIKE ?");
+            PreparedStatement getAlbums = con.prepareStatement("SELECT album.barcode FROM " +
+                    "album WHERE album.artist_id LIKE ?");
+            if(artistID.equals("")){
+                PreparedStatement getID = con.prepareStatement("SELECT artist_id FROM artist " +
+                        "WHERE name LIKE ?");
+                if(name.equals("")){
+                    return 2;
+                }
+                getID.setString(1, name);
+                ResultSet idSet = getID.executeQuery();
+                idSet.next();
+                artistID = idSet.getString("artist_id");
+                if(artistID == null){
+                    return 2;
+                }
+            }
+            getAlbums.setString(1, artistID);
+            ResultSet albBC = getAlbums.executeQuery();
+            while(albBC.next()){
+                rmSongs.setString(1, albBC.getString("barcode"));
+                rmSongs.executeUpdate();
+                rmAlbum.setString(1, albBC.getString("barcode"));
+                rmAlbum.executeUpdate();
+            }
+            rmArtist.setString(1, name);
+            rmArtist.setString(2, artistID);
+            return rmArtist.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeLabel(String name){
+        try{
+            PreparedStatement getArtists = con.prepareStatement("SELECT FROM artist WHERE " +
+                    "label_name LIKE ?");
+            PreparedStatement setUnsigned = con.prepareStatement("UPDATE artist SET label_name =" +
+                    "'UNSIGNED' WHERE label_name LIKE ?");
+            PreparedStatement rmLabel = con.prepareStatement("DELETE FROM record_label WHERE " +
+                    "name LIKE ?");
+            if(name.equals("")){
+                return 2;
+            }
+            getArtists.setString(1, name);
+            ResultSet artists = getArtists.executeQuery();
+            while(artists.next()){
+                setUnsigned.setString(1, name);
+                setUnsigned.executeUpdate();
+            }
+            rmLabel.setString(1, name);
+            return rmLabel.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
         }
     }
 }

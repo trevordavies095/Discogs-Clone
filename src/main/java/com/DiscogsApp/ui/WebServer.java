@@ -67,6 +67,6 @@ public class WebServer
         get(Routes.SEARCH_URL, new GetSearchRoute(templateEngine, sqlManager));
         post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager));
         get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager));
-
+        post(Routes.ADMIN_URL, new PostAdminRoute(templateEngine, sqlManager));
     }
 }

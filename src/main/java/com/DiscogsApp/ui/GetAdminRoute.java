@@ -12,7 +12,7 @@ public class GetAdminRoute implements Route {
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
-    private final String NOT_ADMIN_MSG = "Warning: User Not Classified as Administrator. Page Access Denied.";
+    private final String NOT_ADMIN_MSG = "Warning: User Not Classified as Administrator.\n Page Access Denied.";
     private final String ADMIN_MSG = "Welcome, Administrator: ";
 
     // Class variables
@@ -39,8 +39,10 @@ public class GetAdminRoute implements Route {
             return templateEngine.render(new ModelAndView(vm, FTLKeys.ADMIN_VIEW));
         }
 
-        vm.put(FTLKeys.ADMIN, true);
+        vm.put(FTLKeys.TOOLS, true);
+        vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
         vm.put(FTLKeys.MESSAGE, ADMIN_MSG + httpSession.attribute(FTLKeys.USER));
+        vm.put(FTLKeys.SPECIFIC, false);
         return  templateEngine.render(new ModelAndView(vm, FTLKeys.ADMIN_VIEW));
     }
 }

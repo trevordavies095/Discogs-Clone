@@ -101,7 +101,8 @@ public class PostSignupRoute implements Route {
             vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
             vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
 
-            return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
+            response.redirect(Routes.HOME_URL);
+            return null;
         }else if(status == 1) {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, NAME_TAKEN);
