@@ -7,6 +7,8 @@ public interface FTLKeys
     public static final String SIGNUP_VIEW = "signup.ftl";
     public static final String SEARCH_VIEW = "search.ftl";
     public static final String ADMIN_VIEW = "admin.ftl";
+    public static final String RESULT_VIEW = "result.ftl";
+    public static final String ACCOUNT_VIEW = "account.ftl";
     public static final String TITLE = "title";
     public static final String USER = "username";
     public static final String SIGNED_IN = "signedIn";

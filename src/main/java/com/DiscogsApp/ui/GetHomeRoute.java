@@ -7,6 +7,7 @@ import java.util.Objects;
 import com.DiscogsApp.appl.SQLManager;
 
 
+import com.DiscogsApp.appl.SearchCache;
 import spark.*;
 
 /**
@@ -20,6 +21,7 @@ public class GetHomeRoute implements Route {
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
+    private final SearchCache searchCache;
 
     // Class variables
 
@@ -31,7 +33,7 @@ public class GetHomeRoute implements Route {
      * @throws NullPointerException
      *    when the templateEngine parameter or sqlManager parameter is null
      */
-    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
+    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager, final SearchCache searchCache) {
         // Local constants
 
         // Local variables
@@ -41,6 +43,7 @@ public class GetHomeRoute implements Route {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
+        this.searchCache = searchCache;
     }
 
     /**

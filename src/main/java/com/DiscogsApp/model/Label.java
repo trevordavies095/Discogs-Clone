@@ -33,7 +33,19 @@ public class Label implements SearchObject {
     }
 
     public String toString(){
-        return "Record Label: " + name + ", Year Formed: " +
-                formed + ", Net Worth: " + netWorth;
+        return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Label label = (Label) o;
+
+        if (formed != label.formed) return false;
+        if (Double.compare(label.netWorth, netWorth) != 0) return false;
+        return name != null ? name.equals(label.name) : label.name == null;
+    }
+
 }

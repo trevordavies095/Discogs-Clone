@@ -1,6 +1,7 @@
 package com.DiscogsApp.ui;
 
 import com.DiscogsApp.appl.SQLManager;
+import com.DiscogsApp.appl.SearchCache;
 import spark.*;
 import java.sql.*;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class PostSigninRoute implements Route
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
+    private final SearchCache searchCache;
     private static final String WRONG_PASSWORD = "Incorrect password for username: ";
 
     // Class variables
@@ -28,7 +30,7 @@ public class PostSigninRoute implements Route
         return "Username " + username + " does not exist.";
     }
 
-    PostSigninRoute(TemplateEngine templateEngine, SQLManager sqlManager)
+    PostSigninRoute(final TemplateEngine templateEngine, final SQLManager sqlManager, final SearchCache searchCache)
     {
         // Local constants
 
@@ -40,6 +42,7 @@ public class PostSigninRoute implements Route
         Objects.requireNonNull(sqlManager, "sqlManager must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
+        this.searchCache = searchCache;
     }
 
     public String handle(Request request, Response response)
@@ -64,6 +67,7 @@ public class PostSigninRoute implements Route
             {
                 httpSession.attribute(FTLKeys.USER, username);
                 httpSession.attribute(FTLKeys.SIGNED_IN, true);
+                searchCache.addUser(username);
                 httpSession.attribute(FTLKeys.ADMIN, sqlManager.validateAdministrator(username));
                 response.redirect(Routes.HOME_URL);
                 return null;

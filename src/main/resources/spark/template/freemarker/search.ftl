@@ -57,12 +57,40 @@
     </#if>
 
     <#if postsearch>
-    <h2>Search Results</h2>
+    <h2>Search Results by Category</h2>
+    <#if songs??>
+        <h3>Songs:</h3>
         <ul>
-            <#list searchResults as rslt>
-                <li>${rslt}</li>
+            <#list songs as song>
+                <li><a href="/result?song=${song}">${song}</a></li>
             </#list>
         </ul>
+    </#if>
+    <#if albums??>
+        <h3>Albums:</h3>
+        <ul>
+            <#list albums as album>
+                <li><a href="/result?album=${album}">${album}</a></li>
+            </#list>
+        </ul>
+    </#if>
+    <#if artists??>
+        <h3>Artists:</h3>
+        <ul>
+            <#list artists as artist>
+                <li><a href="/result?artist=${artist}">${artist}</a></li>
+            </#list>
+        </ul>
+    </#if>
+    <#if labels??>
+        <h3>Labels:</h3>
+
+        <ul>
+            <#list labels as label>
+                <li><a href="/result?label=${label}">${label}</a></li>
+            </#list>
+        </ul>
+    </#if>
     </#if>
 
 </div>

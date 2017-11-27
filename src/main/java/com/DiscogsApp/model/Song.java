@@ -8,15 +8,17 @@ public class Song implements SearchObject {
 
     private final String length;
 
-    private final int rating;
+    private final double rating;
 
     private final String genre;
 
     private final boolean explicit;
 
-    private final int release_year;
+    private final int releaseYear;
 
-    private final String album_bc;
+    private final Album album;
+
+    private final int ID;
 
     private String getExplicit(){
         if(explicit){
@@ -26,9 +28,8 @@ public class Song implements SearchObject {
         }
     }
 
-    public Song(int sumrating, int numrating, int release_year, boolean explicit,
-                String title, String length, String genre, String album_bc){
-        this.album_bc = album_bc;
+    public Song(int sumrating, int numrating, int releaseYear, boolean explicit,
+                String title, String length, String genre, Album album, int ID){
         if(genre != null) {
             this.genre = genre;
         } else {
@@ -37,9 +38,11 @@ public class Song implements SearchObject {
         this.title = title;
         this.length = length;
         this.explicit = explicit;
-        this.release_year = release_year;
+        this.releaseYear = releaseYear;
+        this.album = album;
+        this.ID = ID;
         if(sumrating != 0 && numrating != 0) {
-            this.rating = sumrating / numrating;
+            this.rating = (double)sumrating / (double)numrating;
         } else {
             this.rating = 0;
         }
@@ -57,7 +60,7 @@ public class Song implements SearchObject {
         return length;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -65,21 +68,35 @@ public class Song implements SearchObject {
         return genre;
     }
 
-    public boolean isExplicit() {
-        return explicit;
+    public String isExplicit() {
+        return getExplicit();
     }
 
-    public int getRelease_year() {
-        return release_year;
+    public int getReleaseYear() {
+        return releaseYear;
     }
 
-    public String getAlbum_bc() {
-        return album_bc;
-    }
+    public Album getAlbum(){ return album; }
+
+    public int getID(){ return ID; }
 
     public String toString(){
-        return "Song: " + title + ", Length: " + length + ", Genre: " +
-                genre + ", Release Year: " + release_year + ", Rating: " +
-                rating + ", Explicit: " + getExplicit();
+        return title + " by " + album.getArtist().getName();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Song song = (Song) o;
+
+        if (rating != song.rating) return false;
+        if (explicit != song.explicit) return false;
+        if (releaseYear != song.releaseYear) return false;
+        if (!title.equals(song.title)) return false;
+        if (!length.equals(song.length)) return false;
+        return genre.equals(song.genre);
+    }
+
 }

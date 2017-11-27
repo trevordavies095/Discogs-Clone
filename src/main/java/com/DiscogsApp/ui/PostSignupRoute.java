@@ -1,6 +1,7 @@
 package com.DiscogsApp.ui;
 
 import com.DiscogsApp.appl.SQLManager;
+import com.DiscogsApp.appl.SearchCache;
 import org.apache.commons.lang3.ObjectUtils;
 import spark.*;
 
@@ -16,6 +17,7 @@ public class PostSignupRoute implements Route {
     private final int MAX_PASS = 63;
     private final SQLManager sqlManager;
     private final TemplateEngine templateEngine;
+    private final SearchCache searchCache;
 
     // Class variables
 
@@ -24,7 +26,8 @@ public class PostSignupRoute implements Route {
     }
 
 
-    PostSignupRoute(TemplateEngine templateEngine, SQLManager sqlManager) {
+    PostSignupRoute(final TemplateEngine templateEngine, final SQLManager sqlManager,
+                    final SearchCache searchCache) {
         // Local constants
 
         // Local variables
@@ -34,6 +37,7 @@ public class PostSignupRoute implements Route {
         Objects.requireNonNull(sqlManager, "sqlManager must not be null");
         this.sqlManager = sqlManager;
         this.templateEngine = templateEngine;
+        this.searchCache = searchCache;
     }
 
     private String tooLongMessage(String attr, int max) {
@@ -93,9 +97,10 @@ public class PostSignupRoute implements Route {
 
         status = sqlManager.addUser(username, password, firstname, lastname);
 
-        if(status == 0) {
+        if(status == 1) {
             httpSession.attribute(FTLKeys.USER, username);
             httpSession.attribute(FTLKeys.SIGNED_IN, true);
+            searchCache.addUser(username);
 
             vm.put(FTLKeys.TITLE, FTLKeys.WELCOME);
             vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
@@ -103,7 +108,7 @@ public class PostSignupRoute implements Route {
 
             response.redirect(Routes.HOME_URL);
             return null;
-        }else if(status == 1) {
+        }else if(status == 0) {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, NAME_TAKEN);
         }else if(status == 2) {
