@@ -5,9 +5,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div class = "page">
+<div class="page">
 
-    <h1>My Account: ${username}</h1>
+    <h1>Event Information for "${eventName}"</h1>
 
     <nav>
     <#if signedIn>
@@ -29,29 +29,9 @@
     </#if>
     </nav>
 
-    <#if revalidated>
-        <a href="/updateAccount">Update Account Information</a>
-        <p>First Name: ${firstname}</p>
-        <p>Last Name: ${lastname}</p>
-        <p>Username: ${username}</p>
-        <p>Number of Songs Rated: ${songsRated}</p>
-        <p>Your Top Rated Songs:</p>
-        <ul>
-            <#list songs as song>
-                <li>${song}</li>
-            </#list>
-        </ul>
-    <#elseif !revalidated && !attempted>
-        <form action="/account" method="POST">
-            <label for="password">Password:</label>
-            <br/>
-            <input id="password" type="password" name="password" />
-            <br/>
-            <button type="submit">Sign In</button>
-        </form>
-    <#else>
-        <h2>Incorrect credentials; account access denied.</h2>
-    </#if>
+    <p>Event Location: ${eventLoc}</p>
+    <p>Start Time: ${eventTime}</p>
+    <p>Artist Name: <a href="/result?artist=${eventArtist}">${eventArtist}</a></p>
 
 </div>
 </body>

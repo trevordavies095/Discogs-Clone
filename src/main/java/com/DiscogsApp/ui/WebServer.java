@@ -70,11 +70,14 @@ public class WebServer
         get(Routes.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
         get(Routes.SEARCH_URL, new GetSearchRoute(templateEngine, sqlManager));
         post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager, searchCache));
-        get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager));
+        get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager, searchCache));
         post(Routes.ADMIN_URL, new PostAdminRoute(templateEngine, sqlManager));
         get(Routes.RESULT_URL, new GetResultRoute(templateEngine, sqlManager, searchCache));
         post(Routes.RESULT_URL, new GetResultRoute(templateEngine, sqlManager, searchCache));
         get(Routes.ACCOUNT_URL, new GetMyAccountRoute(templateEngine, sqlManager, searchCache));
         post(Routes.ACCOUNT_URL, new PostMyAccountRoute(templateEngine, sqlManager, searchCache));
+        get(Routes.ACCUPDATE_URL, new GetUpdateAccountRoute(templateEngine, sqlManager, searchCache));
+        post(Routes.ACCUPDATE_URL, new PostUpdateAccountRoute(templateEngine, sqlManager, searchCache));
+        get(Routes.EVENTS_URL, new GetEventsRoute(templateEngine, sqlManager, searchCache));
     }
 }

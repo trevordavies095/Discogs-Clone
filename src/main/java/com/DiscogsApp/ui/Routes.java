@@ -10,4 +10,6 @@ public interface Routes
     public static final String ADMIN_URL = "/admin";
     public static final String RESULT_URL = "/result";
     public static final String ACCOUNT_URL = "/account";
+    public static final String ACCUPDATE_URL = "/updateAccount";
+    public static final String EVENTS_URL = "/event";
 }

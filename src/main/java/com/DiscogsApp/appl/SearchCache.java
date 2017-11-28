@@ -22,40 +22,52 @@ public class SearchCache {
     }
 
     public Song getSong(String username, String song){
-        ArrayList<SearchObject> data = cache.get(username).getSongs();
-        for(SearchObject curr : data){
-            if(curr.toString().equals(song) || ((Song) curr).getTitle().equals(song)){
-                return (Song) curr;
+        UserSearch cCache = cache.get(username);
+        if(cCache != null) {
+            ArrayList<SearchObject> data = cCache.getSongs();
+            for (SearchObject curr : data) {
+                if (curr.toString().equals(song) || ((Song) curr).getTitle().equals(song)) {
+                    return (Song) curr;
+                }
             }
         }
         return null;
     }
 
     public Album getAlbum(String username, String album){
-        ArrayList<SearchObject> data = cache.get(username).getAlbums();
-        for(SearchObject curr : data){
-            if(curr.toString().equals(album) || ((Album) curr).getTitle().equals(album)){
-                return (Album) curr;
+        UserSearch cCache = cache.get(username);
+        if(cCache != null) {
+            ArrayList<SearchObject> data = cCache.getAlbums();
+            for (SearchObject curr : data) {
+                if (curr.toString().equals(album) || ((Album) curr).getTitle().equals(album)) {
+                    return (Album) curr;
+                }
             }
         }
         return null;
     }
 
     public Artist getArtist(String username, String artist){
-        ArrayList<SearchObject> data = cache.get(username).getArtists();
-        for(SearchObject curr : data){
-            if(curr.toString().equals(artist) || ((Artist) curr).getName().equals(artist)){
-                return (Artist) curr;
+        UserSearch cCache = cache.get(username);
+        if(cCache != null) {
+            ArrayList<SearchObject> data = cCache.getArtists();
+            for (SearchObject curr : data) {
+                if (curr.toString().equals(artist) || ((Artist) curr).getName().equals(artist)) {
+                    return (Artist) curr;
+                }
             }
         }
         return null;
     }
 
     public Label getLabel(String username, String label){
-        ArrayList<SearchObject> data = cache.get(username).getLabels();
-        for(SearchObject curr : data){
-            if(curr.toString().equals(label) || ((Label) curr).getName().equals(label)){
-                return (Label) curr;
+        UserSearch cCache = cache.get(username);
+        if(cCache != null) {
+            ArrayList<SearchObject> data = cCache.getLabels();
+            for (SearchObject curr : data) {
+                if (curr.toString().equals(label) || ((Label) curr).getName().equals(label)) {
+                    return (Label) curr;
+                }
             }
         }
         return null;

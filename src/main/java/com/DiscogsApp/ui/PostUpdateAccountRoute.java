@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GetMyAccountRoute implements Route {
+public class PostUpdateAccountRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
@@ -16,21 +16,17 @@ public class GetMyAccountRoute implements Route {
 
     private final SearchCache searchCache;
 
-    public GetMyAccountRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache) {
-        // Local constants
-
-        // Local variables
-
-        /****** start PostSearchRoute() ******/
+    public PostUpdateAccountRoute(TemplateEngine templateEngine,
+                                 SQLManager sqlManager, SearchCache searchCache){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
-        this.templateEngine = templateEngine;
-        this.sqlManager = sqlManager;
         this.searchCache = searchCache;
+        this.sqlManager = sqlManager;
+        this.templateEngine = templateEngine;
     }
 
-    public String handle(Request request, Response response){
+    public String handle(Request request, Response response) {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
@@ -47,10 +43,19 @@ public class GetMyAccountRoute implements Route {
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
-        vm.put("revalidated", false);
-        vm.put("attempted", false);
-        vm.put("editmode", request.queryParams("updateMode"));
+        String newUsername = request.queryParams("updateUName");
+        String newFirstname =  request.queryParams("updateFName");
+        String newLastname = request.queryParams("updateLName");
+        if(!newFirstname.equals("")) sqlManager.updateFirstname(
+                httpSession.attribute(FTLKeys.USER), newFirstname);
+        if(!newLastname.equals("")) sqlManager.updateLastname(
+                httpSession.attribute(FTLKeys.USER), newLastname);
+        if(!newUsername.equals("")){
+            sqlManager.updateUsername(httpSession.attribute(FTLKeys.USER), newUsername);
+            httpSession.attribute(FTLKeys.USER, newUsername);
+        }
 
-        return templateEngine.render(new ModelAndView(vm, FTLKeys.ACCOUNT_VIEW));
+        response.redirect(Routes.ACCOUNT_URL);
+        return null;
     }
 }

@@ -8,7 +8,6 @@ import com.DiscogsApp.model.Label;
 import com.DiscogsApp.model.Song;
 import spark.*;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +25,7 @@ public class GetResultRoute implements Route {
 
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
         this.searchCache = searchCache;
@@ -39,6 +39,11 @@ public class GetResultRoute implements Route {
         // Local variables
 
         /****** start handle() ******/
+
+        if(httpSession.isNew()){
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
 
         String song = request.queryParams("song");
         String album = request.queryParams("album");
@@ -65,15 +70,12 @@ public class GetResultRoute implements Route {
                         sqlManager.parseSearch(song, "", "", ""));
                 rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
             }
+            usrRating = sqlManager.hasUserRated(httpSession.attribute(FTLKeys.USER),
+                    Integer.toString(rSong.getID()));
             vm.put("song", rSong.getTitle());
             vm.put("length", rSong.getLength());
-            if (usrRating) {
-                vm.put("rated", true);
-                vm.put("rating", rSong.getRating());
-                System.out.println(rSong.getRating());
-            } else if(!usrRating){
-                vm.put("rated", false);
-            }
+            vm.put("rating", rSong.getRating());
+            vm.put("rated", usrRating);
             vm.put("genre", rSong.getGenre());
             vm.put("explicit", rSong.isExplicit());
             vm.put("ryear", Integer.toString(rSong.getReleaseYear()));
@@ -107,6 +109,10 @@ public class GetResultRoute implements Route {
             vm.put("dyear", rArtist.getDebutYear());
             vm.put("label", rArtist.getLabel().getName());
             vm.put("aalbums", aAlbums);
+            ArrayList<String> artistEvents = sqlManager.getEvents(rArtist.getArtistID());
+            if(artistEvents.size() > 0) {
+                vm.put("aevents", artistEvents);
+            }
         }else if(label != null){
             Label rLabel = searchCache.getLabel(httpSession.attribute(FTLKeys.USER), label);
             if(rLabel == null){
@@ -117,7 +123,7 @@ public class GetResultRoute implements Route {
             ArrayList<String> lArtists = sqlManager.getLabelArtists(rLabel);
             vm.put("label", rLabel.getName());
             vm.put("nworth", rLabel.getNetWorth());
-            vm.put("fyear", rLabel.getFormed());
+            vm.put("fyear", Integer.toString(rLabel.getFormed()));
             vm.put("lartists", lArtists);
         }
 

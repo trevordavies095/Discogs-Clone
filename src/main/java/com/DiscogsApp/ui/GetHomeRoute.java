@@ -1,5 +1,6 @@
 package com.DiscogsApp.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,8 +40,9 @@ public class GetHomeRoute implements Route {
         // Local variables
 
         /******start GetHomeRoute() ******/
-
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
         this.searchCache = searchCache;
@@ -64,6 +66,7 @@ public class GetHomeRoute implements Route {
             httpSession.attribute(FTLKeys.USER, "Guest");
             httpSession.attribute(FTLKeys.SIGNED_IN, false);
             httpSession.attribute(FTLKeys.ADMIN, false);
+            searchCache.addUser(httpSession.attribute(FTLKeys.USER));
         }
         if(httpSession.attribute(FTLKeys.USER) ==  null){
             httpSession.attribute(FTLKeys.USER, "Guest");
@@ -77,6 +80,8 @@ public class GetHomeRoute implements Route {
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
+        ArrayList<String> events = sqlManager.getEvents();
+        vm.put("events", events);
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
     }

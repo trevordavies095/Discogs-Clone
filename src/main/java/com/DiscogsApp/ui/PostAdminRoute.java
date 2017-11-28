@@ -144,6 +144,11 @@ public class PostAdminRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
         int success;
 
+        if(httpSession.isNew()){
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
+
         String action = request.queryParams("action");
 
         switch(action){

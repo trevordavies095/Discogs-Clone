@@ -29,29 +29,22 @@
     </#if>
     </nav>
 
-    <#if revalidated>
-        <a href="/updateAccount">Update Account Information</a>
-        <p>First Name: ${firstname}</p>
-        <p>Last Name: ${lastname}</p>
-        <p>Username: ${username}</p>
-        <p>Number of Songs Rated: ${songsRated}</p>
-        <p>Your Top Rated Songs:</p>
-        <ul>
-            <#list songs as song>
-                <li>${song}</li>
-            </#list>
-        </ul>
-    <#elseif !revalidated && !attempted>
-        <form action="/account" method="POST">
-            <label for="password">Password:</label>
-            <br/>
-            <input id="password" type="password" name="password" />
-            <br/>
-            <button type="submit">Sign In</button>
-        </form>
-    <#else>
-        <h2>Incorrect credentials; account access denied.</h2>
-    </#if>
+    <form action="/updateAccount" method="POST">
+        <br/>
+        <label for="updateFName">New First Name:</label>
+        <br/>
+        <input id="updateFName" type="text" name="updateFName" />
+        <br/>
+        <label for="updateLName">New Last Name:</label>
+        <br/>
+        <input id="updateLName" type="text" name="updateLName" />
+        <br/>
+        <label for="updateUName">New Username:</label>
+        <br/>
+        <input id="updateUName" type="text" name="updateUName" />
+        <br/>
+        <button name="updateAccount" type="submit">Update Account</button>
+    </form>
 
 </div>
 </body>

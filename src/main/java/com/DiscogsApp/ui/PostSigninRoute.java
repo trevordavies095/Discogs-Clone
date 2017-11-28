@@ -37,9 +37,9 @@ public class PostSigninRoute implements Route
         // Local variables
 
         /****** start PostSigninRoute() ******/
-
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        Objects.requireNonNull(sqlManager, "sqlManager must not be null");
+        Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
         this.searchCache = searchCache;
@@ -56,6 +56,11 @@ public class PostSigninRoute implements Route
         String password = request.queryParams(FTLKeys.PASS);
         boolean userExists = sqlManager.validateUsername(username);
         boolean goodPass;
+
+        if(httpSession.isNew()){
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
 
         /****** start handle() ******/
 

@@ -2,7 +2,6 @@ package com.DiscogsApp.appl;
 
 import com.DiscogsApp.model.*;
 import java.sql.*;
-import java.time.Period;
 import java.util.*;
 
 
@@ -33,6 +32,25 @@ public class SQLManager
         catch(SQLException ex)
         {
             ex.printStackTrace();
+        }
+    }
+
+    private ArrayList<String> stringifyEvents(ResultSet events){
+        String curr;
+        String currTS;
+        ArrayList<String> results = new ArrayList<>();
+        try {
+            while (events.next()) {
+                curr = events.getString("group_name") + " playing at " +
+                        events.getString("event_location") + " on ";
+                currTS = DiscEvent.parseTimestamp(events.getString("event_time"));
+                curr = curr + currTS + " (ID: " + events.getInt("event_id") + ")";
+                results.add(curr);
+            }
+            return results;
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -189,7 +207,7 @@ public class SQLManager
             if(!(nameTaken))
             {
                 PreparedStatement nqry = con.prepareStatement("INSERT INTO users VALUES (" +
-                        "?, ?, ?, ?, FALSE, '{}')");
+                        "?, ?, ?, ?, FALSE)");
                 nqry.setString(1, username);
                 nqry.setString(2, password);
                 nqry.setString(3, firstname);
@@ -372,6 +390,35 @@ public class SQLManager
         }
     }
 
+    public ArrayList<String> getEvents(){
+        try {
+           ArrayList<String> results = new ArrayList<>();
+           PreparedStatement getem = con.prepareStatement("SELECT event_time," +
+                   " event_location, event_id, artist.group_name FROM events INNER JOIN " +
+                   "artist ON events.event_artist = artist.artist_id");
+           ResultSet events = getem.executeQuery();
+           return stringifyEvents(events);
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> getEvents(int artistID){
+        try {
+            ArrayList<String> results = new ArrayList<>();
+            PreparedStatement getem = con.prepareStatement("SELECT event_time," +
+                    " event_location, event_id, artist.group_name FROM events INNER JOIN " +
+                    "artist ON events.event_artist = artist.artist_id WHERE artist_id = ?");
+            getem.setString(1, Integer.toString(artistID));
+            ResultSet events = getem.executeQuery();
+            return stringifyEvents(events);
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public ArrayList<String> getLabelArtists(Label label){
         try {
             ArrayList<String> results = new ArrayList<>();
@@ -383,6 +430,26 @@ public class SQLManager
                 results.add(rset.getString("group_name"));
             }
             return results;
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public DiscEvent getSingleEvent(String eventString){
+        try {
+            String[] splitter = eventString.split("ID: ");
+            String strID = splitter[splitter.length - 1].trim().replace(")", "");
+            int eID = Integer.parseInt(strID);
+            PreparedStatement getEvent = con.prepareStatement("SELECT event_name, event_location, event_time," +
+                    "event_id, event_time, artist.group_name FROM events INNER JOIN artist ON " +
+                    "events.event_artist = artist.artist_id WHERE event_id = ?");
+            getEvent.setInt(1, eID);
+            ResultSet event = getEvent.executeQuery();
+            event.next();
+            return new DiscEvent(event.getString("event_name"), event.getString("event_time"),
+                    event.getString("group_name"), event.getString("event_location"),
+                    event.getInt("event_id"));
         } catch(SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -434,25 +501,6 @@ public class SQLManager
         } catch(SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-    }
-
-    public void updateRating(String username, String songID, int rating){
-        try {
-
-            PreparedStatement updateRatings = con.prepareStatement("INSERT INTO given_ratings " +
-                            "VALUES (?, ?, ?)");
-            updateRatings.setString(1, username);
-            updateRatings.setString(2, songID);
-            updateRatings.setInt(3, rating);
-            updateRatings.executeUpdate();
-            updateRatings = con.prepareStatement("UPDATE song SET song_tratings = song_tratings + 1, " +
-                    "song_sratings = song_sratings + ? WHERE song_id = ?");
-            updateRatings.setInt(1, rating);
-            updateRatings.setString(2, songID);
-            updateRatings.executeUpdate();
-        } catch(SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -569,6 +617,62 @@ public class SQLManager
         } catch(SQLException ex){
             ex.printStackTrace();
             return 0;
+        }
+    }
+
+    public void updateRating(String username, String songID, int rating){
+        try {
+            if(rating > 5) rating = 5;
+            if(rating < 0) rating = 0;
+            PreparedStatement updateRatings = con.prepareStatement("INSERT INTO given_ratings " +
+                    "VALUES (?, ?, ?)");
+            updateRatings.setString(1, username);
+            updateRatings.setString(2, songID);
+            updateRatings.setInt(3, rating);
+            updateRatings.executeUpdate();
+            updateRatings = con.prepareStatement("UPDATE song SET song_tratings = song_tratings + 1, " +
+                    "song_sratings = song_sratings + ? WHERE song_id = ?");
+            updateRatings.setInt(1, rating);
+            updateRatings.setString(2, songID);
+            updateRatings.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateFirstname(String username, String firstname){
+        try {
+            PreparedStatement updateFN = con.prepareStatement("UPDATE users SET firstname = " +
+                    "? WHERE username = ?");
+            updateFN.setString(2, username);
+            updateFN.setString(1, firstname);
+            updateFN.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateLastname(String username, String lastname){
+        try {
+            PreparedStatement updateFN = con.prepareStatement("UPDATE users SET lastname = " +
+                    "? WHERE username = ?");
+            updateFN.setString(2, username);
+            updateFN.setString(1, lastname);
+            updateFN.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateUsername(String username, String nUsername){
+        try {
+            PreparedStatement updateFN = con.prepareStatement("UPDATE users SET username = " +
+                    "? WHERE username = ?");
+            updateFN.setString(2, username);
+            updateFN.setString(1, nUsername);
+            updateFN.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

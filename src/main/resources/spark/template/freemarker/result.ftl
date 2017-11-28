@@ -33,9 +33,9 @@
         <h2>Information on Song: ${song}</h2>
         <p>Song Title: ${song}</p>
         <p>Length: ${length}</p>
-        <#if rated>
+        <#if rated || !signedIn>
             <p>Rating: ${rating}</p>
-        <#else>
+        <#elseif !rated && signedIn>
             <form action="/result?song=${song}" method="POST">
                 <label for="rateSong">Rate this Song (Enter a number between 1 and 5):</label>
                 <br/>
@@ -74,11 +74,21 @@
                 <li><a href="/result?album=${albm}">${albm}</a></li>
             </#list>
         </ul>
+        <#if aevents??>
+        <p>Upcoming Events: </p>
+            <ul>
+                <#list aevents as events>
+                    <li><a href="/event?chosen=${events}">${events}</a></li>
+                </#list>
+            </ul>
+        <#else>
+            <p>Artist is not playing in any upcoming events.</p>
+        </#if>
         <p>Label Name: <a href="/result?label=${label}">${label}</a></p>
     <#elseif label??>
         <h2>Information on Label: ${label}</h2>
         <p>Label Name: ${label}</p>
-        <p>Net Worth: ${nworth}</p>
+        <p>Net Worth: $${nworth} USD</p>
         <p>Formation Year: ${fyear}</p>
         <p>Label Artists:</p>
         <ul>

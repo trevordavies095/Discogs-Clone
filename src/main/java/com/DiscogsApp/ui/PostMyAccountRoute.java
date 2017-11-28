@@ -24,19 +24,25 @@ public class PostMyAccountRoute implements Route {
         // Local variables
 
         /****** start PostSearchRoute() ******/
-
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
         this.searchCache = searchCache;
     }
 
-    public String handle(Request request, Response response){
+    public String handle(Request request, Response response) {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
         // Local variables
+
+        if(httpSession.isNew()){
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
 
         /****** start handle() ******/
 
@@ -51,8 +57,13 @@ public class PostMyAccountRoute implements Route {
             vm.put("firstname", usr.getFirstname());
             vm.put("lastname", usr.getLastname());
             vm.put("username", usr.getUsername());
-            vm.put("songs", new ArrayList<>(usr.getSongsRated().subList(0,5)));
+            if(usr.getSongsRated().size() >= 5) {
+                vm.put("songs", new ArrayList<>(usr.getSongsRated().subList(0,5)));
+            } else {
+                vm.put("songs", new ArrayList<>(usr.getSongsRated()));
+            }
             vm.put("songsRated", usr.getSongsRated().size());
+            vm.put("editmode", false);
         } else {
             response.redirect(Routes.SIGNOUT_URL);
             return null;

@@ -9,6 +9,8 @@ public interface FTLKeys
     public static final String ADMIN_VIEW = "admin.ftl";
     public static final String RESULT_VIEW = "result.ftl";
     public static final String ACCOUNT_VIEW = "account.ftl";
+    public static final String ACC_UPDATE_VIEW = "accUpdate.ftl";
+    public static final String EVENTS_VIEW = "events.ftl";
     public static final String TITLE = "title";
     public static final String USER = "username";
     public static final String SIGNED_IN = "signedIn";
@@ -25,4 +27,5 @@ public interface FTLKeys
     public static final String POSTSEARCH = "postsearch";
     public static final String TOOLS = "tools";
     public static final String SPECIFIC = "specific";
+    public static final String CACHE = "cache";
 }

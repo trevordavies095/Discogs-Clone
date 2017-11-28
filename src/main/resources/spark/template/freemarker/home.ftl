@@ -31,10 +31,19 @@
     </#if>
     </nav>
 
-    <p> Welcome to DisClones.</p>
+    <h2> Welcome to Disc Clones.</h2>
 
     <#if message??>
         <div class="message ${messageType}">${message}</div>
+    </#if>
+
+    <#if events??>
+        <h3>Upcoming Events:</h3>
+        <ul>
+            <#list events as event>
+                <li><a href="/event?chosen=${event}">${event}</a></li>
+            </#list>
+        </ul>
     </#if>
 
 </div>

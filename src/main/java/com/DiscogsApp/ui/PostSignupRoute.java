@@ -34,7 +34,8 @@ public class PostSignupRoute implements Route {
 
         /****** start PostSignupRoute() ******/
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        Objects.requireNonNull(sqlManager, "sqlManager must not be null");
+        Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.sqlManager = sqlManager;
         this.templateEngine = templateEngine;
         this.searchCache = searchCache;
@@ -62,6 +63,11 @@ public class PostSignupRoute implements Route {
         String firstname = request.queryParams("firstname");
         String lastname = request.queryParams("lastname");
         int status;
+
+        if(httpSession.isNew()){
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
 
         /****** start handle() ******/
 
