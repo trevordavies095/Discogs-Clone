@@ -7,7 +7,6 @@ import static spark.SparkBase.staticFileLocation;
 import java.util.Objects;
 
 import com.DiscogsApp.appl.SQLManager;
-import com.DiscogsApp.appl.SearchCache;
 import spark.TemplateEngine;
 
 
@@ -22,7 +21,6 @@ public class WebServer
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
-    private final SearchCache searchCache;
 
     // Class variables
 
@@ -34,8 +32,7 @@ public class WebServer
      *
      * @param sqlManager: the SQLManager for the application instance
      */
-    public WebServer(final TemplateEngine templateEngine,
-                     final SQLManager sqlManager, final SearchCache searchCache)
+    public WebServer(final TemplateEngine templateEngine, final SQLManager sqlManager)
     {
         // Local constants
 
@@ -46,7 +43,6 @@ public class WebServer
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
-        this.searchCache = searchCache;
     }
 
     /**
@@ -62,22 +58,20 @@ public class WebServer
 
         staticFileLocation("/public");
 
-        get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager, searchCache));
+        get(Routes.HOME_URL, new GetHomeRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNIN_URL, new GetSigninRoute(templateEngine));
-        post(Routes.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager, searchCache));
+        post(Routes.SIGNIN_URL, new PostSigninRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNUP_URL, new GetSignupRoute(templateEngine, sqlManager));
-        post(Routes.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager, searchCache));
+        post(Routes.SIGNUP_URL, new PostSignupRoute(templateEngine, sqlManager));
+
         get(Routes.SIGNOUT_URL, new GetSignoutRoute(templateEngine, sqlManager));
+
         get(Routes.SEARCH_URL, new GetSearchRoute(templateEngine, sqlManager));
-        post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager, searchCache));
-        get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager, searchCache));
-        post(Routes.ADMIN_URL, new PostAdminRoute(templateEngine, sqlManager));
-        get(Routes.RESULT_URL, new GetResultRoute(templateEngine, sqlManager, searchCache));
-        post(Routes.RESULT_URL, new GetResultRoute(templateEngine, sqlManager, searchCache));
-        get(Routes.ACCOUNT_URL, new GetMyAccountRoute(templateEngine, sqlManager, searchCache));
-        post(Routes.ACCOUNT_URL, new PostMyAccountRoute(templateEngine, sqlManager, searchCache));
-        get(Routes.ACCUPDATE_URL, new GetUpdateAccountRoute(templateEngine, sqlManager, searchCache));
-        post(Routes.ACCUPDATE_URL, new PostUpdateAccountRoute(templateEngine, sqlManager, searchCache));
-        get(Routes.EVENTS_URL, new GetEventsRoute(templateEngine, sqlManager, searchCache));
+        post(Routes.SEARCH_URL, new PostSearchRoute(templateEngine, sqlManager));
+
+        get(Routes.ADMIN_URL, new GetAdminRoute(templateEngine, sqlManager));
+
     }
 }
