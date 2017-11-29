@@ -6,6 +6,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.DiscogsApp.appl.SQLManager;
+import com.DiscogsApp.appl.SearchCache;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -57,7 +58,8 @@ public final class Application
         // Local variables
         final TemplateEngine templateEngine = new FreeMarkerEngine();
         final SQLManager sqlManager = new SQLManager();
-        final WebServer webServer = new WebServer(templateEngine, sqlManager);
+        final SearchCache searchCache = new SearchCache();
+        final WebServer webServer = new WebServer(templateEngine, sqlManager, searchCache);
         final Application app = new Application(webServer);
 
         /****** start main() ******/

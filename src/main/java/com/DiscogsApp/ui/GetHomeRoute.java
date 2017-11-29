@@ -1,5 +1,6 @@
 package com.DiscogsApp.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.Objects;
 import com.DiscogsApp.appl.SQLManager;
 
 
+import com.DiscogsApp.appl.SearchCache;
 import spark.*;
 
 /**
@@ -20,6 +22,7 @@ public class GetHomeRoute implements Route {
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
+    private final SearchCache searchCache;
 
     // Class variables
 
@@ -31,16 +34,18 @@ public class GetHomeRoute implements Route {
      * @throws NullPointerException
      *    when the templateEngine parameter or sqlManager parameter is null
      */
-    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager) {
+    GetHomeRoute(final TemplateEngine templateEngine, final SQLManager sqlManager, final SearchCache searchCache) {
         // Local constants
 
         // Local variables
 
         /******start GetHomeRoute() ******/
-
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(sqlManager, "SQLManager must not be null");
+        Objects.requireNonNull(searchCache, "searchCache must not be null");
         this.templateEngine = templateEngine;
         this.sqlManager = sqlManager;
+        this.searchCache = searchCache;
     }
 
     /**
@@ -61,6 +66,7 @@ public class GetHomeRoute implements Route {
             httpSession.attribute(FTLKeys.USER, "Guest");
             httpSession.attribute(FTLKeys.SIGNED_IN, false);
             httpSession.attribute(FTLKeys.ADMIN, false);
+            searchCache.addUser(httpSession.attribute(FTLKeys.USER));
         }
         if(httpSession.attribute(FTLKeys.USER) ==  null){
             httpSession.attribute(FTLKeys.USER, "Guest");
@@ -74,6 +80,8 @@ public class GetHomeRoute implements Route {
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
+        ArrayList<String> events = sqlManager.getEvents();
+        vm.put("events", events);
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
     }

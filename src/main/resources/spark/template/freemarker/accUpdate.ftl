@@ -5,11 +5,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div class="page">
+<div class = "page">
 
-    <h1>
-            ${title}${username}
-    </h1>
+    <h1>My Account: ${username}</h1>
 
     <nav>
     <#if signedIn>
@@ -31,20 +29,22 @@
     </#if>
     </nav>
 
-    <h2> Welcome to Disc Clones.</h2>
-
-    <#if message??>
-        <div class="message ${messageType}">${message}</div>
-    </#if>
-
-    <#if events??>
-        <h3>Upcoming Events:</h3>
-        <ul>
-            <#list events as event>
-                <li><a href="/event?chosen=${event}">${event}</a></li>
-            </#list>
-        </ul>
-    </#if>
+    <form action="/updateAccount" method="POST">
+        <br/>
+        <label for="updateFName">New First Name:</label>
+        <br/>
+        <input id="updateFName" type="text" name="updateFName" />
+        <br/>
+        <label for="updateLName">New Last Name:</label>
+        <br/>
+        <input id="updateLName" type="text" name="updateLName" />
+        <br/>
+        <label for="updateUName">New Username:</label>
+        <br/>
+        <input id="updateUName" type="text" name="updateUName" />
+        <br/>
+        <button name="updateAccount" type="submit">Update Account</button>
+    </form>
 
 </div>
 </body>

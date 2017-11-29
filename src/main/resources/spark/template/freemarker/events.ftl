@@ -7,9 +7,7 @@
 <body>
 <div class="page">
 
-    <h1>
-            ${title}${username}
-    </h1>
+    <h1>Event Information for "${eventName}"</h1>
 
     <nav>
     <#if signedIn>
@@ -31,20 +29,9 @@
     </#if>
     </nav>
 
-    <h2> Welcome to Disc Clones.</h2>
-
-    <#if message??>
-        <div class="message ${messageType}">${message}</div>
-    </#if>
-
-    <#if events??>
-        <h3>Upcoming Events:</h3>
-        <ul>
-            <#list events as event>
-                <li><a href="/event?chosen=${event}">${event}</a></li>
-            </#list>
-        </ul>
-    </#if>
+    <p>Event Location: ${eventLoc}</p>
+    <p>Start Time: ${eventTime}</p>
+    <p>Artist Name: <a href="/result?artist=${eventArtist}">${eventArtist}</a></p>
 
 </div>
 </body>

@@ -14,7 +14,10 @@ public class Album implements SearchObject {
 
     private final int rating;
 
-    public Album(String barcode, String style, String genre, String title, int sumrating, int numrating){
+    private final Artist artist;
+
+    public Album(String barcode, String style, String genre, String title, int sumrating,
+                 int numrating, Artist artist){
         this.barcode = barcode;
         if(genre != null) {
             this.genre = genre;
@@ -32,6 +35,7 @@ public class Album implements SearchObject {
         } else {
             this.rating = 0;
         }
+        this.artist = artist;
     }
 
     public static SearchEnum getType() {
@@ -58,8 +62,24 @@ public class Album implements SearchObject {
         return rating;
     }
 
+    public Artist getArtist(){ return this.artist; }
+
     public String toString(){
-        return "Album: " + title + ", Genre: " + genre + ", Style: " +
-                style + ", Barcode: " + barcode;
+        return title + " by " + artist.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Album album = (Album) o;
+
+        if (rating != album.rating) return false;
+        if (barcode != null ? !barcode.equals(album.barcode) : album.barcode != null) return false;
+        if (style != null ? !style.equals(album.style) : album.style != null) return false;
+        if (genre != null ? !genre.equals(album.genre) : album.genre != null) return false;
+        if (artist != null ? !artist.equals(album.artist) : album.artist != null) return false;
+        return title != null ? title.equals(album.title) : album.title == null;
     }
 }

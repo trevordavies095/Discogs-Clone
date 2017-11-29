@@ -5,11 +5,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div class="page">
+<div class = "page">
 
-    <h1>
-            ${title}${username}
-    </h1>
+    <h1>My Account: ${username}</h1>
 
     <nav>
     <#if signedIn>
@@ -31,19 +29,28 @@
     </#if>
     </nav>
 
-    <h2> Welcome to Disc Clones.</h2>
-
-    <#if message??>
-        <div class="message ${messageType}">${message}</div>
-    </#if>
-
-    <#if events??>
-        <h3>Upcoming Events:</h3>
+    <#if revalidated>
+        <a href="/updateAccount">Update Account Information</a>
+        <p>First Name: ${firstname}</p>
+        <p>Last Name: ${lastname}</p>
+        <p>Username: ${username}</p>
+        <p>Number of Songs Rated: ${songsRated}</p>
+        <p>Your Top Rated Songs:</p>
         <ul>
-            <#list events as event>
-                <li><a href="/event?chosen=${event}">${event}</a></li>
+            <#list songs as song>
+                <li>${song}</li>
             </#list>
         </ul>
+    <#elseif !revalidated && !attempted>
+        <form action="/account" method="POST">
+            <label for="password">Password:</label>
+            <br/>
+            <input id="password" type="password" name="password" />
+            <br/>
+            <button type="submit">Sign In</button>
+        </form>
+    <#else>
+        <h2>Incorrect credentials; account access denied.</h2>
     </#if>
 
 </div>
