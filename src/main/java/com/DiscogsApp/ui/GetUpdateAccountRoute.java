@@ -8,16 +8,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GetUpdateAccountRoute implements Route {
-
+public class GetUpdateAccountRoute implements Route
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
-
     private final SearchCache searchCache;
 
+    // Class variables
+
     public GetUpdateAccountRoute(TemplateEngine templateEngine,
-                                 SQLManager sqlManager, SearchCache searchCache){
+                                 SQLManager sqlManager, SearchCache searchCache)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start GetUpdateAccountRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
@@ -26,19 +34,21 @@ public class GetUpdateAccountRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    public String handle(Request request, Response response){
+    public String handle(Request request, Response response)
+    {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
         // Local variables
 
-        if(httpSession.isNew()){
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
-
-        /****** start handle() ******/
 
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
