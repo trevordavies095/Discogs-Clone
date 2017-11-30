@@ -10,20 +10,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PostMyAccountRoute implements Route {
-
+public class PostMyAccountRoute implements Route
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
-
     private final SearchCache searchCache;
 
-    public PostMyAccountRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache) {
+    // Class variables
+
+    public PostMyAccountRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache)
+    {
         // Local constants
 
         // Local variables
 
         /****** start PostSearchRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
@@ -32,39 +35,50 @@ public class PostMyAccountRoute implements Route {
         this.searchCache = searchCache;
     }
 
-    public String handle(Request request, Response response) {
+    public String handle(Request request, Response response)
+    {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
         // Local variables
+        String password;
+        boolean valid;
+        UserAccount usr;
 
-        if(httpSession.isNew()){
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
 
-        /****** start handle() ******/
+        password = request.queryParams(FTLKeys.PASS);
+        valid = sqlManager.validatePassword(httpSession.attribute(FTLKeys.USER), password);
 
-        String password = request.queryParams(FTLKeys.PASS);
-        boolean valid = sqlManager.validatePassword(httpSession.attribute(FTLKeys.USER), password);
-        if(valid){
+        if(valid)
+        {
             vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
             vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
             vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
             vm.put("revalidated", true);
-            UserAccount usr = sqlManager.getUserData(httpSession.attribute(FTLKeys.USER));
+            usr = sqlManager.getUserData(httpSession.attribute(FTLKeys.USER));
             vm.put("firstname", usr.getFirstname());
             vm.put("lastname", usr.getLastname());
             vm.put("username", usr.getUsername());
-            if(usr.getSongsRated().size() >= 5) {
+
+            if(usr.getSongsRated().size() >= 5)
                 vm.put("songs", new ArrayList<>(usr.getSongsRated().subList(0,5)));
-            } else {
+            else
                 vm.put("songs", new ArrayList<>(usr.getSongsRated()));
-            }
+
             vm.put("songsRated", usr.getSongsRated().size());
             vm.put("editmode", false);
-        } else {
+        }
+
+        else
+            {
             response.redirect(Routes.SIGNOUT_URL);
             return null;
         }
