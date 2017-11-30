@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PostSignupRoute implements Route {
+public class PostSignupRoute implements Route
+{
     // Class constants
     private final String UNK_ERROR = "Unknown error occurred while adding new user to database.";
     private final String NAME_TAKEN = "The username you input is already in use. Please choose another.";
@@ -21,18 +22,15 @@ public class PostSignupRoute implements Route {
 
     // Class variables
 
-    private String invalidMessage(String attr){
-        return "Your entry for " + attr + " is invalid.";
-    }
-
-
     PostSignupRoute(final TemplateEngine templateEngine, final SQLManager sqlManager,
-                    final SearchCache searchCache) {
+                    final SearchCache searchCache)
+    {
         // Local constants
 
         // Local variables
 
         /****** start PostSignupRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
@@ -41,7 +39,8 @@ public class PostSignupRoute implements Route {
         this.searchCache = searchCache;
     }
 
-    private String tooLongMessage(String attr, int max) {
+    private String tooLongMessage(String attr, int max)
+    {
         // Local constants
 
         // Local variables
@@ -52,7 +51,19 @@ public class PostSignupRoute implements Route {
                 attr + " to " + max + " characters.";
     }
 
-    public String handle(Request request, Response response) {
+    private String invalidMessage(String attr)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start invalidMessage() ******/
+
+        return "Your entry for " + attr + " is invalid.";
+    }
+
+    public String handle(Request request, Response response)
+    {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
@@ -64,38 +75,54 @@ public class PostSignupRoute implements Route {
         String lastname = request.queryParams("lastname");
         int status;
 
+        /****** start handle() ******/
+
         if(httpSession.isNew()){
             response.redirect(Routes.HOME_URL);
             return null;
         }
 
-        /****** start handle() ******/
-
-        if(username.length() > 20) {
+        if(username.length() > 20)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, tooLongMessage("username", MAX_USR));
 
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
-        }else if(firstname != null && firstname.length() > 20) {
+        }
+
+        else if(firstname != null && firstname.length() > 20)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, tooLongMessage("firstname", MAX_USR));
 
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
-        }else if(lastname != null && lastname.length() > 20) {
+        }
+
+        else if(lastname != null && lastname.length() > 20)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, tooLongMessage("lastname", MAX_USR));
 
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
-        }else if(password.length() > 63) {
+        }
+
+        else if(password.length() > 63)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, tooLongMessage("password", MAX_PASS));
 
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
-        }else if(password.equals("") || password.contains("\"")){
+        }
+
+        else if(password.equals("") || password.contains("\""))
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, invalidMessage("password"));
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
-        }else if(username.equals("") || password.contains("\"")){
+        }
+
+        else if(username.equals("") || password.contains("\""))
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, invalidMessage("username"));
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
@@ -103,7 +130,8 @@ public class PostSignupRoute implements Route {
 
         status = sqlManager.addUser(username, password, firstname, lastname);
 
-        if(status == 1) {
+        if(status == 1)
+        {
             httpSession.attribute(FTLKeys.USER, username);
             httpSession.attribute(FTLKeys.SIGNED_IN, true);
             searchCache.addUser(username);
@@ -114,10 +142,16 @@ public class PostSignupRoute implements Route {
 
             response.redirect(Routes.HOME_URL);
             return null;
-        }else if(status == 0) {
+        }
+
+        else if(status == 0)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, NAME_TAKEN);
-        }else if(status == 2) {
+        }
+
+        else if(status == 2)
+        {
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
             vm.put(FTLKeys.MESSAGE, UNK_ERROR);
         }
