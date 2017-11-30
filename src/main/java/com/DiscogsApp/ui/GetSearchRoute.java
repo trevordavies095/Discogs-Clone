@@ -14,7 +14,6 @@ public class GetSearchRoute implements Route
 
     // Class variables
 
-
     GetSearchRoute(TemplateEngine templateEngine, SQLManager sqlManager)
     {
         // Local constants
@@ -22,6 +21,7 @@ public class GetSearchRoute implements Route
         // Local variables
 
         /****** start GetSearchRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         this.templateEngine = templateEngine;
@@ -36,12 +36,15 @@ public class GetSearchRoute implements Route
 
         // Local variables
 
-        if(httpSession.isNew()){
+
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
 
-        /****** start handle() ******/
         vm.put(FTLKeys.PRESEARCH, true);
         vm.put(FTLKeys.POSTSEARCH, false);
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
