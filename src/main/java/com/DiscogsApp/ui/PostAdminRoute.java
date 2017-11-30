@@ -8,150 +8,248 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PostAdminRoute implements Route {
-
+public class PostAdminRoute implements Route
+{
     // Class constants
     private final TemplateEngine templateEngine;
     private final SQLManager sqlManager;
 
-    private int insertSong(Request request){
+    // Class variables
+
+    public PostAdminRoute(TemplateEngine templateEngine, SQLManager sqlManager)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start PostAdminRoute() ******/
+
+        Objects.requireNonNull(templateEngine, "Template engine must not be null");
+        Objects.requireNonNull(sqlManager, "sqlManager must not be null");
+        this.sqlManager = sqlManager;
+        this.templateEngine = templateEngine;
+    }
+
+    private int insertSong(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String title = request.queryParams("sTitle");
         String length = request.queryParams("sLength");
         String albumBC = request.queryParams("albumBC");
         String genre = request.queryParams("genre");
-        boolean explicit = Boolean.getBoolean(request.queryParams("explicit"));
         String releaseYear = request.queryParams("sReleaseYear");
-        if(title.equals("") || length.equals("") || albumBC.equals("")){
+        boolean explicit = Boolean.getBoolean(request.queryParams("explicit"));
+
+        /****** start insertSong() ******/
+
+        if(title.equals("") || length.equals("") || albumBC.equals(""))
             return 2;
-        }
-        if(releaseYear.equals("")){
+        if(releaseYear.equals(""))
             releaseYear = "0";
-        }
+
         return sqlManager.addSong(title, length, genre, explicit, releaseYear, albumBC);
     }
 
-    private int insertArtist(Request request){
+    private int insertArtist(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String title = request.queryParams("arTitle");
         String realName = request.queryParams("realName");
         String labelName = request.queryParams("arLabelName");
         String dbYear = request.queryParams("arDebutYear");
-        if(title.equals("") || labelName.equals("")){
+
+        /****** start insertArtist() ******/
+
+        if(title.equals("") || labelName.equals(""))
             return 2;
-        }
-        if(dbYear.equals("")){
+        if(dbYear.equals(""))
             dbYear = "0";
-        }
+
         return sqlManager.addArtist(title, realName, labelName, dbYear);
     }
 
-    private int insertAlbum(Request request){
+    private int insertAlbum(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String barcode = request.queryParams("barcode");
         String style = request.queryParams("style");
         String genre = request.queryParams("abGenre");
         String title = request.queryParams("abTitle");
         String artistID = request.queryParams("artistID");
-        if(barcode.equals("") || title.equals("") || artistID.equals("")){
+
+        /****** start insertAlbum() ******/
+
+        if(barcode.equals("") || title.equals("") || artistID.equals(""))
             return 2;
-        }
+
         return sqlManager.addAlbum(barcode, style, genre, title, artistID);
     }
 
-    private int insertLabel(Request request){
+    private int insertLabel(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String name = request.queryParams("labelName");
         String formYear = request.queryParams("formYear");
         String netWorth = request.queryParams("netWorth");
-        if(name.equals("")){
+
+        /****** start insertLabel() ******/
+
+        if(name.equals(""))
             return 2;
-        }
+
         return sqlManager.addLabel(name, formYear, netWorth);
     }
 
-    private int deleteSong(Request request){
+    private int deleteSong(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String title = request.queryParams("rmSongTitle");
         String songID = request.queryParams("rmSongID");
-        if(title.equals("") && songID.equals("")){
+
+        /****** start deleteSong() ******/
+
+        if(title.equals("") && songID.equals(""))
             return 2;
-        }
+
         return sqlManager.removeSong(title, songID);
     }
 
-    private int deleteAlbum(Request request){
+    private int deleteAlbum(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String barcode = request.queryParams("rmAlbumBC");
         String title = request.queryParams("rmAlbumTitle");
-        if(title.equals("") && barcode.equals("")){
+
+        /****** start deleteAlbum() ******/
+
+        if(title.equals("") && barcode.equals(""))
             return 2;
-        }
+
         return sqlManager.removeAlbum(title, barcode);
     }
 
-    private int deleteArtist(Request request){
+    private int deleteArtist(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String name = request.queryParams("rmArtistName");
         String artistID = request.queryParams("rmArtistID");
-        if(name.equals("") && artistID.equals("")){
+
+        /****** start deleteArtist() ******/
+
+        if(name.equals("") && artistID.equals(""))
             return 2;
-        }
+
         return sqlManager.removeArtist(name, artistID);
     }
 
-    private int deleteLabel(Request request){
+    private int deleteLabel(Request request)
+    {
+        // Local constants
+
+        // Local variables
         String name = request.queryParams("rmLabelName");
-        if(name.equals("")){
+
+        /****** start deleteLabel() ******/
+
+        if(name.equals(""))
             return 2;
-        }
+
         return sqlManager.removeLabel(name);
     }
 
-    private void makeDeleteStatusMsg(int status, Map<String, Object> vm, String tbl){
-        if(status == 0){
+    private void makeDeleteStatusMsg(int status, Map<String, Object> vm, String tbl)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start makeDeleteStatusMsg() ******/
+
+        if(status == 0)
+        {
             vm.put(FTLKeys.MESSAGE, "Failed to remove " + tbl + ": unknown SQL error. Ensure you aren't " +
                     "attempting to delete a tuple which does not exist.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
-        }else if(status == 2){
+        }
+
+        else if(status == 2)
+        {
             vm.put(FTLKeys.MESSAGE, "Failed to remove " + tbl + ": please enter values for at least one attribute.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
-        }else{
+        }
+
+        else
+        {
             vm.put(FTLKeys.MESSAGE, "Successfully removed " + tbl + " from database.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
         }
     }
 
-    private void makeInsertStatusMsg(int status, Map<String, Object> vm, String tbl){
-        if(status == 0){
+    private void makeInsertStatusMsg(int status, Map<String, Object> vm, String tbl)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start makeInsertStatusMsg() ******/
+
+        if(status == 0)
+        {
             vm.put(FTLKeys.MESSAGE, "Failed to add " + tbl + ": unknown SQL error. Ensure you aren't" +
                     "violating a unique attribute restriction or attempting to add a non-existent" +
                     "foreign key.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
-        }else if(status == 2){
+        }
+
+        else if(status == 2)
+        {
             vm.put(FTLKeys.MESSAGE, "Failed to add " + tbl + ": please enter values for all REQUIRED attributes.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_ERR);
-        }else{
+        }
+
+        else
+        {
             vm.put(FTLKeys.MESSAGE, "Successfully added " + tbl + " to database.");
             vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
         }
     }
 
-    public PostAdminRoute(TemplateEngine templateEngine, SQLManager sqlManager){
-        Objects.requireNonNull(templateEngine, "Template engine must not be null");
-        Objects.requireNonNull(sqlManager, "sqlManager must not be null");
-
-        this.sqlManager = sqlManager;
-        this.templateEngine = templateEngine;
-    }
-
-    public String handle(Request request, Response response){
-
+    public String handle(Request request, Response response)
+    {
+        // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
-        int success;
 
-        if(httpSession.isNew()){
+        // Local variables
+        int success;
+        String action;
+
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
 
-        String action = request.queryParams("action");
+        action = request.queryParams("action");
 
-        switch(action){
+        switch(action)
+        {
             case "addSong":
                 vm.put(FTLKeys.MESSAGE, "Entered Add Song Tool.");
                 vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
