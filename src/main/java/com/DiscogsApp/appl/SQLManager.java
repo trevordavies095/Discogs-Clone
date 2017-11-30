@@ -1,6 +1,7 @@
 package com.DiscogsApp.appl;
 
 import com.DiscogsApp.model.*;
+
 import java.sql.*;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class SQLManager
         ArrayList<String> results = new ArrayList<>();
         try {
             while (events.next()) {
-                curr = events.getString("group_name") + " playing at " +
+                curr = events.getString("group_name") + " performing at " +
                         events.getString("event_location") + " on ";
                 currTS = DiscEvent.parseTimestamp(events.getString("event_time"));
                 curr = curr + currTS + " (ID: " + events.getInt("event_id") + ")";
@@ -89,7 +90,7 @@ public class SQLManager
                 if(outerShell >= 3){
                     cAlbum = new Album(rset.getString("album_bc"), rset.getString("album_style"),
                             rset.getString("album_genre"), rset.getString("album_title"),
-                            rset.getInt("album_sratings"), rset.getInt("album_tratings"), cArtist);
+                            rset.getInt("album_rating"), cArtist);
                     if(!albums.contains(cAlbum)) albums.add(cAlbum);
                 }
                 if(outerShell >= 4){
@@ -328,14 +329,13 @@ public class SQLManager
     public int addAlbum(String barcode, String style, String genre, String title,
                         String artistID){
         try {
-            PreparedStatement pstate = con.prepareStatement("INSERT INTO album VALUES(?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pstate = con.prepareStatement("INSERT INTO album VALUES(?, ?, ?, ?, ?, ?)");
             pstate.setString(1, barcode);
             pstate.setString(2, style);
             pstate.setString(3, genre);
             pstate.setInt(4,0);
-            pstate.setInt(5,0);
-            pstate.setString(6, title);
-            pstate.setInt(7, Integer.parseInt(artistID));
+            pstate.setString(5, title);
+            pstate.setInt(6, Integer.parseInt(artistID));
             return pstate.executeUpdate();
         } catch(SQLException ex){
             ex.printStackTrace();
@@ -392,7 +392,6 @@ public class SQLManager
 
     public ArrayList<String> getEvents(){
         try {
-           ArrayList<String> results = new ArrayList<>();
            PreparedStatement getem = con.prepareStatement("SELECT event_time," +
                    " event_location, event_id, artist.group_name FROM events INNER JOIN " +
                    "artist ON events.event_artist = artist.artist_id");
@@ -406,12 +405,11 @@ public class SQLManager
 
     public ArrayList<String> getEvents(int artistID){
         try {
-            ArrayList<String> results = new ArrayList<>();
-            PreparedStatement getem = con.prepareStatement("SELECT event_time," +
+            PreparedStatement getEv = con.prepareStatement("SELECT event_time," +
                     " event_location, event_id, artist.group_name FROM events INNER JOIN " +
                     "artist ON events.event_artist = artist.artist_id WHERE artist_id = ?");
-            getem.setString(1, Integer.toString(artistID));
-            ResultSet events = getem.executeQuery();
+            getEv.setString(1, Integer.toString(artistID));
+            ResultSet events = getEv.executeQuery();
             return stringifyEvents(events);
         } catch(SQLException ex){
             ex.printStackTrace();
@@ -430,6 +428,24 @@ public class SQLManager
                 results.add(rset.getString("group_name"));
             }
             return results;
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<String> getAlbumEditions(Album album){
+        try {
+            ArrayList<String> editions = new ArrayList<>();
+            PreparedStatement getEd = con.prepareStatement("SELECT * FROM edition WHERE " +
+                    "base_barcode = ?");
+            getEd.setString(1, album.getBarcode());
+            ResultSet eds = getEd.executeQuery();
+            while(eds.next()){
+                editions.add(eds.getString("edition_title") + ", barcode: " +
+                        eds.getString("edition_barcode"));
+            }
+            return editions;
         } catch(SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -620,21 +636,47 @@ public class SQLManager
         }
     }
 
-    public void updateRating(String username, String songID, int rating){
+    public void updateAlbumRating(Song song){
+        double count = 0;
+        double sum_ratings = 0;
+        try {
+            PreparedStatement getAlbSong = con.prepareStatement("SELECT * " +
+                    "FROM song WHERE song.album_bc = ?");
+            getAlbSong.setString(1, song.getAlbum().getBarcode());
+            ResultSet albSongs = getAlbSong.executeQuery();
+            while(albSongs.next()){
+                if(albSongs.getInt("song_tratings") != 0){
+                    count++;
+                    sum_ratings += albSongs.getDouble("song_sratings")
+                            / albSongs.getDouble("song_tratings");
+                }
+            }
+            PreparedStatement upAlb = con.prepareStatement("UPDATE album SET album_rating = ? WHERE " +
+                    "album_bc = ?");
+            if(count == 0) count = 1;
+            upAlb.setDouble(1, sum_ratings/count);
+            upAlb.setString(2, song.getAlbum().getBarcode());
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateRating(String username, Song song, int rating){
         try {
             if(rating > 5) rating = 5;
             if(rating < 0) rating = 0;
             PreparedStatement updateRatings = con.prepareStatement("INSERT INTO given_ratings " +
                     "VALUES (?, ?, ?)");
             updateRatings.setString(1, username);
-            updateRatings.setString(2, songID);
+            updateRatings.setString(2, Integer.toString(song.getID()));
             updateRatings.setInt(3, rating);
             updateRatings.executeUpdate();
             updateRatings = con.prepareStatement("UPDATE song SET song_tratings = song_tratings + 1, " +
                     "song_sratings = song_sratings + ? WHERE song_id = ?");
             updateRatings.setInt(1, rating);
-            updateRatings.setString(2, songID);
+            updateRatings.setString(2, Integer.toString(song.getID()));
             updateRatings.executeUpdate();
+            updateAlbumRating(song);
         } catch(SQLException ex) {
             ex.printStackTrace();
         }

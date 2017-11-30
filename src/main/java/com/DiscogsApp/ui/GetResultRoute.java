@@ -65,7 +65,7 @@ public class GetResultRoute implements Route {
                     Integer.toString(rSong.getID()));
             if(newRating != null && !newRating.equals("") && !usrRating){
                 sqlManager.updateRating(httpSession.attribute(FTLKeys.USER),
-                        Integer.toString(rSong.getID()), Integer.parseInt(newRating));
+                        rSong, Integer.parseInt(newRating));
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch(song, "", "", ""));
                 rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
@@ -89,6 +89,7 @@ public class GetResultRoute implements Route {
                 rAlbum = searchCache.getAlbum(httpSession.attribute(FTLKeys.USER), album);
             }
             ArrayList<String> aSongs = sqlManager.getAlbumSongs(rAlbum);
+            ArrayList<String> aEditions = sqlManager.getAlbumEditions(rAlbum);
             vm.put("album", rAlbum.getTitle());
             vm.put("albumBC", rAlbum.getBarcode());
             vm.put("rating", rAlbum.getRating());
@@ -96,6 +97,7 @@ public class GetResultRoute implements Route {
             vm.put("style", rAlbum.getStyle());
             vm.put("asongs", aSongs);
             vm.put("aartist", rAlbum.getArtist().getName());
+            vm.put("aeditions", aEditions);
         }else if(artist != null){
             Artist rArtist = searchCache.getArtist(httpSession.attribute(FTLKeys.USER), artist);
             if(rArtist == null){
@@ -106,7 +108,7 @@ public class GetResultRoute implements Route {
             ArrayList<String> aAlbums = sqlManager.getArtistAlbums(rArtist);
             vm.put("artist", rArtist.getName());
             vm.put("rname", rArtist.getRealName());
-            vm.put("dyear", rArtist.getDebutYear());
+            vm.put("dyear", Integer.toString(rArtist.getDebutYear()));
             vm.put("label", rArtist.getLabel().getName());
             vm.put("aalbums", aAlbums);
             ArrayList<String> artistEvents = sqlManager.getEvents(rArtist.getArtistID());

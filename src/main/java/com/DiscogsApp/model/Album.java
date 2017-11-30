@@ -12,12 +12,11 @@ public class Album implements SearchObject {
 
     private final String title;
 
-    private final int rating;
+    private final double rating;
 
     private final Artist artist;
 
-    public Album(String barcode, String style, String genre, String title, int sumrating,
-                 int numrating, Artist artist){
+    public Album(String barcode, String style, String genre, String title, int rating, Artist artist){
         this.barcode = barcode;
         if(genre != null) {
             this.genre = genre;
@@ -30,11 +29,7 @@ public class Album implements SearchObject {
         } else {
             this.style = "unknown";
         }
-        if(sumrating != 0 && numrating != 0) {
-            this.rating = sumrating / numrating;
-        } else {
-            this.rating = 0;
-        }
+        this.rating = rating;
         this.artist = artist;
     }
 
@@ -58,7 +53,7 @@ public class Album implements SearchObject {
         return title;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 

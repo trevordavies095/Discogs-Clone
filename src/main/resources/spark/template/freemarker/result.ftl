@@ -62,6 +62,12 @@
                 <li><a href="/result?song=${sng}">${sng}</a></li>
             </#list>
         </ul>
+        <p>Other Editions of This Album:</p>
+        <ul>
+            <#list aeditions as edition>
+                <li>${edition}</li>
+            </#list>
+        </ul>
         <p>Artist: <a href="/result?artist=${aartist}">${aartist}</a></p>
     <#elseif artist??>
         <h2>Information on Artist: ${artist}</h2>
@@ -82,7 +88,7 @@
                 </#list>
             </ul>
         <#else>
-            <p>Artist is not playing in any upcoming events.</p>
+            <p>Artist is not performing in any upcoming events.</p>
         </#if>
         <p>Label Name: <a href="/result?label=${label}">${label}</a></p>
     <#elseif label??>

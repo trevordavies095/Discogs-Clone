@@ -116,10 +116,10 @@ public class PostSearchRoute implements Route
             vm.put(FTLKeys.MESSAGE, "No results found for your search.");
             return templateEngine.render(new ModelAndView(vm, FTLKeys.SEARCH_VIEW));
         }
-        vm.put("songs", printResults.get(SearchEnum.SONG));
-        vm.put("artists", printResults.get(SearchEnum.ARTIST));
-        vm.put("albums", printResults.get(SearchEnum.ALBUM));
-        vm.put("labels", printResults.get(SearchEnum.LABEL));
+        if(!printResults.get(SearchEnum.SONG).isEmpty()) vm.put("songs", printResults.get(SearchEnum.SONG));
+        if(!printResults.get(SearchEnum.ARTIST).isEmpty()) vm.put("artists", printResults.get(SearchEnum.ARTIST));
+        if(!printResults.get(SearchEnum.ALBUM).isEmpty()) vm.put("albums", printResults.get(SearchEnum.ALBUM));
+        if(!printResults.get(SearchEnum.LABEL).isEmpty()) vm.put("labels", printResults.get(SearchEnum.LABEL));
         vm.put(FTLKeys.PRESEARCH, false);
         vm.put(FTLKeys.POSTSEARCH, true);
 
