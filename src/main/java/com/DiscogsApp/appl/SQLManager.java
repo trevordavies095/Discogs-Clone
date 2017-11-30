@@ -36,12 +36,21 @@ public class SQLManager
         }
     }
 
-    private ArrayList<String> stringifyEvents(ResultSet events){
+    private ArrayList<String> stringifyEvents(ResultSet events)
+    {
+        // Local constants
+
+        // Local variables
         String curr;
         String currTS;
         ArrayList<String> results = new ArrayList<>();
-        try {
-            while (events.next()) {
+
+        /****** start stringifyEvents() ******/
+
+        try
+        {
+            while (events.next())
+            {
                 curr = events.getString("group_name") + " performing at " +
                         events.getString("event_location") + " on ";
                 currTS = DiscEvent.parseTimestamp(events.getString("event_time"));
@@ -49,7 +58,10 @@ public class SQLManager
                 results.add(curr);
             }
             return results;
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
@@ -69,11 +81,12 @@ public class SQLManager
         Artist cArtist = null;
         Album cAlbum = null;
         Song cSong = null;
+
         /****** start parseResults() ******/
 
-        if(outerShell < 1){
+        if(outerShell < 1)
             return null;
-        }
+
         try
         {
             while (rset.next())
@@ -215,11 +228,11 @@ public class SQLManager
                 nqry.setString(4, lastname);
                 nqry.executeUpdate();
                 goodInsert = validateUsername(username);
-                if(goodInsert) {
+
+                if(goodInsert)
                     return 1;
-                } else {
+                else
                     return 2;
-                }
             }
 
             else
@@ -235,15 +248,24 @@ public class SQLManager
 
     public UserSearch parseSearch(String song, String album, String artist, String label)
     {
+        // Local constants
+
+        // Local variables
         ResultSet pertinent;
         PreparedStatement getAll;
         int outerShell = 0;
+
+        /****** parseSearch() ******/
+
         if(label.equals("")) label = SQL_DEFAULT; else label = "%"+label+"%";
         if(artist.equals("")) artist = SQL_DEFAULT; else artist = "%"+artist+"%";
         if(album.equals("")) album = SQL_DEFAULT; else album = "%"+album+"%";
         if(song.equals("")) song = SQL_DEFAULT; else song = "%"+song+"%";
-        try{
-            if(!(song.equals(SQL_DEFAULT))){
+
+        try
+        {
+            if(!(song.equals(SQL_DEFAULT)))
+            {
                 getAll = con.prepareStatement("SELECT * FROM song NATURAL JOIN album " +
                         "NATURAL JOIN artist NATURAL JOIN record_label WHERE song_title LIKE ?" +
                         "AND album_title LIKE ? AND group_name LIKE ? AND label_name LIKE ?");
@@ -252,7 +274,10 @@ public class SQLManager
                 getAll.setString(3, artist);
                 getAll.setString(4, label);
                 outerShell = 4;
-            }else if(!(album.equals(SQL_DEFAULT))){
+            }
+
+            else if(!(album.equals(SQL_DEFAULT)))
+            {
                 getAll = con.prepareStatement("SELECT * FROM album NATURAL JOIN artist " +
                         "NATURAL JOIN record_label WHERE album_title LIKE ? AND group_name LIKE ? " +
                         "AND label_name LIKE ?");
@@ -260,31 +285,50 @@ public class SQLManager
                 getAll.setString(2, artist);
                 getAll.setString(3, label);
                 outerShell = 3;
-            }else if(!(artist.equals(SQL_DEFAULT))){
+            }
+
+            else if(!(artist.equals(SQL_DEFAULT)))
+            {
                 getAll = con.prepareStatement("SELECT * FROM artist NATURAL JOIN record_label " +
                         "WHERE group_name LIKE ? AND label_name LIKE ?");
                 getAll.setString(1, artist);
                 getAll.setString(2, label);
                 outerShell = 2;
-            }else if(!(label.equals(SQL_DEFAULT))){
+            }
+
+            else if(!(label.equals(SQL_DEFAULT)))
+            {
                 getAll = con.prepareStatement("SELECT * FROM record_label WHERE label_name " +
                         "LIKE ?");
                 getAll.setString(1, label);
                 outerShell = 1;
-            } else {
-                return null;
             }
+
+            else
+                return null;
+
             pertinent = getAll.executeQuery();
             return parseResults(pertinent, outerShell);
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
     public int addSong(String title, String length, String genre, boolean explicit,
-                       String release, String albumBC){
-        try {
+                       String release, String albumBC)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start addSong() ******/
+
+        try
+        {
             PreparedStatement mkID = con.prepareStatement("SELECT COUNT (*) FROM song");
             ResultSet rset = mkID.executeQuery();
             rset.next();
@@ -300,15 +344,26 @@ public class SQLManager
             pstate.setString(8, albumBC);
             pstate.setString(9, Integer.toString(songID));
             return pstate.executeUpdate();
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
     public int addArtist(String title, String realName, String labelName,
-                         String debutYear){
-        try {
+                         String debutYear)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start addArtist() ******/
+
+        try
+        {
             PreparedStatement mkID = con.prepareStatement("SELECT COUNT (*) FROM artist");
             ResultSet rset = mkID.executeQuery();
             rset.next();
@@ -320,15 +375,25 @@ public class SQLManager
             pstate.setInt(4, Integer.parseInt(debutYear));
             pstate.setString(5, labelName);
             return pstate.executeUpdate();
-        } catch(SQLException ex){
+        }
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
     public int addAlbum(String barcode, String style, String genre, String title,
-                        String artistID){
-        try {
+                        String artistID)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start addAlbum() ******/
+
+        try
+        {
             PreparedStatement pstate = con.prepareStatement("INSERT INTO album VALUES(?, ?, ?, ?, ?, ?)");
             pstate.setString(1, barcode);
             pstate.setString(2, style);
@@ -337,123 +402,217 @@ public class SQLManager
             pstate.setString(5, title);
             pstate.setInt(6, Integer.parseInt(artistID));
             return pstate.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public int addLabel(String name, String formYear, String netWorth){
-        try {
+    public int addLabel(String name, String formYear, String netWorth)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start addLabel() ******/
+
+        try
+        {
             PreparedStatement pstate = con.prepareStatement("INSERT INTO record_label VALUES(?, ?, ?)");
             pstate.setString(1, name);
             pstate.setInt(2, Integer.parseInt(formYear));
             pstate.setDouble(3, Double.parseDouble(netWorth));
             return pstate.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public ArrayList<String> getAlbumSongs(Album album){
-        try {
+    public ArrayList<String> getAlbumSongs(Album album)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getAlbumSongs() ******/
+
+        try
+        {
             ArrayList<String> results = new ArrayList<>();
             PreparedStatement pstate = con.prepareStatement("SELECT * FROM song WHERE song.album_bc " +
                     "LIKE ?");
             pstate.setString(1, album.getBarcode());
             ResultSet rset = pstate.executeQuery();
-            while(rset.next()){
+
+            while(rset.next())
                 results.add(rset.getString("song_title"));
-            }
+
             return results;
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<String> getArtistAlbums(Artist artist){
-        try {
+    public ArrayList<String> getArtistAlbums(Artist artist)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getArtistAlbums() ******/
+
+        try
+        {
             ArrayList<String> results = new ArrayList<>();
             PreparedStatement pstate = con.prepareStatement("SELECT * FROM album WHERE album.artist_id " +
                     "LIKE ?");
             pstate.setString(1, Integer.toString(artist.getArtistID()));
             ResultSet rset = pstate.executeQuery();
-            while(rset.next()){
+
+            while(rset.next())
                 results.add(rset.getString("album_title"));
-            }
+
             return results;
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<String> getEvents(){
-        try {
+    public ArrayList<String> getEvents()
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getEvents() ******/
+
+        try
+        {
            PreparedStatement getem = con.prepareStatement("SELECT event_time," +
                    " event_location, event_id, artist.group_name FROM events INNER JOIN " +
                    "artist ON events.event_artist = artist.artist_id");
            ResultSet events = getem.executeQuery();
            return stringifyEvents(events);
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<String> getEvents(int artistID){
-        try {
+    public ArrayList<String> getEvents(int artistID)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getEvents() ******/
+
+        try
+        {
             PreparedStatement getEv = con.prepareStatement("SELECT event_time," +
                     " event_location, event_id, artist.group_name FROM events INNER JOIN " +
                     "artist ON events.event_artist = artist.artist_id WHERE artist_id = ?");
             getEv.setString(1, Integer.toString(artistID));
             ResultSet events = getEv.executeQuery();
             return stringifyEvents(events);
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<String> getLabelArtists(Label label){
-        try {
+    public ArrayList<String> getLabelArtists(Label label)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getLabelArtists() ******/
+
+        try
+        {
             ArrayList<String> results = new ArrayList<>();
             PreparedStatement pstate = con.prepareStatement("SELECT * FROM artist WHERE artist.label_name " +
                     "LIKE ?");
             pstate.setString(1, label.getName());
             ResultSet rset = pstate.executeQuery();
-            while(rset.next()){
+
+            while(rset.next())
                 results.add(rset.getString("group_name"));
-            }
+
             return results;
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<String> getAlbumEditions(Album album){
-        try {
+    public ArrayList<String> getAlbumEditions(Album album)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getAlbumEditions() ******/
+
+        try
+        {
             ArrayList<String> editions = new ArrayList<>();
             PreparedStatement getEd = con.prepareStatement("SELECT * FROM edition WHERE " +
                     "base_barcode = ?");
             getEd.setString(1, album.getBarcode());
             ResultSet eds = getEd.executeQuery();
-            while(eds.next()){
+
+            while(eds.next())
+            {
                 editions.add(eds.getString("edition_title") + ", barcode: " +
                         eds.getString("edition_barcode"));
             }
+
             return editions;
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public DiscEvent getSingleEvent(String eventString){
-        try {
+    public DiscEvent getSingleEvent(String eventString)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getSingleEvent() ******/
+
+        try
+        {
             String[] splitter = eventString.split("ID: ");
             String strID = splitter[splitter.length - 1].trim().replace(")", "");
             int eID = Integer.parseInt(strID);
@@ -466,14 +625,25 @@ public class SQLManager
             return new DiscEvent(event.getString("event_name"), event.getString("event_time"),
                     event.getString("group_name"), event.getString("event_location"),
                     event.getInt("event_id"));
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public UserAccount getUserData(String username){
-        try {
+    public UserAccount getUserData(String username)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getUserData() ******/
+
+        try
+        {
             ArrayList<URSong> rawSongs =  new ArrayList<>();
             ArrayList<String> songsRated = new ArrayList<>();
             PreparedStatement getUser = con.prepareStatement("SELECT * FROM users " +
@@ -487,76 +657,119 @@ public class SQLManager
                     "artist.artist_id WHERE username = ?");
             getData.setString(1, username);
             ResultSet ratingData = getData.executeQuery();
-            while(ratingData.next()){
+
+            while(ratingData.next())
+            {
                 rawSongs.add(new URSong(ratingData.getString("song_title"),
                         ratingData.getString("album_title"),
                         ratingData.getString("group_name"),
                         ratingData.getInt("rating_given")));
             }
+
             rawSongs.sort(URSong::compareTo);
-            for(int i = 0; i < rawSongs.size(); i++){
+
+            for(int i = 0; i < rawSongs.size(); i++)
+            {
                 songsRated.add(rawSongs.get(i).getTitle() + " by " + rawSongs.get(i).getArtistName() + ", Rating Given: " +
                     Integer.toString(rawSongs.get(i).getRating()));
             }
+
             return new UserAccount(userData.getString("firstname"), userData.getString("lastname"),
                     username, songsRated);
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public boolean hasUserRated(String username, String songID){
-        try {
+    public boolean hasUserRated(String username, String songID)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start hasUserRated() ******/
+
+        try
+        {
             PreparedStatement getRated = con.prepareStatement("SELECT * FROM given_ratings" +
                     " WHERE username = ? AND song_rated = ?");
             getRated.setString(1, username);
             getRated.setString(2, songID);
             ResultSet rRated = getRated.executeQuery();
             return rRated.next();
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return false;
         }
     }
 
-    public int removeSong(String title, String id){
-        try {
+    public int removeSong(String title, String id)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start removeSong() ******/
+
+        try
+        {
             PreparedStatement pstate = con.prepareStatement("DELETE FROM song WHERE song.song_title LIKE " +
                     "? AND song.song_id LIKE ? ");
-            if(title.equals("")){
+
+            if(title.equals(""))
                 title = SQL_DEFAULT;
-            }
-            if(id.equals("")){
+
+            if(id.equals(""))
                 id = SQL_DEFAULT;
-            }
+
             pstate.setString(1, title);
             pstate.setString(2, id);
             return pstate.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public int removeAlbum(String title, String barcode){
-        try {
+    public int removeAlbum(String title, String barcode)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start removeAlbum() ******/
+
+        try
+        {
             PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
                     "song.album_bc LIKE ?");
-            if(barcode.equals("")){
+
+            if(barcode.equals(""))
+            {
                 PreparedStatement getBC = con.prepareStatement("SELECT album.album_bc FROM album WHERE " +
                         "album.album_title LIKE ?");
-                if(title.equals("")){
+
+                if(title.equals(""))
                     return 2;
-                }
+
                 getBC.setString(1, title);
                 ResultSet bcSet = getBC.executeQuery();
                 bcSet.next();
                 barcode = bcSet.getString("barcode");
-                if(barcode == null){
+                if(barcode == null)
                     return 2;
-                }
             }
+
             rmSongs.setString(1, barcode);
             rmSongs.executeUpdate();
             PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
@@ -564,14 +777,25 @@ public class SQLManager
             rmAlbum.setString(1, barcode);
             rmAlbum.setString(2, title);
             return rmAlbum.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public int removeArtist(String name, String artistID){
-        try {
+    public int removeArtist(String name, String artistID)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start removeArtist() ******/
+
+        try
+        {
             PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
                     "song.album_bc LIKE ?");
             PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
@@ -580,23 +804,28 @@ public class SQLManager
                     "artist.group_name LIKE ? AND artist.artist_id LIKE ?");
             PreparedStatement getAlbums = con.prepareStatement("SELECT album.album_bc FROM " +
                     "album WHERE album.artist_id LIKE ?");
-            if(artistID.equals("")){
+            if(artistID.equals(""))
+            {
                 PreparedStatement getID = con.prepareStatement("SELECT artist_id FROM artist " +
                         "WHERE artist.group_name LIKE ?");
-                if(name.equals("")){
+
+                if(name.equals(""))
                     return 2;
-                }
+
                 getID.setString(1, name);
                 ResultSet idSet = getID.executeQuery();
                 idSet.next();
                 artistID = idSet.getString("artist_id");
-                if(artistID == null){
+
+                if(artistID == null)
                     return 2;
-                }
+
             }
             getAlbums.setString(1, artistID);
             ResultSet albBC = getAlbums.executeQuery();
-            while(albBC.next()){
+
+            while(albBC.next())
+            {
                 rmSongs.setString(1, albBC.getString("barcode"));
                 rmSongs.executeUpdate();
                 rmAlbum.setString(1, albBC.getString("barcode"));
@@ -605,47 +834,74 @@ public class SQLManager
             rmArtist.setString(1, name);
             rmArtist.setString(2, artistID);
             return rmArtist.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public int removeLabel(String name){
-        try{
+    public int removeLabel(String name)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start removeLabel() ******/
+
+        try
+        {
             PreparedStatement getArtists = con.prepareStatement("SELECT FROM artist WHERE " +
                     "label_name LIKE ?");
             PreparedStatement setUnsigned = con.prepareStatement("UPDATE artist SET label_name =" +
                     "'UNSIGNED' WHERE label_name LIKE ?");
             PreparedStatement rmLabel = con.prepareStatement("DELETE FROM record_label WHERE " +
                     "label_name LIKE ?");
-            if(name.equals("")){
+            if(name.equals(""))
                 return 2;
-            }
+
             getArtists.setString(1, name);
             ResultSet artists = getArtists.executeQuery();
-            while(artists.next()){
+
+            while(artists.next())
+            {
                 setUnsigned.setString(1, name);
                 setUnsigned.executeUpdate();
             }
             rmLabel.setString(1, name);
             return rmLabel.executeUpdate();
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
             return 0;
         }
     }
 
-    public void updateAlbumRating(Song song){
+    public void updateAlbumRating(Song song)
+    {
+        // Local constants
+
+        // Local variables
         double count = 0;
         double sum_ratings = 0;
-        try {
+
+        /****** start updateAlbumRating() ******/
+
+        try
+        {
             PreparedStatement getAlbSong = con.prepareStatement("SELECT * " +
                     "FROM song WHERE song.album_bc = ?");
             getAlbSong.setString(1, song.getAlbum().getBarcode());
             ResultSet albSongs = getAlbSong.executeQuery();
-            while(albSongs.next()){
-                if(albSongs.getInt("song_tratings") != 0){
+
+            while(albSongs.next())
+            {
+                if(albSongs.getInt("song_tratings") != 0)
+                {
                     count++;
                     sum_ratings += albSongs.getDouble("song_sratings")
                             / albSongs.getDouble("song_tratings");
@@ -653,18 +909,33 @@ public class SQLManager
             }
             PreparedStatement upAlb = con.prepareStatement("UPDATE album SET album_rating = ? WHERE " +
                     "album_bc = ?");
-            if(count == 0) count = 1;
+            if(count == 0)
+                count = 1;
             upAlb.setDouble(1, sum_ratings/count);
             upAlb.setString(2, song.getAlbum().getBarcode());
-        } catch(SQLException ex){
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void updateRating(String username, Song song, int rating){
-        try {
-            if(rating > 5) rating = 5;
-            if(rating < 0) rating = 0;
+    public void updateRating(String username, Song song, int rating)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start updateRating() ******/
+
+        try
+        {
+            if(rating > 5)
+                rating = 5;
+            if(rating < 0)
+                rating = 0;
+
             PreparedStatement updateRatings = con.prepareStatement("INSERT INTO given_ratings " +
                     "VALUES (?, ?, ?)");
             updateRatings.setString(1, username);
@@ -677,43 +948,79 @@ public class SQLManager
             updateRatings.setString(2, Integer.toString(song.getID()));
             updateRatings.executeUpdate();
             updateAlbumRating(song);
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void updateFirstname(String username, String firstname){
-        try {
+    public void updateFirstname(String username, String firstname)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start updateFirstname() ******/
+
+        try
+        {
             PreparedStatement updateFN = con.prepareStatement("UPDATE users SET firstname = " +
                     "? WHERE username = ?");
             updateFN.setString(2, username);
             updateFN.setString(1, firstname);
             updateFN.executeUpdate();
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void updateLastname(String username, String lastname){
-        try {
+    public void updateLastname(String username, String lastname)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start updateLastname() ******/
+
+        try
+        {
             PreparedStatement updateFN = con.prepareStatement("UPDATE users SET lastname = " +
                     "? WHERE username = ?");
             updateFN.setString(2, username);
             updateFN.setString(1, lastname);
             updateFN.executeUpdate();
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void updateUsername(String username, String nUsername){
-        try {
+    public void updateUsername(String username, String nUsername)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start updateUsername() ******/
+
+        try
+        {
             PreparedStatement updateFN = con.prepareStatement("UPDATE users SET username = " +
                     "? WHERE username = ?");
             updateFN.setString(2, username);
             updateFN.setString(1, nUsername);
             updateFN.executeUpdate();
-        } catch(SQLException ex) {
+        }
+
+        catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
