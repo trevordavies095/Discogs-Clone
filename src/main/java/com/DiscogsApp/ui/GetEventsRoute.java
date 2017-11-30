@@ -9,20 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GetEventsRoute implements Route {
-
+public class GetEventsRoute implements Route
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
-
     private final SearchCache searchCache;
 
-    public GetEventsRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache) {
+    // Class variables
+
+    public GetEventsRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache)
+    {
         // Local constants
 
         // Local variables
 
         /****** start PostSearchRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
@@ -31,24 +34,31 @@ public class GetEventsRoute implements Route {
         this.searchCache = searchCache;
     }
 
-    public String handle(Request request, Response response){
+    public String handle(Request request, Response response)
+    {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
         // Local variables
+        String cEvent;
+        DiscEvent devent;
 
-        if(httpSession.isNew()){
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
 
-        /****** start handle() ******/
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
-        String cEvent = request.queryParams("chosen");
-        DiscEvent devent = sqlManager.getSingleEvent(cEvent);
+
+        cEvent = request.queryParams("chosen");
+        devent = sqlManager.getSingleEvent(cEvent);
+
         vm.put("eventLoc", devent.getEventLocation());
         vm.put("eventTime", devent.getEventTime());
         vm.put("eventName", devent.getEventName());
