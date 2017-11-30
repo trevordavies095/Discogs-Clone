@@ -13,15 +13,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GetResultRoute implements Route {
-
+public class GetResultRoute implements Route
+{
+    // Class constants
     private final TemplateEngine templateEngine;
-
     private final SQLManager sqlManager;
-
     private final SearchCache searchCache;
 
-    public GetResultRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache){
+    // Class variables
+
+    public GetResultRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start GetResultRoute() ******/
 
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
@@ -31,45 +38,64 @@ public class GetResultRoute implements Route {
         this.searchCache = searchCache;
     }
 
-    public String handle(Request request, Response response){
+    public String handle(Request request, Response response)
+    {
         // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
         // Local variables
-
-        /****** start handle() ******/
-
-        if(httpSession.isNew()){
-            response.redirect(Routes.HOME_URL);
-            return null;
-        }
-
         String song = request.queryParams("song");
         String album = request.queryParams("album");
         String artist = request.queryParams("artist");
         String label = request.queryParams("label");
         String newRating = request.queryParams("rateSong");
 
+        Song rSong;
+        Album rAlbum;
+        Artist rArtist;
+        Label rLabel;
+        boolean usrRating;
+        ArrayList<String> aSongs;
+        ArrayList<String> aEditions;
+        ArrayList<String> aAlbums;
+        ArrayList<String> artistEvents;
+        ArrayList<String> lArtists;
+
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
+
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
-        if(song != null) {
-            Song rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
-            if (rSong == null) {
+
+        if(song != null)
+        {
+            rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
+            if (rSong == null)
+            {
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch(song, "", "", ""));
                 rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
             }
-            boolean usrRating = sqlManager.hasUserRated(httpSession.attribute(FTLKeys.USER),
+
+            usrRating = sqlManager.hasUserRated(httpSession.attribute(FTLKeys.USER),
                     Integer.toString(rSong.getID()));
-            if(newRating != null && !newRating.equals("") && !usrRating){
+
+            if(newRating != null && !newRating.equals("") && !usrRating)
+            {
                 sqlManager.updateRating(httpSession.attribute(FTLKeys.USER),
                         rSong, Integer.parseInt(newRating));
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch(song, "", "", ""));
                 rSong = searchCache.getSong(httpSession.attribute(FTLKeys.USER), song);
             }
+
             usrRating = sqlManager.hasUserRated(httpSession.attribute(FTLKeys.USER),
                     Integer.toString(rSong.getID()));
             vm.put("song", rSong.getTitle());
@@ -81,15 +107,20 @@ public class GetResultRoute implements Route {
             vm.put("ryear", Integer.toString(rSong.getReleaseYear()));
             vm.put("salbum", rSong.getAlbum().getTitle());
             vm.put("sartist", rSong.getAlbum().getArtist().getName());
-        }else if(album != null){
-            Album rAlbum = searchCache.getAlbum(httpSession.attribute(FTLKeys.USER), album);
-            if(rAlbum == null){
+        }
+
+        else if(album != null)
+        {
+            rAlbum = searchCache.getAlbum(httpSession.attribute(FTLKeys.USER), album);
+            if(rAlbum == null)
+            {
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch("", album,"",""));
                 rAlbum = searchCache.getAlbum(httpSession.attribute(FTLKeys.USER), album);
             }
-            ArrayList<String> aSongs = sqlManager.getAlbumSongs(rAlbum);
-            ArrayList<String> aEditions = sqlManager.getAlbumEditions(rAlbum);
+
+            aSongs = sqlManager.getAlbumSongs(rAlbum);
+            aEditions = sqlManager.getAlbumEditions(rAlbum);
             vm.put("album", rAlbum.getTitle());
             vm.put("albumBC", rAlbum.getBarcode());
             vm.put("rating", rAlbum.getRating());
@@ -98,31 +129,41 @@ public class GetResultRoute implements Route {
             vm.put("asongs", aSongs);
             vm.put("aartist", rAlbum.getArtist().getName());
             vm.put("aeditions", aEditions);
-        }else if(artist != null){
-            Artist rArtist = searchCache.getArtist(httpSession.attribute(FTLKeys.USER), artist);
-            if(rArtist == null){
+        }
+
+        else if(artist != null)
+        {
+            rArtist = searchCache.getArtist(httpSession.attribute(FTLKeys.USER), artist);
+            if(rArtist == null)
+            {
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch("", "", artist, ""));
                 rArtist = searchCache.getArtist(httpSession.attribute(FTLKeys.USER), artist);
             }
-            ArrayList<String> aAlbums = sqlManager.getArtistAlbums(rArtist);
+
+            aAlbums = sqlManager.getArtistAlbums(rArtist);
             vm.put("artist", rArtist.getName());
             vm.put("rname", rArtist.getRealName());
             vm.put("dyear", Integer.toString(rArtist.getDebutYear()));
             vm.put("label", rArtist.getLabel().getName());
             vm.put("aalbums", aAlbums);
-            ArrayList<String> artistEvents = sqlManager.getEvents(rArtist.getArtistID());
-            if(artistEvents.size() > 0) {
+            artistEvents = sqlManager.getEvents(rArtist.getArtistID());
+            if(artistEvents.size() > 0)
                 vm.put("aevents", artistEvents);
-            }
-        }else if(label != null){
-            Label rLabel = searchCache.getLabel(httpSession.attribute(FTLKeys.USER), label);
-            if(rLabel == null){
+
+        }
+
+        else if(label != null)
+        {
+            rLabel = searchCache.getLabel(httpSession.attribute(FTLKeys.USER), label);
+            if(rLabel == null)
+            {
                 searchCache.updateCache(httpSession.attribute(FTLKeys.USER),
                         sqlManager.parseSearch("", "","",label));
                 rLabel = searchCache.getLabel(httpSession.attribute(FTLKeys.USER), label);
             }
-            ArrayList<String> lArtists = sqlManager.getLabelArtists(rLabel);
+
+            lArtists = sqlManager.getLabelArtists(rLabel);
             vm.put("label", rLabel.getName());
             vm.put("nworth", rLabel.getNetWorth());
             vm.put("fyear", Integer.toString(rLabel.getFormed()));
@@ -131,5 +172,4 @@ public class GetResultRoute implements Route {
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.RESULT_VIEW));
     }
-
 }
