@@ -1,10 +1,15 @@
 package com.DiscogsApp.appl;
 
 import com.DiscogsApp.model.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Searches cache for DisClones
+ * @author Patrick Ehrenreich (pxe1833@rit.edu)
+ * @author Loren Davies (ltd9938@rit.edu)
+ * @since October 21st, 2017
+ */
 public class SearchCache
 {
     // Class constants
@@ -12,6 +17,9 @@ public class SearchCache
     // Class variables
     private HashMap<String, UserSearch> cache;
 
+    /**
+     * Constructor for SearchCache class
+     */
     public SearchCache()
     {
         // Local constants
