@@ -37,12 +37,13 @@ public class GetSignupRoute implements Route
 
         // Local variables
 
-        if(httpSession.isNew()){
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
-
-        /****** start handle() ******/
 
         vm.put(FTLKeys.TITLE, "Create Account");
         return templateEngine.render(new ModelAndView(vm, FTLKeys.SIGNUP_VIEW));
