@@ -1,0 +1,13 @@
+Patrick Ehrenreich
+	- 
+
+Loren Davies
+	- Code documentation
+	- Database population
+	- Report
+	- Presentation
+	- GitHub management
+	- README.txt
+	
+Michael Hopkins
+	-
