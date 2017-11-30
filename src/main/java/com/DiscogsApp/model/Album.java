@@ -42,29 +42,22 @@ public class Album implements SearchObject
     public static SearchEnum getType() {
         return type;
     }
-
     public String getBarcode() {
         return barcode;
     }
-
     public String getStyle() {
         return style;
     }
-
     public String getGenre() {
         return genre;
     }
-
     public String getTitle() {
         return title;
     }
-
     public double getRating() {
         return rating;
     }
-
     public Artist getArtist(){ return this.artist; }
-
     public String toString(){
         return title + " by " + artist.getName();
     }
