@@ -18,7 +18,6 @@ public class PostSigninRoute implements Route
 
     // Class variables
 
-
     private static String makeBadUsernameMessage(String username)
     {
         // Local constants
