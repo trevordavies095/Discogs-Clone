@@ -22,6 +22,7 @@ public class GetSignoutRoute implements Route
         // Local variables
 
         /****** start GetSignoutRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         this.templateEngine = templateEngine;
@@ -36,12 +37,13 @@ public class GetSignoutRoute implements Route
 
         // Local variables
 
-        if(httpSession.isNew()){
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
-
-        /****** start handle() ******/
 
         httpSession.attribute(FTLKeys.SIGNED_IN, false);
         httpSession.attribute(FTLKeys.USER, "Guest");
@@ -51,6 +53,7 @@ public class GetSignoutRoute implements Route
         vm.put(FTLKeys.USER, "Guest");
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put("events", sqlManager.getEvents());
+
         return templateEngine.render(new ModelAndView(vm, FTLKeys.HOME_VIEW));
     }
 }
