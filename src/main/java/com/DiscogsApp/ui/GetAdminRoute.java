@@ -20,7 +20,14 @@ public class GetAdminRoute implements Route {
 
     // Class variables
 
-    public GetAdminRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache){
+    public GetAdminRoute(TemplateEngine templateEngine, SQLManager sqlManager, SearchCache searchCache)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start GetAdminRoute() ******/
+
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(sqlManager, "SQLManager must not be null");
         Objects.requireNonNull(searchCache, "searchCache must not be null");
@@ -29,12 +36,18 @@ public class GetAdminRoute implements Route {
         this.searchCache = searchCache;
     }
 
-    public String handle(Request request, Response response){
-
+    public String handle(Request request, Response response)
+    {
+        // Local constants
         final Session httpSession = request.session();
         final Map<String, Object> vm = new HashMap<>();
 
-        if(httpSession.isNew()){
+        // Local variables
+
+        /****** start handle() ******/
+
+        if(httpSession.isNew())
+        {
             response.redirect(Routes.HOME_URL);
             return null;
         }
@@ -42,7 +55,8 @@ public class GetAdminRoute implements Route {
         vm.put(FTLKeys.SIGNED_IN, httpSession.attribute(FTLKeys.SIGNED_IN));
         vm.put(FTLKeys.USER, httpSession.attribute(FTLKeys.USER));
 
-        if(!(boolean)(httpSession.attribute(FTLKeys.ADMIN))){
+        if(!(boolean)(httpSession.attribute(FTLKeys.ADMIN)))
+        {
             vm.put(FTLKeys.ADMIN, false);
             vm.put(FTLKeys.MESSAGE, NOT_ADMIN_MSG);
             return templateEngine.render(new ModelAndView(vm, FTLKeys.ADMIN_VIEW));
