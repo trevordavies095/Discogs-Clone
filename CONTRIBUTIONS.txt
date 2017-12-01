@@ -10,8 +10,10 @@ Patrick Ehrenreich
 
 Loren Davies
 	- Code documentation
+	- CSS
+	- Gathered data to be populated (CSV file)
+	- Phase reports
 	- Table population
-	- Report
 	- Phase 3 Presentation Slides
 	- GitHub management
 	- README.txt
