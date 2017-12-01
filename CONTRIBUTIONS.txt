@@ -10,7 +10,7 @@ Patrick Ehrenreich
 
 Loren Davies
 	- Code documentation
-	- CSS
+	- CSS style design & redesign
 	- Gathered data to be populated (CSV file)
 	- Phase reports
 	- Table population
