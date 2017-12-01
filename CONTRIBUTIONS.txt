@@ -20,7 +20,7 @@ Loren Davies
 	
 Michael Hopkins
 	- Phase 3 report and helped with other reports
-	- Helped with Database table creation and population
+	- Helped with database table creation and population
 	- Database management to remove duplicate albums and move them into editions table with the correct barcodes maitained
 	- Ensured every label has an artist ,every artist has an album,every album has a genre, and helped individually
 	  add songs for each album
