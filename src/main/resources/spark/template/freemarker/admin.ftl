@@ -36,15 +36,24 @@
             <h2>Tools:</h2>
             </br>
             <form action="/admin" method="POST">
-                <button value="addSong" name="action" type="submit">Add Song</button>
-                <button value="addAlbum" name="action" type="submit">Add Album</button>
-                <button value="addArtist" name="action" type="submit">Add Artist</button>
-                <button value="addLabel" name="action" type="submit">Add Label</button>
+                <select id="action" name="action">
+                    <option value="addSong">Add Song</option>
+                    <option value="addAlbum">Add Album</option>
+                    <option value="addArtist">Add Artist</option>
+                    <option value="addLabel">Add Label</option>
+                    <option value="addEdition">Add Edition</option>
+                    <option value="addLocation">Add Location</option>
+                    <option value="removeSong">Remove Song</option>
+                    <option value="removeAlbum">Remove Album</option>
+                    <option value="removeArtist">Remove Artist</option>
+                    <option value="removeLabel">Remove Label</option>
+                    <option value="removeEdition">Remove Edition</option>
+                    <option value="removeEvent">Remove Event</option>
+                    <option value="removeLocation">Remove Location</option>
+                </select>
                 <br/>
-                <button value="removeSong" name="action" type="submit">Remove Song</button>
-                <button value="removeAlbum" name="action" type="submit">Remove Album</button>
-                <button value="removeArtist" name="action" type="submit">Remove Artist</button>
-                <button value="removeLabel" name="action" type="submit">Remove Label</button>
+                <button type="submit">Submit</button>
+
             </form>
         <#elseif specific??>
             <#if message??>
@@ -136,6 +145,44 @@
                 <input id="netWorth" type="text" name="netWorth" />
                 <br/>
                 <button value="addLabelAct" name="action" type="submit">Add Label</button>
+            <#elseif specific == "addEdition">
+                <br/>
+                <label for="editionTitle">Edition Title (REQUIRED):</label>
+                <br/>
+                <input id="editionTitle" type="text" name="editionTitle" />
+                <br/>
+                <label for="editionBarcode">Edition Barcode (REQUIRED):</label>
+                <br/>
+                <input id="editionBarcode" type="text" name="editionBarcode" />
+                <br/>
+                <label for="baseBarcode">Base Edition Barcode (REQUIRED):</label>
+                <br/>
+                <input id="baseBarcode" type="text" name="baseBarcode" />
+                <br/>
+                <label for="editionStyle">Edition Style:</label>
+                <br/>
+                <input id="editionStyle" type="text" name="editionStyle" />
+                <br/>
+                <button value="addEditionAct" name="action" type="submit">Add Edition</button>
+            <#elseif specific == "addLocation">
+                <br/>
+                <label for="locationName">Location Name (REQUIRED):</label>
+                <br/>
+                <input id="locationName" type="text" name="locationName" />
+                <br/>
+                <label for="locationCap">Location Capacity (REQUIRED):</label>
+                <br/>
+                <input id="locationCap" type="text" name="locationCap" />
+                <br/>
+                <label for="locationCity">Location City (REQUIRED):</label>
+                <br/>
+                <input id="locationCity" type="text" name="locationCity" />
+                <br/>
+                <label for="locationState">Location State (REQUIRED, Enter 2 Character Abbreviation):</label>
+                <br/>
+                <input id="locationState" type="text" name="locationState" />
+                <br/>
+                <button value="addLocationAct" name="action" type="submit">Add Location</button>
             <#elseif specific == "removeSong">
                 <br/>
                 <label for="rmSongTitle">Song Title:</label>
@@ -177,6 +224,27 @@
                 <input id="rmLabelName" type="text" name="rmLabelName" />
                 <br/>
                 <button value="removeLabelAct" name="action" type="submit">Remove Label</button>
+            <#elseif specific == "removeLocation">
+                <br/>
+                <label for="rmLocationName">Location Name (REQUIRED):</label>
+                <br/>
+                <input id="rmLocationName" type="text" name="rmLocationName" />
+                <br/>
+                <button value="removeLocationAct" name="action" type="submit">Remove Location</button>
+            <#elseif specific == "removeEdition">
+                <br/>
+                <label for="rmEditionBC">Edition Barcode (REQUIRED):</label>
+                <br/>
+                <input id="rmEditionBC" type="text" name="rmEditionBC" />
+                <br/>
+                <button value="removeEditionAct" name="action" type="submit">Remove Edition</button>
+            <#elseif specific == "removeEvent">
+                <br/>
+                <label for="rmEventID">Event ID (REQUIRED):</label>
+                <br/>
+                <input id="rmEventID" type="text" name="rmEventID" />
+                <br/>
+                <button value="removeEventAct" name="action" type="submit">Remove Event</button>
             </#if>
             </form>
         </#if>

@@ -79,5 +79,6 @@ public class WebServer
         get(Routes.ACCUPDATE_URL, new GetUpdateAccountRoute(templateEngine, sqlManager, searchCache));
         post(Routes.ACCUPDATE_URL, new PostUpdateAccountRoute(templateEngine, sqlManager, searchCache));
         get(Routes.EVENTS_URL, new GetEventsRoute(templateEngine, sqlManager, searchCache));
+        post(Routes.EVENTS_URL, new GetEventsRoute(templateEngine, sqlManager, searchCache));
     }
 }

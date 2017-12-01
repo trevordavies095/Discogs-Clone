@@ -1,9 +1,6 @@
 package com.DiscogsApp;
 
-import java.io.InputStream;
 import java.util.Objects;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import com.DiscogsApp.appl.SQLManager;
 import com.DiscogsApp.appl.SearchCache;
@@ -12,16 +9,11 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.DiscogsApp.ui.WebServer;
 
-/**
- *
- *
- */
 public final class Application
 {
     // Class constants
 
     // Class variables
-    private static final Logger LOG = Logger.getLogger(Application.class.getName());
     private final WebServer webServer;
 
     private Application(final WebServer webServer)
@@ -42,9 +34,7 @@ public final class Application
         // Local variables
 
         /****** start initialize() ******/
-        LOG.config("Application is initializing.");
         webServer.initialize();
-        LOG.config("Application initialization complete.");
     }
 
     /**
@@ -63,15 +53,6 @@ public final class Application
         final Application app = new Application(webServer);
 
         /****** start main() ******/
-
-        /*try {
-            ClassLoader classLoader = Application.class.getClassLoader();
-            final InputStream logConfig = classLoader.getResourceAsStream("log.properties");
-            LogManager.getLogManager().readConfiguration(logConfig);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Could not initialize log manager because: " + e.getMessage());
-        }*/
 
         app.initialize();
     }

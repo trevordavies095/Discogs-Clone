@@ -36,6 +36,20 @@ public class SQLManager
         }
     }
 
+    private int getAtttendeeCount(int eventID){
+        try {
+            PreparedStatement atCnt = con.prepareStatement("SELECT count(event_attendees.user_username) " +
+                    "FROM event_attendees WHERE event_id = ?");
+            atCnt.setInt(1, eventID);
+            ResultSet numAtnd = atCnt.executeQuery();
+            numAtnd.next();
+            return numAtnd.getInt("count");
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
     private ArrayList<String> stringifyEvents(ResultSet events)
     {
         // Local constants
@@ -205,6 +219,19 @@ public class SQLManager
         }
     }
 
+    public void addAttendee(int eventID, String username, boolean attending){
+        try {
+            PreparedStatement addAtt = con.prepareStatement("INSERT INTO event_attendees VALUES " +
+                    "(?, ?, ?)");
+            addAtt.setInt(1, eventID);
+            addAtt.setString(2, username);
+            addAtt.setBoolean(3, attending);
+            addAtt.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public int addUser(String username, String password, String firstname, String lastname) {
         // Local constants
 
@@ -315,6 +342,36 @@ public class SQLManager
         {
             ex.printStackTrace();
             return null;
+        }
+    }
+
+    public int addLocation(String name, String cap, String city, String state) {
+        try {
+            PreparedStatement addLoc = con.prepareStatement("INSERT INTO locations VALUES " +
+                    "(?, ?, ?, ?)");
+            addLoc.setString(1, name);
+            addLoc.setInt(2, Integer.parseInt(cap));
+            addLoc.setString(3, city);
+            addLoc.setString(4, state);
+            return addLoc.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int addEdition(String style, String baseBC, String edBC, String title) {
+        try {
+            PreparedStatement addEdi = con.prepareStatement("INSERT INTO edition VALUES " +
+                    "(?, ?, ?, ?)");
+            addEdi.setString(1, style);
+            addEdi.setString(2, baseBC);
+            addEdi.setString(3, title);
+            addEdi.setString(4, edBC);
+            return addEdi.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return 0;
         }
     }
 
@@ -624,7 +681,35 @@ public class SQLManager
             event.next();
             return new DiscEvent(event.getString("event_name"), event.getString("event_time"),
                     event.getString("group_name"), event.getString("event_location"),
-                    event.getInt("event_id"));
+                    event.getInt("event_id"), getAtttendeeCount(event.getInt("event_id")));
+        }
+
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public DiscEvent getSingleEvent(int eventID)
+    {
+        // Local constants
+
+        // Local variables
+
+        /****** start getSingleEvent() ******/
+
+        try
+        {
+            PreparedStatement getEvent = con.prepareStatement("SELECT event_name, event_location, event_time," +
+                    "event_id, event_time, artist.group_name FROM events INNER JOIN artist ON " +
+                    "events.event_artist = artist.artist_id WHERE event_id = ?");
+            getEvent.setInt(1, eventID);
+            ResultSet event = getEvent.executeQuery();
+            event.next();
+            return new DiscEvent(event.getString("event_name"), event.getString("event_time"),
+                    event.getString("group_name"), event.getString("event_location"),
+                    event.getInt("event_id"), getAtttendeeCount(event.getInt("event_id")));
         }
 
         catch(SQLException ex)
@@ -685,6 +770,21 @@ public class SQLManager
         }
     }
 
+    public boolean getUserAttending(DiscEvent devent, String username){
+        try {
+            PreparedStatement getStatus =  con.prepareStatement("SELECT event_attendees.user_attending FROM " +
+                    "event_attendees WHERE event_id = ? AND user_username = ?");
+            getStatus.setInt(1, devent.getEventID());
+            getStatus.setString(2, username);
+            ResultSet rtnVal = getStatus.executeQuery();
+            return rtnVal.next();
+
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean hasUserRated(String username, String songID)
     {
         // Local constants
@@ -720,14 +820,32 @@ public class SQLManager
 
         try
         {
-            PreparedStatement pstate = con.prepareStatement("DELETE FROM song WHERE song.song_title LIKE " +
-                    "? AND song.song_id LIKE ? ");
+            PreparedStatement pstate = con.prepareStatement("DELETE FROM song WHERE song.song_title = " +
+                    "? AND song.song_id = ? ");
+            PreparedStatement rmRatings = con.prepareStatement("DELETE FROM given_ratings WHERE " +
+                    "given_ratings.song_rated = ?");
+            PreparedStatement getSongs = con.prepareStatement("SELECT song.song_id FROM " +
+                    "song WHERE song.song_title = ?");
 
             if(title.equals(""))
                 title = SQL_DEFAULT;
 
             if(id.equals(""))
                 id = SQL_DEFAULT;
+
+            if(title.equals(SQL_DEFAULT) && id.equals(SQL_DEFAULT)) return 2;
+
+            if(id.equals(SQL_DEFAULT)){
+                getSongs.setString(1, title);
+                ResultSet songers = getSongs.executeQuery();
+                songers.next();
+                id = songers.getString("song_id");
+                rmRatings.setString(1, id);
+                rmRatings.executeUpdate();
+            } else {
+                rmRatings.setString(1, id);
+                rmRatings.executeUpdate();
+            }
 
             pstate.setString(1, title);
             pstate.setString(2, id);
@@ -753,6 +871,10 @@ public class SQLManager
         {
             PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
                     "song.album_bc LIKE ?");
+            PreparedStatement rmRatings = con.prepareStatement("DELETE FROM given_ratings WHERE " +
+                    "given_ratings.song_rated = ?");
+            PreparedStatement getSongs = con.prepareStatement("SELECT song.song_id FROM " +
+                    "song WHERE song.album_bc = ?");
 
             if(barcode.equals(""))
             {
@@ -765,15 +887,20 @@ public class SQLManager
                 getBC.setString(1, title);
                 ResultSet bcSet = getBC.executeQuery();
                 bcSet.next();
-                barcode = bcSet.getString("barcode");
+                barcode = bcSet.getString("album_bc");
                 if(barcode == null)
                     return 2;
             }
-
+            getSongs.setString(1, barcode);
+            ResultSet songs = getSongs.executeQuery();
+            while(songs.next()){
+                rmRatings.setString(1, songs.getString("song_id"));
+                rmRatings.executeUpdate();
+            }
             rmSongs.setString(1, barcode);
             rmSongs.executeUpdate();
             PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
-                    "album.album_bc LIKE ? AND album.album_title LIKE ?");
+                    "album.album_bc = ? AND album.album_title = ?");
             rmAlbum.setString(1, barcode);
             rmAlbum.setString(2, title);
             return rmAlbum.executeUpdate();
@@ -796,18 +923,30 @@ public class SQLManager
 
         try
         {
+            PreparedStatement rmRatings = con.prepareStatement("DELETE FROM given_ratings WHERE " +
+                    "given_ratings.song_rated = ?");
             PreparedStatement rmSongs = con.prepareStatement("DELETE FROM song WHERE " +
-                    "song.album_bc LIKE ?");
+                    "song.album_bc = ?");
             PreparedStatement rmAlbum = con.prepareStatement("DELETE FROM album WHERE " +
-                    "album.album_bc LIKE ?");
+                    "album.album_bc = ?");
             PreparedStatement rmArtist = con.prepareStatement("DELETE FROM artist WHERE " +
-                    "artist.group_name LIKE ? AND artist.artist_id LIKE ?");
+                    "artist.group_name = ? AND artist.artist_id = ?");
             PreparedStatement getAlbums = con.prepareStatement("SELECT album.album_bc FROM " +
-                    "album WHERE album.artist_id LIKE ?");
+                    "album WHERE album.artist_id = ?");
+            PreparedStatement getSongs = con.prepareStatement("SELECT song.song_id FROM " +
+                    "song WHERE song.album_bc = ?");
+            PreparedStatement rmEdition =  con.prepareStatement("DELETE FROM edition WHERE " +
+                    "edition.base_barcode = ?");
+            PreparedStatement getEvents = con.prepareStatement("SELECT events.event_id FROM " +
+                    "events WHERE event_artist = ?");
+            PreparedStatement rmEvents =  con.prepareStatement("DELETE FROM events WHERE " +
+                    "event_id = ?");
+            PreparedStatement rmAttendees = con.prepareStatement("DELETE FROM event_attendees WHERE " +
+                    "event_attendees.event_id = ?");
             if(artistID.equals(""))
             {
                 PreparedStatement getID = con.prepareStatement("SELECT artist_id FROM artist " +
-                        "WHERE artist.group_name LIKE ?");
+                        "WHERE artist.group_name = ?");
 
                 if(name.equals(""))
                     return 2;
@@ -822,14 +961,29 @@ public class SQLManager
 
             }
             getAlbums.setString(1, artistID);
+            getEvents.setString(1, artistID);
             ResultSet albBC = getAlbums.executeQuery();
-
+            ResultSet badEvents =  getEvents.executeQuery();
             while(albBC.next())
             {
-                rmSongs.setString(1, albBC.getString("barcode"));
+                getSongs.setString(1, albBC.getString("album_bc"));
+                ResultSet sngOnAlb = getSongs.executeQuery();
+                while(sngOnAlb.next()){
+                    rmRatings.setString(1, sngOnAlb.getString("song_id"));
+                    rmRatings.executeUpdate();
+                }
+                rmSongs.setString(1, albBC.getString("album_bc"));
                 rmSongs.executeUpdate();
-                rmAlbum.setString(1, albBC.getString("barcode"));
+                rmEdition.setString(1, albBC.getString("album_bc"));
+                rmEdition.executeUpdate();
+                rmAlbum.setString(1, albBC.getString("album_bc"));
                 rmAlbum.executeUpdate();
+            }
+            while(badEvents.next()){
+                rmAttendees.setInt(1, badEvents.getInt("event_id"));
+                rmAttendees.executeUpdate();
+                rmEvents.setInt(1, badEvents.getInt("event_id"));
+                rmEvents.executeUpdate();
             }
             rmArtist.setString(1, name);
             rmArtist.setString(2, artistID);
@@ -876,6 +1030,50 @@ public class SQLManager
 
         catch(SQLException ex)
         {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeLocation(String name) {
+        try {
+            PreparedStatement removeLoc = con.prepareStatement("DELETE FROM locations WHERE location_name" +
+                    " = ?");
+            PreparedStatement removeDependants = con.prepareStatement("DELETE FROM events WHERE " +
+                    "events.event_location = ?");
+            removeDependants.setString(1, name);
+            removeLoc.setString(1, name);
+            removeDependants.executeUpdate();
+            return removeLoc.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeEvent(int ID){
+        try {
+            PreparedStatement delAttend = con.prepareStatement("DELETE FROM event_attendees WHERE " +
+                    "event_attendees.event_id = ?");
+            PreparedStatement delEvent = con.prepareStatement("DELETE FROM events WHERE " +
+                    "events.event_id = ?");
+            delAttend.setInt(1, ID);
+            delEvent.setInt(1, ID);
+            delAttend.executeUpdate();
+            return delEvent.executeUpdate();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int removeEdition(String edBC){
+        try {
+            PreparedStatement delEdition = con.prepareStatement("DELETE FROM edition WHERE " +
+                    "edition_barcode = ?");
+            delEdition.setString(1, edBC);
+            return delEdition.executeUpdate();
+        } catch(SQLException ex) {
             ex.printStackTrace();
             return 0;
         }

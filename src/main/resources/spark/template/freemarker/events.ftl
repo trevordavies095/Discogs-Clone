@@ -32,6 +32,23 @@
     <p>Event Location: ${eventLoc}</p>
     <p>Start Time: ${eventTime}</p>
     <p>Artist Name: <a href="/result?artist=${eventArtist}">${eventArtist}</a></p>
+    <#if signedIn>
+        <#if declared>
+            <p>Number of Attendees: ${attendees}</p>
+        <#else>
+            <label for="att_declaration">Will you be attending?</label>
+            <form action="/event?prevID=${eventID}" method="POST">
+                <select id="att_declaration" name="att_declaration">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <br/>
+                <button type="submit">Submit Answer</button>
+            </form>
+        </#if>
+    <#else>
+        <p>Number of Attendees: ${attendees}</p>
+    </#if>
 
 </div>
 </body>

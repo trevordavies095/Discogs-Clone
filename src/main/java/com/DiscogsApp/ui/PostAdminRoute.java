@@ -1,7 +1,6 @@
 package com.DiscogsApp.ui;
 
 import com.DiscogsApp.appl.SQLManager;
-import com.sun.org.apache.regexp.internal.RE;
 import spark.*;
 
 import java.util.HashMap;
@@ -28,6 +27,29 @@ public class PostAdminRoute implements Route
         Objects.requireNonNull(sqlManager, "sqlManager must not be null");
         this.sqlManager = sqlManager;
         this.templateEngine = templateEngine;
+    }
+
+    private int insertLocation(Request request) {
+        String name = request.queryParams("locationName");
+        String capacity = request.queryParams("locationCap");
+        String city = request.queryParams("locationCity");
+        String state = request.queryParams("locationState");
+        if(state.equals("") || name.equals("") || capacity.equals("") || city.equals("") ||
+                state.length() > 2) {
+            return 2;
+        }
+        return sqlManager.addLocation(name, capacity, city, state);
+    }
+
+    private int insertEdition(Request request) {
+        String style = request.queryParams("editionStyle");
+        String baseBC = request.queryParams("baseBarcode");
+        String edBC = request.queryParams("editionBarcode");
+        String title = request.queryParams("editionTitle");
+        if(baseBC.equals("") || edBC.equals("") || title.equals("")){
+            return 2;
+        }
+        return sqlManager.addEdition(style, baseBC, edBC, title);
     }
 
     private int insertSong(Request request)
@@ -171,6 +193,40 @@ public class PostAdminRoute implements Route
         return sqlManager.removeLabel(name);
     }
 
+    private int deleteLocation(Request request){
+        String name = request.queryParams("rmLocationName");
+
+        if(name.equals("")){
+            return 2;
+        }
+
+        return sqlManager.removeLocation(name);
+    }
+
+    private int deleteEvent(Request request){
+        String ID = request.queryParams("rmEventID");
+
+        if(ID.equals("")){
+            return 2;
+        }
+        try {
+            int formattedID = Integer.parseInt(ID);
+            return sqlManager.removeEvent(formattedID);
+        } catch(NumberFormatException ex) {
+            ex.printStackTrace();
+            return 2;
+        }
+    }
+
+    private int deleteEdition(Request request){
+        String edBC = request.queryParams("rmEditionBC");
+
+        if(edBC.equals("")){
+            return 2;
+        }
+        return sqlManager.removeEdition(edBC);
+    }
+
     private void makeDeleteStatusMsg(int status, Map<String, Object> vm, String tbl)
     {
         // Local constants
@@ -270,6 +326,21 @@ public class PostAdminRoute implements Route
                 vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
                 vm.put(FTLKeys.SPECIFIC, action);
                 break;
+            case "addEvent":
+                vm.put(FTLKeys.MESSAGE, "Entered Add Event Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
+            case "addLocation":
+                vm.put(FTLKeys.MESSAGE, "Entered Add Location Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
+            case "addEdition":
+                vm.put(FTLKeys.MESSAGE, "Entered Add Edition Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
             case "removeSong":
                 vm.put(FTLKeys.MESSAGE, "Entered Remove Song Tool.");
                 vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
@@ -287,6 +358,21 @@ public class PostAdminRoute implements Route
                 break;
             case "removeLabel":
                 vm.put(FTLKeys.MESSAGE, "Entered Remove Label Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
+            case "removeEvent":
+                vm.put(FTLKeys.MESSAGE, "Entered Remove Event Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
+            case "removeLocation":
+                vm.put(FTLKeys.MESSAGE, "Entered Remove Location Tool.");
+                vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
+                vm.put(FTLKeys.SPECIFIC, action);
+                break;
+            case "removeEdition":
+                vm.put(FTLKeys.MESSAGE, "Entered Remove Edition Tool.");
                 vm.put(FTLKeys.MSG_TYPE, FTLKeys.MSG_TYPE_INFO);
                 vm.put(FTLKeys.SPECIFIC, action);
                 break;
@@ -310,6 +396,16 @@ public class PostAdminRoute implements Route
                 vm.put(FTLKeys.SPECIFIC, "addLabel");
                 makeInsertStatusMsg(success, vm, "label");
                 break;
+            case "addLocationAct":
+                success = insertLocation(request);
+                vm.put(FTLKeys.SPECIFIC, "addLocation");
+                makeInsertStatusMsg(success, vm, "location");
+                break;
+            case "addEditionAct":
+                success = insertEdition(request);
+                vm.put(FTLKeys.SPECIFIC, "addEdition");
+                makeInsertStatusMsg(success, vm, "edition");
+                break;
             case "removeSongAct":
                 success = deleteSong(request);
                 vm.put(FTLKeys.SPECIFIC, "removeSong");
@@ -329,6 +425,21 @@ public class PostAdminRoute implements Route
                 success = deleteLabel(request);
                 vm.put(FTLKeys.SPECIFIC, "removeLabel");
                 makeDeleteStatusMsg(success, vm, "label");
+                break;
+            case "removeEventAct":
+                success = deleteEvent(request);
+                vm.put(FTLKeys.SPECIFIC, "removeEvent");
+                makeDeleteStatusMsg(success, vm, "event");
+                break;
+            case "removeLocationAct":
+                success = deleteLocation(request);
+                vm.put(FTLKeys.SPECIFIC, "removeLocation");
+                makeDeleteStatusMsg(success, vm, "location");
+                break;
+            case "removeEditionAct":
+                success = deleteEdition(request);
+                vm.put(FTLKeys.SPECIFIC, "removeEdition");
+                makeDeleteStatusMsg(success, vm, "edition");
                 break;
         }
 

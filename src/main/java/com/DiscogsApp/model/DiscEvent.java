@@ -13,7 +13,7 @@ public class DiscEvent
     private int attendees;
 
     public DiscEvent(String eventName, String eventTime, String eventArtist,
-                     String eventLocation, int ID)
+                     String eventLocation, int ID, int attendees)
     {
         // Local constants
 
@@ -26,6 +26,7 @@ public class DiscEvent
         this.eventName = eventName;
         this.eventTime = eventTime;
         this.eventID = ID;
+        this.attendees = attendees;
     }
 
     public static String parseTimestamp(String eTime)

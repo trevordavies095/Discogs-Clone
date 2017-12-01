@@ -42,6 +42,10 @@ public class GetEventsRoute implements Route
 
         // Local variables
         String cEvent;
+        String rawID;
+        String att;
+        boolean attending;
+        Integer prevID;
         DiscEvent devent;
 
         /****** start handle() ******/
@@ -57,13 +61,43 @@ public class GetEventsRoute implements Route
         vm.put(FTLKeys.ADMIN, httpSession.attribute(FTLKeys.ADMIN));
 
         cEvent = request.queryParams("chosen");
-        devent = sqlManager.getSingleEvent(cEvent);
+        rawID = request.queryParams("prevID");
+        att = request.queryParams("att_declaration");
+        if(cEvent != null) {
+            devent = sqlManager.getSingleEvent(cEvent);
+        } else if(rawID != null){
+            prevID = Integer.parseInt(rawID);
+            devent = sqlManager.getSingleEvent(prevID);
+        } else {
+            response.redirect(Routes.HOME_URL);
+            return null;
+        }
+
+        if(att != null){
+            switch(att){
+                case "yes":
+                    attending = true;
+                    break;
+                default:
+                    attending = false;
+                    break;
+            }
+            sqlManager.addAttendee(devent.getEventID(), httpSession.attribute(FTLKeys.USER), attending);
+            if(cEvent != null) {
+                devent = sqlManager.getSingleEvent(cEvent);
+            } else if(rawID != null){
+                prevID = Integer.parseInt(rawID);
+                devent = sqlManager.getSingleEvent(prevID);
+            }
+        }
 
         vm.put("eventLoc", devent.getEventLocation());
         vm.put("eventTime", devent.getEventTime());
         vm.put("eventName", devent.getEventName());
         vm.put("eventArtist", devent.getEventArtist());
         vm.put("eventID", devent.getEventID());
+        vm.put("attendees", devent.getAttendees());
+        vm.put("declared", sqlManager.getUserAttending(devent, httpSession.attribute(FTLKeys.USER)));
 
         return templateEngine.render(new ModelAndView(vm, FTLKeys.EVENTS_VIEW));
     }

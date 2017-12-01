@@ -54,6 +54,11 @@ div.page h1 {
     background-color: dimgrey;
 }
 
+#navigation a:active {
+    background-color: #191919;
+    color: white;
+}
+
 div.page h2, h3, h4 {
     margin: 0 0 15px 0;
     color: #E59322;

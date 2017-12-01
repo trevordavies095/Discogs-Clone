@@ -53,12 +53,12 @@ public class SearchCache
 
         // Local variables
         UserSearch cCache = cache.get(username);
-        ArrayList<SearchObject> data = cCache.getSongs();
 
         /****** start getSong() ******/
 
         if(cCache != null)
         {
+            ArrayList<SearchObject> data = cCache.getSongs();
             for (SearchObject curr : data)
             {
                 if (curr.toString().equals(song) || ((Song) curr).getTitle().equals(song))
@@ -74,12 +74,12 @@ public class SearchCache
 
         // Local variables
         UserSearch cCache = cache.get(username);
-        ArrayList<SearchObject> data = cCache.getAlbums();
 
         /****** start getAlbum() ******/
 
         if(cCache != null)
         {
+            ArrayList<SearchObject> data = cCache.getAlbums();
             for (SearchObject curr : data)
             {
                 if (curr.toString().equals(album) || ((Album) curr).getTitle().equals(album))
@@ -95,12 +95,12 @@ public class SearchCache
 
         // Local variables
         UserSearch cCache = cache.get(username);
-        ArrayList<SearchObject> data = cCache.getArtists();
 
         /****** start getArtist() ******/
 
         if(cCache != null)
         {
+            ArrayList<SearchObject> data = cCache.getArtists();
             for (SearchObject curr : data)
             {
                 if (curr.toString().equals(artist) || ((Artist) curr).getName().equals(artist))
@@ -116,12 +116,12 @@ public class SearchCache
 
         // Local variables
         UserSearch cCache = cache.get(username);
-        ArrayList<SearchObject> data = cCache.getLabels();
 
         /****** start getLabel() ******/
 
         if(cCache != null)
         {
+            ArrayList<SearchObject> data = cCache.getLabels();
             for (SearchObject curr : data)
             {
                 if (curr.toString().equals(label) || ((Label) curr).getName().equals(label))
