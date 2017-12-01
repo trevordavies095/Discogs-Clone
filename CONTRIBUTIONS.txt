@@ -1,11 +1,18 @@
 Patrick Ehrenreich
-	- 
+	- Wrote all application files (.java, .ftl, .css, et cetera)
+	- Database creation
+	- Table creation
+	- Table reduction
+	- Script for table population
+	- Minor code documentation
+	- Phase Reports
+	- Phase 3 Presentation Slides
 
 Loren Davies
 	- Code documentation
-	- Database population
+	- Table population
 	- Report
-	- Presentation
+	- Phase 3 Presentation Slides
 	- GitHub management
 	- README.txt
 	
