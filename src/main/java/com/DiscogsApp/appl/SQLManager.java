@@ -389,7 +389,7 @@ public class SQLManager
             PreparedStatement mkID = con.prepareStatement("SELECT COUNT (*) FROM song");
             ResultSet rset = mkID.executeQuery();
             rset.next();
-            int songID = 1102 + rset.getInt("count");
+            int songID = 1103 + rset.getInt("count");
             PreparedStatement pstate = con.prepareStatement("INSERT INTO song VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstate.setString(1, title);
             pstate.setString(2, length);
@@ -455,9 +455,9 @@ public class SQLManager
             pstate.setString(1, barcode);
             pstate.setString(2, style);
             pstate.setString(3, genre);
-            pstate.setInt(4,0);
-            pstate.setString(5, title);
-            pstate.setInt(6, Integer.parseInt(artistID));
+            pstate.setInt(6,0);
+            pstate.setString(4, title);
+            pstate.setInt(5, Integer.parseInt(artistID));
             return pstate.executeUpdate();
         }
 
@@ -475,7 +475,8 @@ public class SQLManager
         // Local variables
 
         /****** start addLabel() ******/
-
+        if(formYear.equals("")) formYear = "0";
+        if(netWorth.equals("")) netWorth = "0";
         try
         {
             PreparedStatement pstate = con.prepareStatement("INSERT INTO record_label VALUES(?, ?, ?)");
@@ -1111,6 +1112,7 @@ public class SQLManager
                 count = 1;
             upAlb.setDouble(1, sum_ratings/count);
             upAlb.setString(2, song.getAlbum().getBarcode());
+            upAlb.executeUpdate();
         }
 
         catch(SQLException ex)
@@ -1210,11 +1212,27 @@ public class SQLManager
 
         try
         {
-            PreparedStatement updateFN = con.prepareStatement("UPDATE users SET username = " +
+            PreparedStatement updateUN = con.prepareStatement("UPDATE users SET username = " +
                     "? WHERE username = ?");
-            updateFN.setString(2, username);
-            updateFN.setString(1, nUsername);
-            updateFN.executeUpdate();
+            PreparedStatement updateAtt = con.prepareStatement("UPDATE event_attendees SET user_username " +
+                    "= 'UPDATING' WHERE user_username = ?");
+            PreparedStatement fixAtt = con.prepareStatement("UPDATE event_attendees SET user_username " +
+                    "= ? WHERE user_username = 'UPDATING'");
+            PreparedStatement updateRat = con.prepareStatement("UPDATE given_ratings SET username " +
+                    "= 'UPDATING' WHERE username = ?");
+            PreparedStatement fixRat = con.prepareStatement("UPDATE given_ratings SET username " +
+                    "= ? WHERE username = 'UPDATING'");
+            updateAtt.setString(1, username);
+            updateRat.setString(1, username);
+            updateAtt.executeUpdate();
+            updateRat.executeUpdate();
+            updateUN.setString(2, username);
+            updateUN.setString(1, nUsername);
+            updateUN.executeUpdate();
+            fixAtt.setString(1, nUsername);
+            fixRat.setString(1, nUsername);
+            fixAtt.executeUpdate();
+            fixRat.executeUpdate();
         }
 
         catch(SQLException ex)

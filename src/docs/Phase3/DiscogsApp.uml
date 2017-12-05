@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.DiscogsApp</OriginalElement>
+  <nodes>
+    <node x="896.5" y="4842.0">com.DiscogsApp.ui.GetHomeRoute</node>
+    <node x="2188.5748653307473" y="4818.0">com.DiscogsApp.ui.GetAdminRoute</node>
+    <node x="5262.574865330747" y="4866.0">com.DiscogsApp.ui.GetSigninRoute</node>
+    <node x="1921.401826115061" y="2120.0">com.DiscogsApp.model.UserAccount</node>
+    <node x="2845.101826115061" y="1964.0">com.DiscogsApp.model.Song</node>
+    <node x="2427.0748653307473" y="2780.0">com.DiscogsApp.appl.SQLManager</node>
+    <node x="2594.7434927817276" y="0.0">com.DiscogsApp.model.SearchEnum</node>
+    <node x="3479.5748653307473" y="4842.0">com.DiscogsApp.ui.GetEventsRoute</node>
+    <node x="2508.5748653307473" y="4842.0">com.DiscogsApp.ui.GetMyAccountRoute</node>
+    <node x="4119.574865330747" y="4854.0">com.DiscogsApp.ui.GetSignoutRoute</node>
+    <node x="2522.943492781728" y="1050.0">com.DiscogsApp.model.Artist</node>
+    <node x="54.5" y="4830.0">com.DiscogsApp.ui.PostSearchRoute</node>
+    <node x="2260.4018261150613" y="2120.0">com.DiscogsApp.model.URSong</node>
+    <node x="2638.4018261150613" y="1468.0">com.DiscogsApp.model.Album</node>
+    <node x="1029.1214950293013" y="2120.0">com.DiscogsApp.model.UserSearch</node>
+    <node x="3957.769702094077" y="2048.0">com.DiscogsApp.model.DiscEvent</node>
+    <node x="3967.821853224962" y="3176.5">com.DiscogsApp.ui.Routes</node>
+    <node x="3638.7958115582956" y="2984.5">com.DiscogsApp.ui.FTLKeys</node>
+    <node x="3799.5748653307473" y="4854.0">com.DiscogsApp.ui.GetSearchRoute</node>
+    <node x="943.7011103549985" y="5476.0">com.DiscogsApp.Application</node>
+    <node x="1273.8476855054919" y="3212.0">com.DiscogsApp.appl.SearchCache</node>
+    <node x="576.5" y="4842.0">com.DiscogsApp.ui.PostMyAccountRoute</node>
+    <node x="2828.5748653307473" y="4842.0">com.DiscogsApp.ui.GetUpdateAccountRoute</node>
+    <node x="5582.574865330747" y="4842.0">com.DiscogsApp.ui.GetResultRoute</node>
+    <node x="2407.4851594483944" y="728.0">com.DiscogsApp.model.Label</node>
+    <node x="2899.4018261150613" y="434.0">com.DiscogsApp.model.SearchField</node>
+    <node x="1228.5" y="4818.0">com.DiscogsApp.ui.PostSigninRoute</node>
+    <node x="2144.9018261150613" y="518.5">com.DiscogsApp.model.SearchObject</node>
+    <node x="1607.5" y="4842.0">com.DiscogsApp.ui.PostUpdateAccountRoute</node>
+    <node x="3148.5748653307473" y="4770.0">com.DiscogsApp.ui.PostSignupRoute</node>
+    <node x="2406.9666994396894" y="5278.0">com.DiscogsApp.ui.WebServer</node>
+    <node x="4942.574865330747" y="4854.0">com.DiscogsApp.ui.GetSignupRoute</node>
+    <node x="4439.574865330747" y="4674.0">com.DiscogsApp.ui.PostAdminRoute</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="15.0" y="-64.0" />
+      <point x="5747.574865330747" y="3874.0" />
+      <point x="4178.978103224962" y="3874.0" />
+      <point x="94.65625" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetAdminRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="25.0" y="-88.0" />
+      <point x="2363.5748653307473" y="4434.0" />
+      <point x="2638.148394742512" y="4434.0" />
+      <point x="-20.426470588235134" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignoutRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="37.5" y="-52.0" />
+      <point x="4307.074865330747" y="4044.0" />
+      <point x="3818.4833115582956" y="4044.0" />
+      <point x="54.6875" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetUpdateAccountRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-75.0" y="-64.0" />
+      <point x="2903.5748653307473" y="4204.0" />
+      <point x="1519.8476855054919" y="4204.0" />
+      <point x="82.0" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSearchRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="37.5" y="-52.0" />
+      <point x="3987.0748653307473" y="4074.0" />
+      <point x="3802.8583115582956" y="4074.0" />
+      <point x="39.0625" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetEventsRoute" target="com.DiscogsApp.model.DiscEvent">
+      <point x="128.57142857142844" y="-64.0" />
+      <point x="3758.146293902176" y="4654.0" />
+      <point x="4306.42527584401" y="4654.0" />
+      <point x="4306.42527584401" y="2760.0" />
+      <point x="4191.10303542741" y="2760.0" />
+      <point x="93.33333333333303" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetAdminRoute">
+      <point x="-14.0" y="-64.0" />
+      <point x="2539.9666994396894" y="5168.0" />
+      <point x="2338.5748653307473" y="5168.0" />
+      <point x="0.0" y="88.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetUpdateAccountRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="75.0" y="-64.0" />
+      <point x="3053.5748653307473" y="4524.0" />
+      <point x="3755.9833115582956" y="4524.0" />
+      <point x="-7.8125" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.UserSearch">
+      <point x="46.85714285714289" y="-100.0" />
+      <point x="1484.7048283626348" y="2650.0" />
+      <point x="1192.6214950293013" y="2650.0" />
+      <point x="0.0" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetUpdateAccountRoute">
+      <point x="14.0" y="-64.0" />
+      <point x="2567.9666994396894" y="5168.0" />
+      <point x="2978.5748653307473" y="5168.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Artist" target="com.DiscogsApp.model.SearchObject">
+      <point x="0.0" y="-184.0" />
+      <point x="2637.443492781728" y="1030.0" />
+      <point x="2672.2434927817276" y="1030.0" />
+      <point x="2672.2434927817276" y="698.0" />
+      <point x="2280.6796038928387" y="698.0" />
+      <point x="41.77777777777783" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.Label">
+      <point x="-93.71428571428578" y="-100.0" />
+      <point x="1344.133399791206" y="2680.0" />
+      <point x="1007.6214950293013" y="2680.0" />
+      <point x="1007.6214950293013" y="1020.0" />
+      <point x="2426.5684927817283" y="1020.0" />
+      <point x="-95.41666666666652" y="136.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSigninRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="89.75" y="-88.0" />
+      <point x="1497.75" y="4484.0" />
+      <point x="3693.4833115582956" y="4484.0" />
+      <point x="-70.3125" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostAdminRoute">
+      <point x="84.0" y="-64.0" />
+      <point x="2637.9666994396894" y="5218.0" />
+      <point x="4681.074865330747" y="5218.0" />
+      <point x="0.0" y="232.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.model.Artist">
+      <point x="105.0" y="-64.0" />
+      <point x="5837.574865330747" y="4654.0" />
+      <point x="5828.074865330747" y="4654.0" />
+      <point x="5828.074865330747" y="1438.0" />
+      <point x="2732.8601594483944" y="1438.0" />
+      <point x="95.41666666666652" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetMyAccountRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-75.0" y="-64.0" />
+      <point x="2583.5748653307473" y="4224.0" />
+      <point x="1494.6169162747226" y="4224.0" />
+      <point x="56.76923076923072" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.SearchObject">
+      <point x="-108.94117647058829" y="-532.0" />
+      <point x="2549.633688860159" y="2600.0" />
+      <point x="2238.9018261150613" y="2600.0" />
+      <point x="0.0" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.Application" target="com.DiscogsApp.ui.WebServer">
+      <point x="94.28571428571422" y="-52.0" />
+      <point x="1147.9868246407127" y="5456.0" />
+      <point x="2651.9666994396894" y="5456.0" />
+      <point x="98.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetAdminRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="125.0" y="-88.0" />
+      <point x="2463.5748653307473" y="4594.0" />
+      <point x="4033.353103224962" y="4594.0" />
+      <point x="-50.96875" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetEventsRoute">
+      <point x="42.0" y="-64.0" />
+      <point x="2595.9666994396894" y="5188.0" />
+      <point x="3629.5748653307473" y="5188.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.model.SearchObject">
+      <point x="-167.0" y="-76.0" />
+      <point x="138.0" y="678.0" />
+      <point x="2155.3462705595057" y="678.0" />
+      <point x="-83.55555555555566" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Album" target="com.DiscogsApp.model.SearchObject">
+      <point x="0.0" y="-208.0" />
+      <point x="2752.9018261150613" y="1448.0" />
+      <point x="2787.701826115061" y="1448.0" />
+      <point x="2787.701826115061" y="688.0" />
+      <point x="2301.5684927817274" y="688.0" />
+      <point x="62.666666666666515" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.Application" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-94.28571428571422" y="-52.0" />
+      <point x="959.4153960692843" y="5456.0" />
+      <point x="0.0" y="5456.0" />
+      <point x="0.0" y="4164.0" />
+      <point x="1280.1553778131843" y="4164.0" />
+      <point x="-157.69230769230762" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetHomeRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="60.0" y="-64.0" />
+      <point x="1106.5" y="4354.0" />
+      <point x="2529.207218271924" y="4354.0" />
+      <point x="-129.36764705882342" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostAdminRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-60.375" y="-232.0" />
+      <point x="4620.699865330747" y="4014.0" />
+      <point x="2828.7954535660415" y="4014.0" />
+      <point x="170.22058823529414" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.Song">
+      <point x="136.17647058823513" y="-532.0" />
+      <point x="2794.7513359189825" y="2730.0" />
+      <point x="2930.976826115061" y="2730.0" />
+      <point x="-28.625" y="268.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetSignupRoute">
+      <point x="98.0" y="-64.0" />
+      <point x="2651.9666994396894" y="5228.0" />
+      <point x="5092.574865330747" y="5228.0" />
+      <point x="0.0" y="52.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetSigninRoute">
+      <point x="112.0" y="-64.0" />
+      <point x="2665.9666994396894" y="5238.0" />
+      <point x="5412.574865330747" y="5238.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetEventsRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="0.0" y="-64.0" />
+      <point x="3629.5748653307473" y="4104.0" />
+      <point x="2747.0895712131005" y="4104.0" />
+      <point x="88.51470588235316" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Song" target="com.DiscogsApp.model.SearchEnum">
+      <point x="91.59999999999991" y="-268.0" />
+      <point x="3051.201826115061" y="1944.0" />
+      <point x="3132.9018261150613" y="1944.0" />
+      <point x="3132.9018261150613" y="364.0" />
+      <point x="2786.089646627882" y="364.0" />
+      <point x="91.84615384615381" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignoutRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="112.5" y="-52.0" />
+      <point x="4382.074865330747" y="4034.0" />
+      <point x="4120.728103224962" y="4034.0" />
+      <point x="36.40625" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="-15.0" y="-64.0" />
+      <point x="5717.574865330747" y="3884.0" />
+      <point x="3880.9833115582956" y="3884.0" />
+      <point x="117.1875" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.model.Label">
+      <point x="135.0" y="-64.0" />
+      <point x="5867.574865330747" y="4644.0" />
+      <point x="5839.074865330747" y="4644.0" />
+      <point x="5839.074865330747" y="1020.0" />
+      <point x="2617.4018261150613" y="1020.0" />
+      <point x="95.41666666666652" y="136.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSearchRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="112.5" y="-52.0" />
+      <point x="4062.0748653307473" y="4644.0" />
+      <point x="4106.165603224962" y="4644.0" />
+      <point x="21.84375" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostUpdateAccountRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-75.0" y="-64.0" />
+      <point x="1682.5" y="4264.0" />
+      <point x="1444.1553778131843" y="4264.0" />
+      <point x="6.307692307692378" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostMyAccountRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="42.85714285714289" y="-64.0" />
+      <point x="769.3571428571429" y="4334.0" />
+      <point x="2501.9719241542766" y="4334.0" />
+      <point x="-156.60294117647072" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.SearchField" target="com.DiscogsApp.model.SearchEnum">
+      <point x="55.75" y="-112.0" />
+      <point x="3066.6518261150613" y="374.0" />
+      <point x="2770.7819543201895" y="374.0" />
+      <point x="76.53846153846143" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetUpdateAccountRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="125.0" y="-64.0" />
+      <point x="3103.5748653307473" y="4614.0" />
+      <point x="4062.478103224962" y="4614.0" />
+      <point x="-21.84375" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Label" target="com.DiscogsApp.model.SearchObject">
+      <point x="-76.33333333333348" y="-136.0" />
+      <point x="2445.6518261150613" y="708.0" />
+      <point x="2259.79071500395" y="708.0" />
+      <point x="20.888888888888687" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.UserAccount">
+      <point x="-136.1764705882356" y="-532.0" />
+      <point x="2522.3983947425118" y="2610.0" />
+      <point x="2177.2351594483944" y="2610.0" />
+      <point x="102.33333333333348" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.UserSearch" target="com.DiscogsApp.model.SearchObject">
+      <point x="81.75" y="-112.0" />
+      <point x="1274.3714950293013" y="1944.0" />
+      <point x="1198.1214950293013" y="1944.0" />
+      <point x="1198.1214950293013" y="708.0" />
+      <point x="2218.0129372261727" y="708.0" />
+      <point x="-20.888888888888687" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignupRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="37.5" y="-52.0" />
+      <point x="5130.074865330747" y="3964.0" />
+      <point x="3849.7333115582956" y="3964.0" />
+      <point x="85.9375" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="167.0" y="-76.0" />
+      <point x="472.0" y="4454.0" />
+      <point x="3646.6083115582956" y="4454.0" />
+      <point x="-117.1875" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.model.UserSearch">
+      <point x="-111.33333333333303" y="-76.0" />
+      <point x="193.66666666666697" y="4154.0" />
+      <point x="149.0" y="4154.0" />
+      <point x="149.0" y="2700.0" />
+      <point x="1061.8214950293013" y="2700.0" />
+      <point x="-130.79999999999995" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.model.SearchEnum">
+      <point x="-222.66666666666652" y="-76.0" />
+      <point x="82.33333333333348" y="4154.0" />
+      <point x="127.0" y="4154.0" />
+      <point x="127.0" y="374.0" />
+      <point x="2602.397338935574" y="374.0" />
+      <point x="-91.84615384615381" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-105.0" y="-64.0" />
+      <point x="5627.574865330747" y="3914.0" />
+      <point x="1595.5399931977997" y="3914.0" />
+      <point x="157.69230769230785" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.model.Album">
+      <point x="75.0" y="-64.0" />
+      <point x="5807.574865330747" y="4654.0" />
+      <point x="5817.074865330747" y="4654.0" />
+      <point x="5817.074865330747" y="1904.0" />
+      <point x="2848.3184927817274" y="1904.0" />
+      <point x="95.41666666666652" y="208.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSigninRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="149.58333333333326" y="-88.0" />
+      <point x="1557.5833333333333" y="4574.0" />
+      <point x="4004.228103224962" y="4574.0" />
+      <point x="-80.09375" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostSigninRoute">
+      <point x="-42.0" y="-64.0" />
+      <point x="2511.9666994396894" y="5188.0" />
+      <point x="1408.0" y="5188.0" />
+      <point x="0.0" y="88.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.URSong">
+      <point x="-27.2352941176473" y="-532.0" />
+      <point x="2631.3395712131" y="2570.0" />
+      <point x="2434.4018261150613" y="2570.0" />
+      <point x="58.0" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetSearchRoute">
+      <point x="56.0" y="-64.0" />
+      <point x="2609.9666994396894" y="5198.0" />
+      <point x="3949.5748653307473" y="5198.0" />
+      <point x="0.0" y="52.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetResultRoute">
+      <point x="126.0" y="-64.0" />
+      <point x="2679.9666994396894" y="5248.0" />
+      <point x="5732.574865330747" y="5248.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.Application" target="com.DiscogsApp.appl.SQLManager">
+      <point x="0.0" y="-52.0" />
+      <point x="1053.7011103549985" y="5426.0" />
+      <point x="566.0" y="5426.0" />
+      <point x="566.0" y="4314.0" />
+      <point x="2474.73663003663" y="4314.0" />
+      <point x="-183.83823529411757" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSignupRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-25.916666666666515" y="-136.0" />
+      <point x="3278.158198664081" y="4154.0" />
+      <point x="2706.23663003663" y="4154.0" />
+      <point x="47.66176470588243" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.Song">
+      <point x="140.57142857142844" y="-100.0" />
+      <point x="1578.4191140769203" y="2720.0" />
+      <point x="2873.726826115061" y="2720.0" />
+      <point x="-85.875" y="268.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetMyAccountRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="75.0" y="-64.0" />
+      <point x="2733.5748653307473" y="4514.0" />
+      <point x="3740.3583115582956" y="4514.0" />
+      <point x="-23.4375" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="0.0" y="-76.0" />
+      <point x="305.0" y="4214.0" />
+      <point x="1343.2323008901074" y="4214.0" />
+      <point x="-94.61538461538453" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-126.0" y="-64.0" />
+      <point x="2427.9666994396894" y="5248.0" />
+      <point x="44.0" y="5248.0" />
+      <point x="44.0" y="4194.0" />
+      <point x="1318.001531659338" y="4194.0" />
+      <point x="-119.84615384615381" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetEventsRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="85.71428571428578" y="-64.0" />
+      <point x="3715.289151045033" y="4634.0" />
+      <point x="4091.603103224962" y="4634.0" />
+      <point x="7.28125" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.SearchObject">
+      <point x="-140.57142857142844" y="-100.0" />
+      <point x="1297.2762569340634" y="2690.0" />
+      <point x="996.6214950293013" y="2690.0" />
+      <point x="996.6214950293013" y="688.0" />
+      <point x="2176.2351594483944" y="688.0" />
+      <point x="-62.666666666666515" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostAdminRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="181.125" y="-232.0" />
+      <point x="4862.199865330747" y="3994.0" />
+      <point x="4135.290603224962" y="3994.0" />
+      <point x="50.96875" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.Album">
+      <point x="93.71428571428578" y="-100.0" />
+      <point x="1531.5619712197777" y="2700.0" />
+      <point x="1819.0714285714284" y="2700.0" />
+      <point x="1819.0714285714284" y="1944.0" />
+      <point x="2657.4851594483944" y="1944.0" />
+      <point x="-95.41666666666652" y="208.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetHomeRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="120.0" y="-64.0" />
+      <point x="1166.5" y="4474.0" />
+      <point x="3677.8583115582956" y="4474.0" />
+      <point x="-85.9375" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Artist" target="com.DiscogsApp.model.SearchEnum">
+      <point x="91.59999999999991" y="-184.0" />
+      <point x="2729.0434927817278" y="1030.0" />
+      <point x="2694.2434927817276" y="1030.0" />
+      <point x="0.0" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSignupRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="77.75" y="-136.0" />
+      <point x="3381.8248653307473" y="4534.0" />
+      <point x="3771.6083115582956" y="4534.0" />
+      <point x="7.8125" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.Artist">
+      <point x="27.235294117646845" y="-532.0" />
+      <point x="2685.810159448394" y="2550.0" />
+      <point x="2555.8601594483944" y="2550.0" />
+      <point x="2555.8601594483944" y="1448.0" />
+      <point x="2580.193492781728" y="1448.0" />
+      <point x="-57.25" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Song" target="com.DiscogsApp.model.Album">
+      <point x="-91.59999999999991" y="-268.0" />
+      <point x="2868.0018261150612" y="1944.0" />
+      <point x="2771.9851594483944" y="1944.0" />
+      <point x="19.083333333333485" y="208.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostUpdateAccountRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="125.0" y="-64.0" />
+      <point x="1882.5" y="4584.0" />
+      <point x="4018.790603224962" y="4584.0" />
+      <point x="-65.53125" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Album" target="com.DiscogsApp.model.Artist">
+      <point x="-91.59999999999991" y="-208.0" />
+      <point x="2661.301826115061" y="1448.0" />
+      <point x="2656.5268261150613" y="1448.0" />
+      <point x="19.083333333333485" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignupRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="112.5" y="-52.0" />
+      <point x="5205.074865330747" y="3954.0" />
+      <point x="4149.853103224962" y="3954.0" />
+      <point x="65.53125" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="222.66666666666663" y="-76.0" />
+      <point x="527.6666666666665" y="4554.0" />
+      <point x="3975.103103224962" y="4554.0" />
+      <point x="-109.21875" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetMyAccountRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-25.0" y="-64.0" />
+      <point x="2633.5748653307473" y="4444.0" />
+      <point x="2651.7660418013356" y="4444.0" />
+      <point x="-6.808823529411711" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.SearchObject" target="com.DiscogsApp.model.SearchEnum">
+      <point x="47.0" y="-27.5" />
+      <point x="2285.9018261150613" y="394.0" />
+      <point x="2633.012723550959" y="394.0" />
+      <point x="-61.230769230769056" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignoutRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-37.5" y="-52.0" />
+      <point x="4232.074865330747" y="4054.0" />
+      <point x="2801.5601594483946" y="4054.0" />
+      <point x="142.9852941176473" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetHomeRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-60.0" y="-64.0" />
+      <point x="986.5" y="4254.0" />
+      <point x="1393.6938393516457" y="4254.0" />
+      <point x="-44.15384615384619" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSigninRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="-75.0" y="-40.0" />
+      <point x="5337.574865330747" y="3944.0" />
+      <point x="3865.3583115582956" y="3944.0" />
+      <point x="101.5625" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetSignoutRoute">
+      <point x="70.0" y="-64.0" />
+      <point x="2623.9666994396894" y="5208.0" />
+      <point x="4269.574865330747" y="5208.0" />
+      <point x="0.0" y="52.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostSearchRoute">
+      <point x="-112.0" y="-64.0" />
+      <point x="2441.9666994396894" y="5238.0" />
+      <point x="305.0" y="5238.0" />
+      <point x="0.0" y="76.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostUpdateAccountRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-25.0" y="-64.0" />
+      <point x="1732.5" y="4404.0" />
+      <point x="2597.2954535660415" y="4404.0" />
+      <point x="-61.279411764705856" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.model.Song">
+      <point x="45.0" y="-64.0" />
+      <point x="5777.574865330747" y="4644.0" />
+      <point x="5806.074865330747" y="4644.0" />
+      <point x="5806.074865330747" y="2740.0" />
+      <point x="3045.476826115061" y="2740.0" />
+      <point x="85.875" y="268.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.UserSearch">
+      <point x="-217.88235294117658" y="-532.0" />
+      <point x="2440.6925123895708" y="2640.0" />
+      <point x="1258.0214950293014" y="2640.0" />
+      <point x="65.40000000000009" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Song" target="com.DiscogsApp.model.SearchObject">
+      <point x="0.0" y="-268.0" />
+      <point x="2959.601826115061" y="1924.0" />
+      <point x="2877.9018261150613" y="1924.0" />
+      <point x="2877.9018261150613" y="678.0" />
+      <point x="2322.457381670617" y="678.0" />
+      <point x="83.55555555555566" y="27.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetMyAccountRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="125.0" y="-64.0" />
+      <point x="2783.5748653307473" y="4604.0" />
+      <point x="4047.915603224962" y="4604.0" />
+      <point x="-36.40625" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetAdminRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-75.0" y="-88.0" />
+      <point x="2263.5748653307473" y="4244.0" />
+      <point x="1469.3861470439533" y="4244.0" />
+      <point x="31.538461538461434" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostMyAccountRoute" target="com.DiscogsApp.model.UserAccount">
+      <point x="-128.57142857142867" y="-64.0" />
+      <point x="597.9285714285716" y="2710.0" />
+      <point x="1972.5684927817279" y="2710.0" />
+      <point x="-102.33333333333326" y="112.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSigninRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="29.916666666666742" y="-88.0" />
+      <point x="1437.9166666666667" y="4394.0" />
+      <point x="2583.677806507218" y="4394.0" />
+      <point x="-74.89705882352928" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Album" target="com.DiscogsApp.model.SearchEnum">
+      <point x="45.80000000000018" y="-208.0" />
+      <point x="2798.701826115061" y="414.0" />
+      <point x="2709.55118508942" y="414.0" />
+      <point x="15.307692307692378" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSearchRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-112.5" y="-52.0" />
+      <point x="3837.0748653307473" y="4094.0" />
+      <point x="2760.707218271924" y="4094.0" />
+      <point x="102.13235294117658" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostMyAccountRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-85.71428571428578" y="-64.0" />
+      <point x="640.7857142857142" y="4224.0" />
+      <point x="1355.8476855054919" y="4224.0" />
+      <point x="-82.0" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostAdminRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="60.375" y="-232.0" />
+      <point x="4741.449865330747" y="4004.0" />
+      <point x="3834.1083115582956" y="4004.0" />
+      <point x="70.3125" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Artist" target="com.DiscogsApp.model.Label">
+      <point x="-91.59999999999991" y="-184.0" />
+      <point x="2545.843492781728" y="1030.0" />
+      <point x="2541.0684927817283" y="1030.0" />
+      <point x="19.083333333333485" y="136.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetHomeRoute">
+      <point x="-84.0" y="-64.0" />
+      <point x="2469.9666994396894" y="5218.0" />
+      <point x="1046.5" y="5218.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSignupRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-129.58333333333348" y="-136.0" />
+      <point x="3174.491531997414" y="4174.0" />
+      <point x="1532.4630701208764" y="4174.0" />
+      <point x="94.61538461538453" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetUpdateAccountRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="25.0" y="-64.0" />
+      <point x="3003.5748653307473" y="4184.0" />
+      <point x="2692.6189829778064" y="4184.0" />
+      <point x="34.04411764705901" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostUpdateAccountRoute">
+      <point x="-28.0" y="-64.0" />
+      <point x="2525.9666994396894" y="5178.0" />
+      <point x="1757.5" y="5178.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostMyAccountRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="128.57142857142856" y="-64.0" />
+      <point x="855.0714285714284" y="4564.0" />
+      <point x="3989.665603224962" y="4564.0" />
+      <point x="-94.65625" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.Album">
+      <point x="108.94117647058829" y="-532.0" />
+      <point x="2767.5160418013356" y="2520.0" />
+      <point x="2733.8184927817274" y="2520.0" />
+      <point x="-19.083333333333485" y="208.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSignupRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="129.58333333333348" y="-136.0" />
+      <point x="3433.658198664081" y="4624.0" />
+      <point x="4077.040603224962" y="4624.0" />
+      <point x="-7.28125" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetEventsRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="42.85714285714266" y="-64.0" />
+      <point x="3672.43200818789" y="4544.0" />
+      <point x="3787.2333115582956" y="4544.0" />
+      <point x="23.4375" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostUpdateAccountRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="75.0" y="-64.0" />
+      <point x="1832.5" y="4494.0" />
+      <point x="3709.1083115582956" y="4494.0" />
+      <point x="-54.6875" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SearchCache" target="com.DiscogsApp.model.Artist">
+      <point x="-46.85714285714289" y="-100.0" />
+      <point x="1390.990542648349" y="2670.0" />
+      <point x="1018.6214950293013" y="2670.0" />
+      <point x="1018.6214950293013" y="1448.0" />
+      <point x="2542.0268261150613" y="1448.0" />
+      <point x="-95.41666666666652" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-70.0" y="-64.0" />
+      <point x="2483.9666994396894" y="5208.0" />
+      <point x="1207.0" y="5208.0" />
+      <point x="1207.0" y="4364.0" />
+      <point x="2542.8248653307473" y="4364.0" />
+      <point x="-115.75" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSigninRoute" target="com.DiscogsApp.ui.Routes">
+      <point x="75.0" y="-40.0" />
+      <point x="5487.574865330747" y="3934.0" />
+      <point x="4164.415603224962" y="3934.0" />
+      <point x="80.09375" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.DiscEvent">
+      <point x="190.64705882352928" y="-532.0" />
+      <point x="2849.2219241542766" y="2750.0" />
+      <point x="4004.4363687607433" y="2750.0" />
+      <point x="-93.33333333333348" y="184.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSearchRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="55.666666666666686" y="-76.0" />
+      <point x="360.66666666666674" y="4294.0" />
+      <point x="2447.5013359189825" y="4294.0" />
+      <point x="-211.07352941176487" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.model.Label" target="com.DiscogsApp.model.SearchEnum">
+      <point x="76.33333333333348" y="-136.0" />
+      <point x="2598.3184927817283" y="708.0" />
+      <point x="2565.6518261150613" y="708.0" />
+      <point x="2565.6518261150613" y="414.0" />
+      <point x="2663.628108166343" y="414.0" />
+      <point x="-30.615384615384755" y="172.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostMyAccountRoute">
+      <point x="-98.0" y="-64.0" />
+      <point x="2455.9666994396894" y="5228.0" />
+      <point x="726.5" y="5228.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.Routes">
+      <point x="140.0" y="-64.0" />
+      <point x="2693.9666994396894" y="5258.0" />
+      <point x="5893.074865330747" y="5258.0" />
+      <point x="5893.074865330747" y="3864.0" />
+      <point x="4193.540603224962" y="3864.0" />
+      <point x="109.21875" y="135.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetSignupRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-37.5" y="-52.0" />
+      <point x="5055.074865330747" y="3974.0" />
+      <point x="2856.030747683689" y="3974.0" />
+      <point x="197.45588235294144" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostSigninRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-149.58333333333348" y="-88.0" />
+      <point x="1258.4166666666665" y="4264.0" />
+      <point x="1406.3092239670304" y="4264.0" />
+      <point x="-31.538461538461434" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.appl.SQLManager" target="com.DiscogsApp.model.Label">
+      <point x="0.0" y="-532.0" />
+      <point x="2658.5748653307473" y="2560.0" />
+      <point x="2502.9018261150613" y="2560.0" />
+      <point x="-19.083333333333485" y="136.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetAdminRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="75.0" y="-88.0" />
+      <point x="2413.5748653307473" y="4504.0" />
+      <point x="3724.7333115582956" y="4504.0" />
+      <point x="-39.0625" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetResultRoute" target="com.DiscogsApp.appl.SQLManager">
+      <point x="-75.0" y="-64.0" />
+      <point x="5657.574865330747" y="3904.0" />
+      <point x="2869.648394742512" y="3904.0" />
+      <point x="211.07352941176487" y="532.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.GetEventsRoute" target="com.DiscogsApp.appl.SearchCache">
+      <point x="-85.71428571428578" y="-64.0" />
+      <point x="3543.8605796164616" y="4124.0" />
+      <point x="1570.3092239670304" y="4124.0" />
+      <point x="132.46153846153857" y="100.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.GetMyAccountRoute">
+      <point x="0.0" y="-64.0" />
+      <point x="2553.9666994396894" y="5158.0" />
+      <point x="2658.5748653307473" y="5158.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.PostMyAccountRoute" target="com.DiscogsApp.ui.FTLKeys">
+      <point x="85.71428571428567" y="-64.0" />
+      <point x="812.2142857142858" y="4464.0" />
+      <point x="3662.2333115582956" y="4464.0" />
+      <point x="-101.5625" y="327.5" />
+    </edge>
+    <edge source="com.DiscogsApp.ui.WebServer" target="com.DiscogsApp.ui.PostSignupRoute">
+      <point x="28.0" y="-64.0" />
+      <point x="2581.9666994396894" y="5178.0" />
+      <point x="3304.0748653307473" y="5178.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.40000000000000013" x="2859.249999999999" y="1409.9999999999995" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

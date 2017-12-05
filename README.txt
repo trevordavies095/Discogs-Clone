@@ -16,7 +16,9 @@ Run Application
 			5. JARs or Directories…
 			6. Choose postgresql-42.1.4.jar which is located in the src folder
 	- Run mvn compile exec:java in the folder’s root (where pom.xml is)
-	- Access application at localhost:4567 (Signing up, signing in and search all work)
+	- Access application at localhost:4567 
 	
 Documentation
 	- All documentation (including JavaDocs) can be found in "/src/docs"
+	- UML Diagram is too large to submit as a single image with distinct dependencies; a package simplified
+		version has been included as a PNG, with the full form included as a .uml file

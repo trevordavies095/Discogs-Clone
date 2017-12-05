@@ -1,8 +1,9 @@
 Patrick Ehrenreich
 	- Wrote all application files (.java, .ftl, .css, et cetera)
+	- All application testing
 	- Database creation
 	- Table creation
-	- Table reduction
+	- Table reduction(s)
 	- Script for table population
 	- Minor code documentation
 	- Phase Reports
@@ -20,10 +21,8 @@ Loren Davies
 	
 Michael Hopkins
 	- Phase 3 report and helped with other reports
-	- Helped with database table creation and population
+	- Helped with database table population
 	- Database management to remove duplicate albums and move them into editions table with the correct barcodes maitained
-	- Ensured every label has an artist ,every artist has an album,every album has a genre, and helped individually
-	  add songs for each album
+	- Ensured every label has an artist ,every artist has an album,every album has a genre, and helped individually add songs for each album
 	- Populated locations and events tables
 	- Helped make orginal phase 1 ER diagram and UML diagram
-	- used CSV files to help populate tables
