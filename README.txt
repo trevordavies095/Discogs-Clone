@@ -1,5 +1,5 @@
 Phase 3 - Group 23 (CSCI-320-03/04)
-Patrick Ehrenreich, Loren Davies, Michael Hopkins
+Patrick Ehrenreich, Loren Davies
 
 -----------
 Disc Clones
