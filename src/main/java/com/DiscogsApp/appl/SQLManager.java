@@ -9,9 +9,9 @@ import java.util.*;
 public class SQLManager
 {
     // Class constants
-    static private final String dburl = "jdbc:postgresql://reddwarf.cs.rit.edu:5432/p32004e";
-    static private final String dbusername = "p32004e";
-    static private final String dbpassword = "ievip6se0pha1sahchuD";
+    static private final String dburl = "";
+    static private final String dbusername = "";
+    static private final String dbpassword = "";
     static private final String SQL_DEFAULT = "%%";
 
     // Class variables
